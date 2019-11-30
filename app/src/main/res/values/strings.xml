@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">RPG:v4</string>
+    <string name="hint_word">Word...</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_valid">Invalid because it is empty.</string>
+    <string name="loginScreen">Loading...</string>
+    <string name="submitLogin">Submit</string>
+    <string name="loginUserHint">Username</string>
+    <string name="loginPassHint">Password</string>
+    <string name="loginYesUser">Enter your username.</string>
+    <string name="loginNoUser">Incorrect username/password.</string>
+    <string name="loginNewUserRequirements">Must include 2+ characters.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
