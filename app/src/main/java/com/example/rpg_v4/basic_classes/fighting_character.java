@@ -7,6 +7,7 @@ public class fighting_character extends Characters{
     private int fighting_img;
     private String attack_type;
     private boolean isDead;
+    private boolean turnSkip;
     private Weapon weapon_equip;
     private inventI item_equip;
     private stats_object stats_static;
@@ -18,6 +19,7 @@ public class fighting_character extends Characters{
         this.fighting_img = fightImg;
         this.attack_type = atkType;
         this.isDead=false;
+        this.turnSkip = false;
         this.weapon_equip = weapon;
         this.item_equip = item;
         this.stats_static = thestats;
@@ -28,9 +30,11 @@ public class fighting_character extends Characters{
     public int getFighting_img() { return fighting_img;}
     public String getAttack_type() {return attack_type;}
     public boolean getIsDead() {return isDead;}
+    public boolean getTurnSkip() {return turnSkip;}
     public void setFighting_img(int img) {this.fighting_img=img;}
     public void setAttack_type(String atk) {this.attack_type=atk;}
     public void setIsDead(boolean ded) {this.isDead = ded;}
+    public void setTurnSkip(boolean skip) {this.turnSkip = skip;}
     public boolean isVolatile() {
         int vol = stats.getVolatility();
         int rand = (int)(Math.random()*100);
@@ -85,27 +89,30 @@ public class fighting_character extends Characters{
         }
     }
     private void setBuffStats() {
-        stats_object temp;
+        stats_object temp = stats_static;
         if (item_equip == null && weapon_equip == null) {
-            temp = null;
+            this.buff_stats = null;
         }
         else if(item_equip == null) {
-            temp = weapon_equip.getStats();
+            this.buff_stats = weapon_equip.getStats();
+            temp.addStats(this.buff_stats);
         }
         else if(weapon_equip == null) {
             if (item_equip.getUse_for_buff()) {
-                temp = null;
+                this.buff_stats = null;
             }
             else {
-                temp = item_equip.getStats();
+                this.buff_stats = item_equip.getStats();
+                temp.addStats(this.buff_stats);
             }
         }
         else {
             if (item_equip.getUse_for_buff()) {
-                temp = weapon_equip.getStats();
+                this.buff_stats = weapon_equip.getStats();
+                temp.addStats(this.buff_stats);
             }
             else {
-                temp = new stats_object(
+                this.buff_stats = new stats_object(
                          item_equip.getStats().getAttackA()+weapon_equip.getStats().getAttackA(),
                          item_equip.getStats().getHealth()+weapon_equip.getStats().getHealth(),
                         item_equip.getStats().getVolatility()+weapon_equip.getStats().getVolatility(),
@@ -116,11 +123,14 @@ public class fighting_character extends Characters{
                         item_equip.getStats().getWaterDefense()+weapon_equip.getStats().getWaterDefense(),
                         item_equip.getStats().getLandDefense()+weapon_equip.getStats().getLandDefense(),
                         item_equip.getStats().getAirDefense()+weapon_equip.getStats().getAirDefense());
+                temp.addStats(this.buff_stats);
             }
         }
-        this.buff_stats = temp;
-        temp.addStats(stats_static);
         this.stats = temp;
+    }
+
+    public void useCard(Card card, fighting_character target) {
+        card.preformCard(this, target);
     }
 
 }

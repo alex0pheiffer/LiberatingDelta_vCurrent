@@ -2,13 +2,9 @@ package com.example.rpg_v4.basic_classes;
 
 public abstract class Weapon extends inventI{
 
-    stats_object buff;
-
-    public Weapon() {
-        super("Weapon");
+    public Weapon(String name, stats_object buff) {
+        super(name, false, buff);
     }
-
-    public stats_object getStats() {return buff;}
 
     public String toString() {return "Weapon";}
 }
