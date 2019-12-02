@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.rpg_v4.PL;
+import com.example.rpg_v4.PL_VendingMachine;
+import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Characters;
 
@@ -22,6 +23,7 @@ public class main_menyu_frontcharacter extends Fragment {
     private Characters character;
     private String weapon;
     private int pl;
+    private PL this_pl;
     private ImageView frontcharacter;
 
     private onMenyuFrontcharacterSelectedListener mListener;
@@ -42,9 +44,10 @@ public class main_menyu_frontcharacter extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            character = PL.getCharacter(getArguments().getString(CHARACTER));
-            weapon = getArguments().getString(WEAPON);
             pl = getArguments().getInt(PlayerLevel);
+            this_pl = PL_VendingMachine.getPL(pl);
+            character = this_pl.getCharacter(getArguments().getString(CHARACTER));
+            weapon = getArguments().getString(WEAPON);
         }
     }
 

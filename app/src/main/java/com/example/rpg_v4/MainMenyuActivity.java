@@ -20,6 +20,7 @@ import com.example.rpg_v4.Main_Menyu_Fragements.region_fragments.RegionFragmentI
 import com.example.rpg_v4.Main_Menyu_Fragements.region_fragments.region_1_fragment;
 import com.example.rpg_v4.basic_classes.Chapter;
 import com.example.rpg_v4.basic_classes.Characters;
+import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.basic_classes.regions;
 import com.example.rpg_v4.basic_classes.the_MCs.Katherine;
 import com.example.rpg_v4.basic_classes.the_cities.chipper_towne;
@@ -35,6 +36,9 @@ import com.example.rpg_v4.db_files.User_Values;
 import java.util.List;
 
 public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener {
+
+    private int pl;
+    private PL this_pl;
 
     private RPG_ViewModel rpgViewModel;
     private int updateUserValuesCounter;
@@ -64,7 +68,13 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         private List<User_Decks> lDecks;
         private List<User_Inventory> lInventory;
         private regions cur_region;
-        public void setlValues(List<User_Values> vals) {this.lValues = vals; cur_region = getCurrentRegion();}
+        public void setlValues(List<User_Values> vals) {
+            this.lValues = vals; cur_region = getCurrentRegion();
+            if (pl < 3 || this_pl == null) {
+                pl = getPL();
+                this_pl = PL_VendingMachine.getPL(pl);
+            }
+        }
         public void setlCharacters(List<User_Characters> lCharacters) {this.lCharacters = lCharacters;}
         public void setlEQPlayed(List<User_EQPlayed> lEQPlayed) {this.lEQPlayed = lEQPlayed;}
         public void setlCards(List<User_Cards> vals) {this.lCards = vals;}
@@ -73,16 +83,17 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
         public checkUserData() {
             cur_region = new Veneland();
+            pl = 1;
         }
 
         private regions getCurrentRegion() {
-            return PL.getRegion(lValues.get(0).getCur_region());
+            return this_pl.getRegion(lValues.get(0).getCur_region());
         }
 
         private Characters getCur_character() {
             Characters character = new Katherine();
             if (lValues != null) {
-                PL.getCharacter(lValues.get(0).getFront_char());
+                this_pl.getCharacter(lValues.get(0).getFront_char());
             }
             return character;
         }
@@ -91,7 +102,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             String weapon = "default";
             if (lCharacters != null) {
                 for (int n = 0; n < lCharacters.size(); n++) {
-                    if (lCharacters.get(n).getName().equals(getCur_character())) {
+                    if (lCharacters.get(n).getName().equals(getCur_character().getName())) {
                         weapon = lCharacters.get(n).getWeapon_equip();
                         break;
                     }
@@ -101,13 +112,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
 
         public User_Values changeCharacter(Characters character) {
-            User_Values temp = new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),lValues.get(0).getCur_okane(),character.getName(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
-            return temp;
+            return new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),lValues.get(0).getCur_okane(),character.getName(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
         }
 
         public User_Values changeOkane(int okane) {
-            User_Values temp = new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),okane,lValues.get(0).getFront_char(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
-            return temp;
+            return new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),okane,lValues.get(0).getFront_char(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
         }
 
         public regions getCur_region() {
@@ -140,7 +149,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
         //adding fragments
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        mainMenyuRegionMapBtn = main_menyu_region_map_btn.newInstance(userDataChecker.getCur_region().getNom());
+        mainMenyuRegionMapBtn = main_menyu_region_map_btn.newInstance(userDataChecker.getCur_region().getNom(), pl);
         itemsBar = menyu_itemsbar.newInstance();
         characterIcon = main_menyu_frontcharacter.newInstance(userDataChecker.getCur_character().getName(), userDataChecker.getCur_weapon(),userDataChecker.getPL());
         ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);

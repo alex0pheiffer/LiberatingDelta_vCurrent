@@ -12,7 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.rpg_v4.PL;
+import com.example.rpg_v4.PL_VendingMachine;
+import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.cityPt;
 import com.example.rpg_v4.basic_classes.regions;
@@ -24,8 +25,9 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
     final String THIS_LAYOUT="REGION_MAP";
 
     private int pl;
+    private PL this_pl;
     private regions thisRegion = new Veneland();
-    private cityPt[] allCities = PL.getAllCitiesRegion(thisRegion.getNom()); //of this region
+    private cityPt[] allCities = this_pl.getAllCitiesRegion(thisRegion.getNom()); //of this region
     private cityPt[] unlockedCities;
     private LinearLayout MaleficereMansionLayout, ChipperTowneLayout;
     private ImageView MaleficereMansionBtn, ChipperTowneBtn;
@@ -61,7 +63,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
         View view = inflater.inflate(R.layout.fragment_region_1_fragment, container, false);
 
         System.out.println("onCreateView: "+pl);
-        unlockedCities = PL.getCities(pl,thisRegion.getNom());
+        unlockedCities = this_pl.getCities(thisRegion.getNom());
         this.setViews(view);
 
         for (int n = 0; n<unlockedCities.length; n++) {

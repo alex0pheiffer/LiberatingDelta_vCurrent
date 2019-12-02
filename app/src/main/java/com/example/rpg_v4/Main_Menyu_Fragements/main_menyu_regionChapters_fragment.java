@@ -11,7 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.rpg_v4.PL;
+import com.example.rpg_v4.PL_VendingMachine;
+import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Chapter;
 import com.example.rpg_v4.basic_classes.cityPt;
@@ -28,6 +29,7 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
     private regions this_region;
     private cityPt this_cityPt;
     private int pl;
+    private PL this_pl;
     private List<Chapter> chapters;
     private boolean[] chapters_open;
     private onRegionChaptersSelectedListener mListener;
@@ -49,10 +51,11 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            this_region = PL.getRegion(getArguments().getString(REGION));
-            this_cityPt = PL.getCityPt(getArguments().getString(CITYPT),this_region);
-            System.out.println("region: "+this_region+", city: "+this_cityPt);
             pl = getArguments().getInt(PlayerLevel);
+            this_pl = PL_VendingMachine.getPL(pl);
+            this_region = this_pl.getRegion(getArguments().getString(REGION));
+            this_cityPt = this_pl.getCityPt(getArguments().getString(CITYPT),this_region);
+            System.out.println("region: "+this_region+", city: "+this_cityPt);
             System.out.println("setChapters+ "+this_cityPt.getChapterAmt());
             for (int i=0; i<this_cityPt.getChapterAmt(); i++) {
                 chapters.add(i,this_cityPt.getChapter(i));

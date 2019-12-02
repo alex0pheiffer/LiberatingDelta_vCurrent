@@ -15,9 +15,8 @@ public class Delta extends main_character {
                 false,
                 50,
                 9,
-                "DragonI",
-                new Integer[] {com.example.rpg_v4.R.drawable.dummy_mmc_img},
-                new Integer[] {new Integer(1)});
+                getAType(9),
+                com.example.rpg_v4.R.drawable.dummy_mmc_img);
     }
 
 }

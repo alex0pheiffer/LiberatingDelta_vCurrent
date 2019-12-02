@@ -1,17 +1,15 @@
 package com.example.rpg_v4.basic_classes;
 
-import com.example.rpg_v4.PL;
-
 public abstract class Chapter {
     private int coor_PL;
     private String nom;
     private String region;
     private String city;
     private int drawable_background; //do i have a place for the individual chapter images? or are we just doing region imgs...
-    private String[] phase_order; //idk if i want these to be activities or like strings or something...
+    private phase_objects[] phase_order;
     private int phase_amount;
 
-    public Chapter(String name, int pl, String region, String city, int drawing, String[] phases, int phase_amount) {
+    public Chapter(String name, int pl, String region, String city, int drawing, phase_objects[] phases, int phase_amount) {
         this.nom = name;
         this.coor_PL = pl;
         this.region = region;
@@ -60,7 +58,7 @@ public abstract class Chapter {
         return coor_PL;
     }
 
-    public String getPhase(int index) {
+    public phase_objects getPhase(int index) {
         return phase_order[index];
     }
 

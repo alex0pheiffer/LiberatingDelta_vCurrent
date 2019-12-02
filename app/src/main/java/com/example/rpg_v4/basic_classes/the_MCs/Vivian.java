@@ -15,9 +15,8 @@ public class Vivian extends main_character {
                 true,
                 65,
                 7,
-                "Mage",
-                new Integer[] {com.example.rpg_v4.R.drawable.dummycat},
-                new Integer[] {new Integer(1)});
+                getAType(17),
+                com.example.rpg_v4.R.drawable.dummycat);
     }
 
     public String toString() {return "Vivian";}

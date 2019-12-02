@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.rpg_v4.PL;
+import com.example.rpg_v4.PL_VendingMachine;
+import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.regions;
 
@@ -24,8 +25,11 @@ import com.example.rpg_v4.basic_classes.regions;
  */
 public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegionBtnInterface{
     private static final String REGION = "region";
+    private static final String PL = "pl";
 
     private regions region;
+    private int pl;
+    private PL this_pl;
     private TextView mainbtn, regionName;
     private final String THIS_LAYOUT = "MAIN_MENYU_LAYOUT";
 
@@ -43,10 +47,11 @@ public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegi
         // Required empty public constructor
     }
 
-    public static main_menyu_region_map_btn newInstance(String region) {
+    public static main_menyu_region_map_btn newInstance(String region, int pl) {
         main_menyu_region_map_btn fragment = new main_menyu_region_map_btn();
         Bundle args = new Bundle();
         args.putString(REGION, region);
+        args.putInt(PL, pl);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +61,9 @@ public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegi
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             System.out.println("gets called: "+savedInstanceState);
-            region = PL.getRegion(getArguments().getString(REGION));
+            pl = getArguments().getInt(PL);
+            this_pl = PL_VendingMachine.getPL(pl);
+            region = this_pl.getRegion(getArguments().getString(REGION));
         }
     }
 

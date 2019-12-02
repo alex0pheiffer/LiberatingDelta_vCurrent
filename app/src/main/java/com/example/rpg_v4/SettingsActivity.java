@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.rpg_v4.basic_classes.Characters;
+import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.basic_classes.regions;
 import com.example.rpg_v4.db_files.RPG_ViewModel;
 import com.example.rpg_v4.db_files.User_Characters;
@@ -47,11 +48,13 @@ public class SettingsActivity extends AppCompatActivity {
             lCharacters = rpgViewModel.getlUserCharacters().getValue();
         }
 
+        /*
         public regions getCurrentRegion() {
             //returns the current region. Current region can only be changed from the MAP activity, and after certain dialog in Chapters
             //tl;dr wont be changed in this activity
             return PL.getRegion(lValues.get(0).getCur_region());
         }
+        */
 
         public User_Values getlValues() {
             if (lValues.size() > 1) {
@@ -61,13 +64,11 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         public User_Values changeCharacter(Characters character) {
-            User_Values temp = new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),lValues.get(0).getCur_okane(),character.getName(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
-            return temp;
+             return new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),lValues.get(0).getCur_okane(),character.getName(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
         }
 
         public User_Values changeOkane(int okane) {
-            User_Values temp = new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),okane,lValues.get(0).getFront_char(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
-            return temp;
+             return new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),okane,lValues.get(0).getFront_char(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
         }
 
     }

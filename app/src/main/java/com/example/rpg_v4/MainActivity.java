@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.db_files.RPG_ViewModel;
 import com.example.rpg_v4.db_files.User_Values;
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //create once to trigger setters...
-        final PL staticplayerlevel = new PL();
+        //final PL staticplayerlevel = new PL();
 
         final checkLogin loginChecker = new checkLogin();
 

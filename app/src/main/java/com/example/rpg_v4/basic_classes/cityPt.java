@@ -8,15 +8,19 @@ public abstract class cityPt {
     private Chapter[] chapters;
     private int chapterAmt;
     private String description;
+    private int plDiscover;     //at what pl does this city get unlocked?
 
-    public cityPt(String name, int drawing, int icon, Chapter[] list, String descript) {
+    public cityPt(String name, int drawing, int icon, Chapter[] list, String descript, int unlock) {
         this.nom = name;
         this.drawable_background = drawing;
         this.drawable_map_icon = icon;
         this.chapters = list;
         this.chapterAmt = chapters.length;
         this.description = descript;
+        this.plDiscover = unlock;
     }
+
+    public int getPlDiscover() { return plDiscover; }
 
     public Chapter getChapter(int index) {
         return chapters[index];
@@ -25,7 +29,7 @@ public abstract class cityPt {
     public Chapter getChapter(String name) {
         Chapter chapter = null;
         for (int i=0; i<chapterAmt; i++) {
-            if (name.equals(chapters[i])) chapter = chapters[i];
+            if (name.equals(chapters[i].getNom())) chapter = chapters[i];
         }
         return chapter;
     }

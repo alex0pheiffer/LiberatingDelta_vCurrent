@@ -11,7 +11,8 @@ public class chipper_towne extends cityPt {
     public chipper_towne() {
         super("Chipper Towne", 0, 0,
                 new Chapter[]{new chapter_1(), new chapter_2()},
-                "One of the most bustling cities in the region. The city that Lithe first starts in.");
+                "One of the most bustling cities in the region. The city that Lithe first starts in.",
+                1);
 
     }
 

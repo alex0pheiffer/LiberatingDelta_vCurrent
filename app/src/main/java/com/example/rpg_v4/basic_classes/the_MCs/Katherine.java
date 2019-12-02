@@ -7,7 +7,7 @@ public class Katherine extends main_character {
     public Katherine() {
         super("Katherine",
                 new String[] {"The main Character!"},
-                new Integer[] {new Integer(1)},
+                new Integer[] {Integer.valueOf(1)},
                 new String[] {"Yippee!"},
                 "Female",
                 14,
@@ -15,9 +15,8 @@ public class Katherine extends main_character {
                 true,
                 80,
                 5,
-                "Mage",
-                new Integer[] {com.example.rpg_v4.R.drawable.dummy_mmc_img},
-                new Integer[] {new Integer(1)});
+                getAType(17),
+                com.example.rpg_v4.R.drawable.dummy_mmc_img);
     }
 
     /*

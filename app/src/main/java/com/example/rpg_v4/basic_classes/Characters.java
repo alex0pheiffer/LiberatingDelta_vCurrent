@@ -1,26 +1,22 @@
 package com.example.rpg_v4.basic_classes;
 
-import com.example.rpg_v4.PL;
-
 public abstract class Characters {
     private String name;
     private String[] description_str;
     private Integer[] description_pl;
-    private String[] greeting;
-    private String gender;
+    private String gender;      //Female or Male or Neither
     private int age;
-    private int height;
+    private int height;         //in centimeters
     private boolean isHuman;
     private int magicalAffinity;
     private int strength;
     private String charType;
     private final static String[] characterTypes = {"Human","DragonA","DragonB","DragonC","DragonD","DragonE","DragonF","DragonG","DragonH","DragonI","DragonJ","DragonK","DragonL","DragonM","DragonN","DragonO","DragonP","Mage","Witch"};
 
-    public Characters(String nom, String[] descript_str, Integer[] descript_pl, String[] greet, String gender, int age, int height, boolean human, int magicalAff, int strength, String charType) {
+    public Characters(String nom, String[] descript_str, Integer[] descript_pl, String gender, int age, int height, boolean human, int magicalAff, int strength, String charType) {
         this.name = nom;
         this.description_str = descript_str;
         this.description_pl = descript_pl;
-        this.greeting = greet;
         this.gender = gender;
         this.age = age;
         this.height = height;
@@ -36,10 +32,6 @@ public abstract class Characters {
 
     public String getName() {
         return name;
-    }
-
-    public String[] getGreeting() {
-        return greeting;
     }
 
     public int getAge() {
@@ -80,10 +72,6 @@ public abstract class Characters {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public void setGreeting(String[] greeting) {
-        this.greeting = greeting;
     }
 
     public void setCharType(String charType) {
