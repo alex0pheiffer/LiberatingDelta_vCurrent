@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener;
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Chapter;
+import com.example.rpg_v4.basic_classes.PL;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
 
     private final List<Chapter> mValues;
     private final onRegionChaptersSelectedListener mListener;
+    private PL this_pl;
 
-    public regionChaptersRecyclerViewAdapter(List<Chapter> items, onRegionChaptersSelectedListener listener) {
+    public regionChaptersRecyclerViewAdapter(List<Chapter> items, onRegionChaptersSelectedListener listener, PL thisPL) {
         System.out.println("set mValues: "+items);
         mValues = items;
         mListener = listener;
+        this_pl = thisPL;
     }
 
     @Override

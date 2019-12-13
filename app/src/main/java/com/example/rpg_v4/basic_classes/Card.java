@@ -60,7 +60,7 @@ public abstract class Card {
         return isCharacterSpecific;
     }
 
-    public void preformCard(fighting_character user, fighting_character target) {}
+    public void preformCard(battle_character user, battle_character target) {}
 
     public String toString() {return "Card";}
 }

@@ -1,14 +1,14 @@
 package com.example.rpg_v4.basic_classes;
 
-public abstract class main_character extends Characters {
+public abstract class main_character extends fighting_character {
 
     int characterImgDrawable;
     String[] greetings;
     fighting_character mc_fight;
     static_character mc_static;
 
-    public main_character(String nom, String[] descriptstr, Integer[] descriptpl, String[] greet, String gender, int age, int height, boolean human, int magicalAff, int strength, String charType, int characterImgDrawable) {
-        super(nom, descriptstr, descriptpl, gender, age, height, human, magicalAff, strength, charType);
+    public main_character(String nom, String[] descriptstr, Integer[] descriptpl, String[] greet, String gender, int age, int height, boolean human, int magicalAff, int strength, String charType, int characterImgDrawable, int fightImg, String atkType, Weapon weapon, inventI item, stats_object thestats) {
+        super(nom, descriptstr, descriptpl, gender, age, height, human, magicalAff, strength, charType, fightImg, atkType, weapon, item, thestats);
         this.greetings = greet;
         this.characterImgDrawable = characterImgDrawable;
     }
