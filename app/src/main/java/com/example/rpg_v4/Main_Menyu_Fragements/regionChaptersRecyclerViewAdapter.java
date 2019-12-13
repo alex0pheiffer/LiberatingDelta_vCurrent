@@ -46,7 +46,7 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.chapterSelected(holder.mItem.getRegion(),holder.mItem);
+                    mListener.chapterSelected(this_pl.getRegion(holder.mItem.getRegion()),holder.mItem);
                 }
             }
         });

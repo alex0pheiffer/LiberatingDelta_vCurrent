@@ -62,6 +62,7 @@ public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegi
         if (getArguments() != null) {
             System.out.println("gets called: "+savedInstanceState);
             pl = getArguments().getInt(PL);
+            System.out.println("pl: "+pl);
             this_pl = PL_VendingMachine.getPL(pl);
             region = this_pl.getRegion(getArguments().getString(REGION));
         }

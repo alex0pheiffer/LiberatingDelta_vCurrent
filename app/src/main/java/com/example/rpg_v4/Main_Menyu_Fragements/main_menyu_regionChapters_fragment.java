@@ -74,7 +74,7 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new regionChaptersRecyclerViewAdapter(chapters, mListener));
+            recyclerView.setAdapter(new regionChaptersRecyclerViewAdapter(chapters, mListener, this_pl));
         }
         return view;
     }
