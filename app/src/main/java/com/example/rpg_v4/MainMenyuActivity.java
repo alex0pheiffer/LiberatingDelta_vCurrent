@@ -69,11 +69,12 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         private List<User_Inventory> lInventory;
         private regions cur_region;
         public void setlValues(List<User_Values> vals) {
-            this.lValues = vals; cur_region = getCurrentRegion();
+            this.lValues = vals;
             if (pl < 3 || this_pl == null) {
                 pl = getPL();
                 this_pl = PL_VendingMachine.getPL(pl);
             }
+            cur_region = getCurrentRegion();
         }
         public void setlCharacters(List<User_Characters> lCharacters) {this.lCharacters = lCharacters;}
         public void setlEQPlayed(List<User_EQPlayed> lEQPlayed) {this.lEQPlayed = lEQPlayed;}

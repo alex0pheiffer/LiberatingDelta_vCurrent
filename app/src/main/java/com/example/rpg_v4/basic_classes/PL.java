@@ -81,6 +81,7 @@ public abstract class PL {
         this.PL = PL;
         this.coorChapter = coorChapter;
 
+        this.all_regions = all_regions;
         this.current_region = current_region;
         this.current_city = current_city;
         this.all_MC_nom = all_MC_nom;
