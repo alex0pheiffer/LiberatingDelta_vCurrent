@@ -22,7 +22,7 @@ import com.example.rpg_v4.R;
 public class region_5_fragment extends Fragment {
     private static final String PlayerLevel= "pl";
 
-    final String THIS_LAYOUT="REGION_MAP";
+    final String THIS_LAYOUT="REGION_MAP_LAYOUT";
 
     private int pl;
 
@@ -71,6 +71,6 @@ public class region_5_fragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-
+        void cityPtPressed(String city);
     }
 }

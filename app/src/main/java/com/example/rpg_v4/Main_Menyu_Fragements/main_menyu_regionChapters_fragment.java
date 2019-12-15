@@ -61,7 +61,7 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
             for (int i=0; i<this_cityPt.getChapterAmt(); i++) {
                 chapters.add(i,this_cityPt.getChapter(i));
             }
-            System.out.println("Chapters 1&2: "+chapters.get(0).getNom()+" "+chapters.get(1).getNom());
+            //System.out.println("Chapters 1&2: "+chapters.get(0).getNom()+" "+chapters.get(1).getNom());
         }
     }
 

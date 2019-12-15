@@ -24,6 +24,7 @@ import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.basic_classes.regions;
 import com.example.rpg_v4.basic_classes.the_MCs.Katherine;
 import com.example.rpg_v4.basic_classes.the_cities.chipper_towne;
+import com.example.rpg_v4.basic_classes.the_cities.maleficere_mansion;
 import com.example.rpg_v4.basic_classes.the_regions.Veneland;
 import com.example.rpg_v4.db_files.RPG_ViewModel;
 import com.example.rpg_v4.db_files.User_Cards;
@@ -49,7 +50,6 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private int updateUserInventoryCounter;
 
     private View activity_whole;
-    private TextView regionLabel, regionBtn,testText;
     private main_menyu_region_map_btn mainMenyuRegionMapBtn;
     private Fragment regionFragment;
     private menyu_itemsbar itemsBar;
@@ -231,6 +231,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         } );
     }
 
+    //todo
     public void fillRegions_frag() {
         System.out.println("OUR CUR PL: "+userDataChecker.getPL());
         regions_frag[0] = region_1_fragment.newInstance(userDataChecker.getPL());
@@ -277,19 +278,48 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 throw new RuntimeException("mismatch regions");
             }
         }
+        else {
+            throw new RuntimeException("mismatch CURRENT_LAYOUT");
+        }
     }
 
-    //region1Btns
-    public void MaleficereMansionPressed() {}
-    public void ChipperTownePressed() {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), new chipper_towne().getNom(),userDataChecker.getPL());
-        //you will need to check if this holder is EMPTY by using our CURRENT_LAYOUT variable
-        //MAKE BETTER FUCKING USE OF THIS. BE ORGANIZED
-        ft.add(R.id.mmc_backbox_bottom,regionChapterListRecycler);
-        ft.addToBackStack(null);
-        ft.commit();
+    //regionBtns
+    public void cityPtPressed(String city) {
+        if (CURRENT_LAYOUT.equals(((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT())) {
+            boolean regions_match = userDataChecker.getCur_region().getNom().equals(((RegionFragmentInterface)regionFragment).getRegion().getNom());
+            if (regions_match) {
+
+                if (city.equals("Maleficere Mansion")) {
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), new maleficere_mansion().getNom(),userDataChecker.getPL());
+                    //well these all have the same CURRENT_LAYOUT SOOOOO
+                    ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+
+                else if (city.equals("Chipper Towne")) {
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), new chipper_towne().getNom(),userDataChecker.getPL());
+                    //you will need to check if this holder is EMPTY by using our CURRENT_LAYOUT variable
+                    //MAKE BETTER FUCKING USE OF THIS. BE ORGANIZED
+                    ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+
+            }
+            else {
+                throw new RuntimeException("mismatch regions");
+            }
+        }
+        else {
+            throw new RuntimeException("mismatch CURRENT_LAYOUT");
+        }
     }
+
+    //regionChapterListFragment
+    public void chapterSelected(regions region, Chapter chapter) {}
 
     //ItemsBarBtns
     public void menyuItemsBarSettingsPressed() {}
@@ -299,6 +329,4 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     public void menyuItemsBarInventoryPressed() {}
     public void menyuItemsBarMapPressed() {}
 
-    //regionChapterListFragment
-    public void chapterSelected(regions region, Chapter chapter) {}
 }

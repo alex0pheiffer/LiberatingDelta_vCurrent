@@ -14,7 +14,7 @@ import com.example.rpg_v4.R;
 
 public class menyu_itemsbar extends Fragment implements ItemsBarFragmentInterface {
 
-    final private String THIS_LAYOUT = "MAIN_MENYU";
+    final private String THIS_LAYOUT = "MAIN_MENYU_LAYOUT";
 
     private Button settingsBtn, charactersBtn, plotBtn, decksBtn, inventoryBtn, mapBtn;
 

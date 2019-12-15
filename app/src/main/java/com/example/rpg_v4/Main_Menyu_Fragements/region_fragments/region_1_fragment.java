@@ -22,7 +22,7 @@ import com.example.rpg_v4.basic_classes.the_regions.Veneland;
 public class region_1_fragment extends Fragment implements RegionFragmentInterface{
     private static final String PlayerLevel = "pl";
 
-    final String THIS_LAYOUT="REGION_MAP";
+    final String THIS_LAYOUT="REGION_MAP_LAYOUT";
 
     private int pl;
     private PL this_pl;
@@ -75,7 +75,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
                 MaleficereMansionBtn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         //we want to change the display of the cityPt information in the other fragment
-                        mListener.MaleficereMansionPressed();
+                        mListener.cityPtPressed(allCities[0].getNom());
                     }
                 });
             }
@@ -85,7 +85,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
                     public void onClick(View view) {
                         //we want to change the display of the cityPt information in the other fragment
                         System.out.println("ChipperTownePressed");
-                        mListener.ChipperTownePressed();
+                        mListener.cityPtPressed(allCities[1].getNom());
                     }
                 });
             }
@@ -113,8 +113,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
     }
 
     public interface onRegion1SelectedListener {
-        void MaleficereMansionPressed();
-        void ChipperTownePressed();
+        void cityPtPressed(String city);
     }
 
     public void setViews(View view) {
