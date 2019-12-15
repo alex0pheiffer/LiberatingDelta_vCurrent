@@ -26,8 +26,8 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
 
     private int pl;
     private PL this_pl;
-    private regions thisRegion = new Veneland();
-    private cityPt[] allCities = this_pl.getAllCitiesRegion(thisRegion.getNom()); //of this region
+    private regions thisRegion;
+    private cityPt[] allCities; //of this region
     private cityPt[] unlockedCities;
     private LinearLayout MaleficereMansionLayout, ChipperTowneLayout;
     private ImageView MaleficereMansionBtn, ChipperTowneBtn;
@@ -54,6 +54,9 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
         if (getArguments() != null) {
             this.pl = getArguments().getInt(PlayerLevel);
             System.out.println("onCreate: "+this.pl);
+            this.this_pl = PL_VendingMachine.getPL(this.pl);
+            this.thisRegion = this.this_pl.getRegion("Veneland");
+            this.allCities = this.this_pl.getAllCitiesRegion(this.thisRegion.getNom());
         }
     }
 

@@ -18,6 +18,7 @@ import com.example.rpg_v4.basic_classes.Chapter;
 import com.example.rpg_v4.basic_classes.cityPt;
 import com.example.rpg_v4.basic_classes.regions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class main_menyu_regionChapters_fragment extends Fragment implements MenyuRegionChaptersFragmentInterface {
@@ -30,7 +31,7 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
     private cityPt this_cityPt;
     private int pl;
     private PL this_pl;
-    private List<Chapter> chapters;
+    private List<Chapter> chapters = new ArrayList<Chapter>();
     private boolean[] chapters_open;
     private onRegionChaptersSelectedListener mListener;
 
@@ -60,7 +61,7 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
             for (int i=0; i<this_cityPt.getChapterAmt(); i++) {
                 chapters.add(i,this_cityPt.getChapter(i));
             }
-            System.out.println(chapters.get(0).getNom()+" "+chapters.get(1).getNom());
+            System.out.println("Chapters 1&2: "+chapters.get(0).getNom()+" "+chapters.get(1).getNom());
         }
     }
 
@@ -73,8 +74,12 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
+            System.out.println("Create RecycleViewer.");
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new regionChaptersRecyclerViewAdapter(chapters, mListener, this_pl));
+            final regionChaptersRecyclerViewAdapter adapter = new regionChaptersRecyclerViewAdapter(chapters, mListener, this_pl);
+            System.out.println("new adapter");
+            recyclerView.setAdapter(adapter);
+            System.out.println("set adapter");
         }
         return view;
     }

@@ -10,4 +10,5 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".Main_Menyu_Fragements.main_menyu_regionChapters_fragment"
-    tools:listitem="@layout/fragment_regionchapters" />
+    tools:listitem="@layout/fragment_regionchapters"
+    android:background="@color/white"/>

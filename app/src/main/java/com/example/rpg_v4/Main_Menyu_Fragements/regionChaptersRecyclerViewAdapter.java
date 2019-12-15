@@ -12,25 +12,28 @@ import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Chapter;
 import com.example.rpg_v4.basic_classes.PL;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 
 public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regionChaptersRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Chapter> mValues;
+    private final List<Chapter> mChapters;
     private final onRegionChaptersSelectedListener mListener;
     private PL this_pl;
 
     public regionChaptersRecyclerViewAdapter(List<Chapter> items, onRegionChaptersSelectedListener listener, PL thisPL) {
-        System.out.println("set mValues: "+items);
-        mValues = items;
+        System.out.println("set mChapters: "+items);
+        //Thread.dumpStack();
+        mChapters = items;
         mListener = listener;
         this_pl = thisPL;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        System.out.println("onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_regionchapters, parent, false);
         return new ViewHolder(view);
@@ -38,24 +41,31 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.plView.setText("PL: "+mValues.get(position).getCoor_PL());
-        holder.mContentView.setText(mValues.get(position).getNom());
+        System.out.println("onBindViewHolder");
+        if (mChapters != null) {
+            System.out.println("setting up holder: "+position);
+            holder.mItem = mChapters.get(position);
+            holder.plView.setText("PL: " + mChapters.get(position).getCoor_PL());
+            holder.mContentView.setText(mChapters.get(position).getNom());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.chapterSelected(this_pl.getRegion(holder.mItem.getRegion()),holder.mItem);
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        mListener.chapterSelected(this_pl.getRegion(holder.mItem.getRegion()), holder.mItem);
+                    }
                 }
-            }
-        });
+            });
+        }
+        else {
+            holder.plView.setText("No Chapters");
+        }
     }
 
     @Override
     public int getItemCount() {
-        System.out.println("getting size: "+mValues);
-        return mValues.size();
+        System.out.println("getting size: "+mChapters);
+        return mChapters.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,6 +76,7 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
 
         public ViewHolder(View view) {
             super(view);
+            System.out.println("new ViewHolder");
             mView = view;
             plView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.content);
@@ -83,11 +94,11 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
 /*
 public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regionChaptersRecyclerViewAdapter.ViewHolder> {
 
-    private final List<regionChapterItem> mValues;
+    private final List<regionChapterItem> mChapters;
     private final onRegionChaptersSelectedListener mListener;
 
     public regionChaptersRecyclerViewAdapter(List<regionChapterItem> items, onRegionChaptersSelectedListener listener) {
-        mValues = items;
+        mChapters = items;
         mListener = listener;
     }
 
@@ -100,9 +111,9 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = mChapters.get(position);
+        holder.mIdView.setText(mChapters.get(position).id);
+        holder.mContentView.setText(mChapters.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +129,7 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mChapters.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
