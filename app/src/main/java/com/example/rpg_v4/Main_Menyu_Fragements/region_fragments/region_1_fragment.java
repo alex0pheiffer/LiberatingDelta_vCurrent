@@ -17,12 +17,11 @@ import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.cityPt;
 import com.example.rpg_v4.basic_classes.regions;
-import com.example.rpg_v4.basic_classes.the_regions.Veneland;
 
 public class region_1_fragment extends Fragment implements RegionFragmentInterface{
     private static final String PlayerLevel = "pl";
 
-    final String THIS_LAYOUT="REGION_MAP_LAYOUT";
+    final String CURRENT_LAYOUT="REGION_MAP_LAYOUT";
 
     private int pl;
     private PL this_pl;
@@ -92,6 +91,12 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
 
 
         }
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                mListener.backBtnPressed(CURRENT_LAYOUT);
+                System.out.println("backpressed");
+            }
+        });
         return view;
     }
 
@@ -114,6 +119,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
 
     public interface onRegion1SelectedListener {
         void cityPtPressed(String city);
+        void backBtnPressed(String layout);
     }
 
     public void setViews(View view) {

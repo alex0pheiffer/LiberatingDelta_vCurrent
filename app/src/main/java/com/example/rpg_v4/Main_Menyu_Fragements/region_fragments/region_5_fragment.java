@@ -69,6 +69,7 @@ public class region_5_fragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void cityPtPressed(String city);
+        void backBtnPressed(String layout);
     }
 
     public void setViews(View view) {

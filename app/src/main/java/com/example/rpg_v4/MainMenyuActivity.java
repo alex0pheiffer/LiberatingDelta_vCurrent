@@ -109,6 +109,10 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             return parsed;
         }
 
+        public boolean compareParsed(String layout1, String layout2) {
+            return (pageParse(layout1).equals(pageParse(layout2)));
+        }
+
         public boolean compareWithCurrent(String compare_layout) {
             return this.CURRENT_LAYOUT.equals(compare_layout);
         }
@@ -392,7 +396,16 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
 
     public void backBtnPressed(String layout) {
-        //pressing the back button will always
+        //pressing the back button will always return you to Main Menyu
+        System.out.println("mm backpressed");
+        clearFragments(layout);
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.menyu_mmc_frag,characterIcon);
+        ft.add(R.id.itemsbar,itemsBar);
+        ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
+        ft.addToBackStack(null);
+        ft.commit();
+        layoutSetter.changeLayout("MAIN_MENYU_LAYOUT");
     }
 
     //ItemsBarBtns
@@ -403,5 +416,24 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     public void menyuItemsBarInventoryPressed() {}
     public void menyuItemsBarMapPressed() {}
 
+    public void clearFragments(String layout) {
+        if (layoutSetter.compareParsed(layout,"REGION_MAP_LAYOUT")) {
+            //everything gets removed but the background
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            for(Fragment fragment : fragmentManager.getFragments()) {
+                if (fragment != null) {
+                    Log.d("TRANSACTIONTEST","removing: "+fragment);
+                    ft.remove(fragment);
+                }
+            }
+            ft.addToBackStack(null);
+            ft.commit();
+            backbox_top_text.setText("");
+        }
+        else if (layoutSetter.compareParsed(layout,"CHARACTER_VIEW_LAYOUT")) {
+
+        }
+        System.out.println("layouts cleared");
+    }
 
 }
