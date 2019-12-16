@@ -9,23 +9,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.rpg_v4.SettingsActivity" android:screenOrientation="landscape" ></activity>
-        <activity android:name="com.example.rpg_v4.dbCheckerActivity" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.MainMenyuActivity" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.db_files.CharactersTableAct" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.db_files.InventoryTableAct" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.db_files.DecksTableAct" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.db_files.CardsTableAct" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.db_files.EQPlayedTableAct" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.db_files.NewValuesAct" android:screenOrientation="landscape"/>
-        <activity android:name="com.example.rpg_v4.db_files.ValuesTableAct" android:screenOrientation="landscape" />
-        <activity android:name="com.example.rpg_v4.MainActivity" android:screenOrientation="landscape">
+        <activity android:name=".wholeMapActivity"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".dbCheckerActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".MainMenyuActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".db_files.CharactersTableAct"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".db_files.InventoryTableAct"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".db_files.DecksTableAct"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".db_files.CardsTableAct"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".db_files.EQPlayedTableAct"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".db_files.NewValuesAct"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".db_files.ValuesTableAct"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

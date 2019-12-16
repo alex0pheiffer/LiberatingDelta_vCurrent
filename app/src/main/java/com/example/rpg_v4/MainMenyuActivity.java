@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -408,13 +409,20 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         layoutSetter.changeLayout("MAIN_MENYU_LAYOUT");
     }
 
+    public void goBtnPressed() {
+
+    }
+
     //ItemsBarBtns
     public void menyuItemsBarSettingsPressed() {}
     public void menyuItemsBarCharactersPressed() {}
     public void menyuItemsBarPlotPressed() {}
     public void menyuItemsBarDecksPressed() {}
     public void menyuItemsBarInventoryPressed() {}
-    public void menyuItemsBarMapPressed() {}
+    public void menyuItemsBarMapPressed() {
+        //okay i think we're opening a new activity... lets see how much this fucks up our data
+        //Intent intented = new Intent(MainMenyuActivity.this, );
+    }
 
     public void clearFragments(String layout) {
         if (layoutSetter.compareParsed(layout,"REGION_MAP_LAYOUT")) {
