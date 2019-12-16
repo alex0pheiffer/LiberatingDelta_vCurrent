@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rpg_v4.PL_VendingMachine;
@@ -38,9 +39,7 @@ public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegi
         this.mListener= callback;
     }
     public interface onRegionMapBtnSelectedListener {
-        String getCURRENT_LAYOUT();
         void regionBtnPressed();
-        boolean checkLayout(String THIS_LAYOUT);
     }
 
     public main_menyu_region_map_btn() {

@@ -9,9 +9,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_frontcharacter;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_regionChapters_fragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_region_map_btn;
@@ -21,6 +23,7 @@ import com.example.rpg_v4.Main_Menyu_Fragements.region_fragments.region_1_fragme
 import com.example.rpg_v4.basic_classes.Chapter;
 import com.example.rpg_v4.basic_classes.Characters;
 import com.example.rpg_v4.basic_classes.PL;
+import com.example.rpg_v4.basic_classes.cityPt;
 import com.example.rpg_v4.basic_classes.regions;
 import com.example.rpg_v4.basic_classes.the_MCs.Katherine;
 import com.example.rpg_v4.basic_classes.the_cities.chipper_towne;
@@ -36,7 +39,7 @@ import com.example.rpg_v4.db_files.User_Values;
 
 import java.util.List;
 
-public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener {
+public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener {
 
     private int pl;
     private PL this_pl;
@@ -50,13 +53,75 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private int updateUserInventoryCounter;
 
     private View activity_whole;
+    private TextView backbox_top_text;
     private main_menyu_region_map_btn mainMenyuRegionMapBtn;
     private Fragment regionFragment;
+    private chapterExtended chapterExtendedFragment;
     private menyu_itemsbar itemsBar;
     private main_menyu_frontcharacter characterIcon;
     private main_menyu_regionChapters_fragment regionChapterListRecycler;
 
-    private String CURRENT_LAYOUT;  //is this mainmenyu, regionmenyu, settingsmenyu, charviewmenyu, decksmenyu
+    private class layoutClass {
+        private String CURRENT_LAYOUT;
+        private String PREVIOUS_LAYOUT;
+
+        layoutClass() {
+            CURRENT_LAYOUT = "MAIN_MENYU_LAYOUT";
+        }
+
+        public boolean requestChange(String NEXT_LAYOUT) {
+            String parsedNext = pageParse(NEXT_LAYOUT);
+            String parsedCurrent = pageParse(CURRENT_LAYOUT);
+            if (parsedNext.equals(parsedCurrent) || parsedNext.equals("MAIN_MENYU") || parsedCurrent.equals("MAIN_MENYU")) {
+                return true;
+            }
+            else return false;
+        }
+
+        public void changeLayout(String NEXT_LAYOUT) {
+            if (requestChange(NEXT_LAYOUT)) {
+                this.PREVIOUS_LAYOUT = CURRENT_LAYOUT;
+                this.CURRENT_LAYOUT = NEXT_LAYOUT;
+                Log.d("LAYOUT","Layout Changed.");
+            }
+            else {
+                throw new RuntimeException("mismatch layout attempt");
+            }
+        }
+
+        private String pageParse(String layout) {
+            boolean firstUnderscore = false, secondUnderscore = false;
+            String parsed = "";
+            while (!secondUnderscore) {
+                if (layout.substring(0,1).equals("_")) {
+                    if (firstUnderscore) {
+                        secondUnderscore = true;
+                    }
+                    else {
+                        firstUnderscore = true;
+                    }
+                }
+                if (!secondUnderscore) {
+                    parsed = parsed + layout.substring(0, 1);
+                    layout = layout.substring(1);
+                }
+            }
+            return parsed;
+        }
+
+        public boolean compareWithCurrent(String compare_layout) {
+            return this.CURRENT_LAYOUT.equals(compare_layout);
+        }
+
+        public String getCURRENT_LAYOUT() {
+            return this.CURRENT_LAYOUT;
+        }
+
+        public String getPREVIOUS_LAYOUT() {
+            return this.PREVIOUS_LAYOUT;
+        }
+    }
+    private layoutClass layoutSetter = new layoutClass();
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment[] regions_frag = new Fragment[18];
 
@@ -139,8 +204,8 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menyu);
 
-        CURRENT_LAYOUT= "MAIN_MENYU_LAYOUT";
         activity_whole = findViewById(R.id.main_menyu_background);
+        backbox_top_text = findViewById(R.id.mmc_backbox_top);
 
         userDataChecker = new checkUserData();
 
@@ -238,18 +303,6 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         //regions_frag[1] = region_2_fragment.newInstance(userDataChecker.getPL());
     }
 
-    public boolean checkLayout(String layout) {
-        return this.CURRENT_LAYOUT.equals(layout);
-    }
-
-    public void setCURRENT_LAYOUT(String CURRENT_LAYOUT) {
-        //this.CURRENT_LAYOUT = CURRENT_LAYOUT;
-    }
-
-    public String getCURRENT_LAYOUT() {
-        return CURRENT_LAYOUT;
-    }
-
     public void setCharacter(Characters character) {
         //first, update our db
         //User_Values changecharacter = userDataChecker.changeCharacter(character);
@@ -259,7 +312,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
 
     public void regionBtnPressed() {
-        if (CURRENT_LAYOUT.equals(mainMenyuRegionMapBtn.getCURRENT_LAYOUT())) {
+        if (layoutSetter.compareWithCurrent(mainMenyuRegionMapBtn.getCURRENT_LAYOUT())) {
             boolean regions_match = userDataChecker.getCur_region().getNom().equals(mainMenyuRegionMapBtn.getRegion().getNom());
             if (regions_match) {
                 //terminate the fragment
@@ -268,10 +321,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 regionFragment = region_1_fragment.newInstance(userDataChecker.getPL());
                 ft.add(R.id.menyu_regionmap_btn_frag,regionFragment);
                 ft.remove(characterIcon);
+                ft.remove(itemsBar);
                 ft.remove(mainMenyuRegionMapBtn);
                 ft.addToBackStack(null);
                 ft.commit();
-                CURRENT_LAYOUT=((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT();//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
+                layoutSetter.changeLayout(((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
                 //intro mainmenyu2region (move region icons on)
             }
             else {
@@ -285,41 +339,61 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
     //regionBtns
     public void cityPtPressed(String city) {
-        if (CURRENT_LAYOUT.equals(((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT())) {
-            boolean regions_match = userDataChecker.getCur_region().getNom().equals(((RegionFragmentInterface)regionFragment).getRegion().getNom());
-            if (regions_match) {
+        boolean regions_match = userDataChecker.getCur_region().getNom().equals(((RegionFragmentInterface)regionFragment).getRegion().getNom());
+        if (regions_match) {
 
-                if (city.equals("Maleficere Mansion")) {
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), new maleficere_mansion().getNom(),userDataChecker.getPL());
-                    //well these all have the same CURRENT_LAYOUT SOOOOO
-                    ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
+            cityPt town;
 
-                else if (city.equals("Chipper Towne")) {
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), new chipper_towne().getNom(),userDataChecker.getPL());
-                    //you will need to check if this holder is EMPTY by using our CURRENT_LAYOUT variable
-                    //MAKE BETTER FUCKING USE OF THIS. BE ORGANIZED
-                    ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
-
+            if (city.equals("Maleficere Mansion")) {
+                town = new maleficere_mansion();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), town.getNom(),userDataChecker.getPL());
+                ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
+                backbox_top_text.setText(town.getNom());
+                ft.addToBackStack(null);
+                ft.commit();
+                layoutSetter.changeLayout("REGION_MAP_CITY");
             }
-            else {
-                throw new RuntimeException("mismatch regions");
+
+            else if (city.equals("Chipper Towne")) {
+                town = new chipper_towne();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), town.getNom(),userDataChecker.getPL());
+                ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
+                backbox_top_text.setText(town.getNom());
+                ft.addToBackStack(null);
+                ft.commit();
+                layoutSetter.changeLayout("REGION_MAP_CITY");
             }
+
         }
         else {
-            throw new RuntimeException("mismatch CURRENT_LAYOUT");
+            throw new RuntimeException("mismatch regions");
         }
     }
 
     //regionChapterListFragment
-    public void chapterSelected(regions region, Chapter chapter) {}
+    public void chapterSelected(regions region, Chapter chapter) {
+        //change the backbox_top to display the chapter name+img
+        //change backbox_bottom from recycleviewer to a display of
+        //show go button...and determine if go is available or not
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        chapterExtendedFragment = chapterExtended.newInstance(pl);
+        ft.replace(R.id.mmc_backbox_bottom,chapterExtendedFragment);
+        backbox_top_text.setText(chapter.getNom());
+        ft.addToBackStack(null);
+        ft.commit();
+        layoutSetter.changeLayout("REGION_MAP_CHAPTER");
+    }
+
+    //regionChapterExtendedFragment
+    public void onChapterExtendedPressed(Chapter chapter) {
+        //lol this probably isnt needed? i dont think this is going to do anything... maybe open an entire window?
+    }
+
+    public void backBtnPressed(String layout) {
+        //pressing the back button will always
+    }
 
     //ItemsBarBtns
     public void menyuItemsBarSettingsPressed() {}
@@ -328,5 +402,6 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     public void menyuItemsBarDecksPressed() {}
     public void menyuItemsBarInventoryPressed() {}
     public void menyuItemsBarMapPressed() {}
+
 
 }

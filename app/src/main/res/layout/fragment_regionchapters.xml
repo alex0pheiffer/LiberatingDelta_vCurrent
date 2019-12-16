@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="40dp"
     android:orientation="horizontal"
     android:background="@color/genericElectric"
@@ -11,14 +11,12 @@
         android:layout_width="0dp"
         android:layout_weight="3"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textSize="15dp"/>
 
     <TextView
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_weight="7"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textSize="15dp"/>
 </LinearLayout>

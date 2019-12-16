@@ -29,7 +29,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
     private regions thisRegion;
     private cityPt[] allCities; //of this region
     private cityPt[] unlockedCities;
-    private LinearLayout MaleficereMansionLayout, ChipperTowneLayout;
+    private LinearLayout MaleficereMansionLayout, ChipperTowneLayout, backbtn;
     private ImageView MaleficereMansionBtn, ChipperTowneBtn;
     private TextView MaleficereMansionText, ChipperTowneText;
 
@@ -123,6 +123,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
         ChipperTowneLayout = view.findViewById(R.id.Chipper_Towne_layout);
         ChipperTowneBtn = view.findViewById(R.id.Chipper_Towne_img);
         ChipperTowneText = view.findViewById(R.id.Chipper_Towne_tag);
+        backbtn = view.findViewById(R.id.region_1_backbtn);
     }
 
     public String getCURRENT_LAYOUT() {

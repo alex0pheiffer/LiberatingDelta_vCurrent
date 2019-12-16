@@ -8,23 +8,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.rpg_v4.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link region_5_fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link region_5_fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class region_5_fragment extends Fragment {
     private static final String PlayerLevel= "pl";
 
     final String THIS_LAYOUT="REGION_MAP_LAYOUT";
 
     private int pl;
+
+    private LinearLayout backbtn;
 
     private OnFragmentInteractionListener mListener;
 
@@ -49,8 +45,9 @@ public class region_5_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_region_5_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_region_5_fragment, container, false);
+        setViews(view);
+        return view;
     }
 
     @Override
@@ -72,5 +69,15 @@ public class region_5_fragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void cityPtPressed(String city);
+    }
+
+    public void setViews(View view) {
+        //MaleficereMansionLayout = view.findViewById(R.id.Maleficere_Mansion_layout);
+        //MaleficereMansionBtn = view.findViewById(R.id.Maleficere_Mansion_img);
+        //MaleficereMansionText = view.findViewById(R.id.Maleficere_Mansion_tag);
+        //ChipperTowneLayout = view.findViewById(R.id.Chipper_Towne_layout);
+        //ChipperTowneBtn = view.findViewById(R.id.Chipper_Towne_img);
+        //ChipperTowneText = view.findViewById(R.id.Chipper_Towne_tag);
+        backbtn = view.findViewById(R.id.region_1_backbtn);
     }
 }

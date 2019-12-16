@@ -173,4 +173,7 @@ public abstract class PL {
         return index;
     }
 
+    public Chapter getChapter() {
+        return this.coorChapter;
+    }
 }

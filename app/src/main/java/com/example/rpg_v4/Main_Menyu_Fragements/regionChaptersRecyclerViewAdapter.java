@@ -73,6 +73,7 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
         public final TextView plView;
         public final TextView mContentView;
         public Chapter mItem;
+        public final String CURRENT_LAYOUT = "REGION_MAP_CHAPTER";
 
         public ViewHolder(View view) {
             super(view);
@@ -82,67 +83,8 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
-    }
-}
-
-
-
-/*
-public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regionChaptersRecyclerViewAdapter.ViewHolder> {
-
-    private final List<regionChapterItem> mChapters;
-    private final onRegionChaptersSelectedListener mListener;
-
-    public regionChaptersRecyclerViewAdapter(List<regionChapterItem> items, onRegionChaptersSelectedListener listener) {
-        mChapters = items;
-        mListener = listener;
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_regionchapters, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mChapters.get(position);
-        holder.mIdView.setText(mChapters.get(position).id);
-        holder.mContentView.setText(mChapters.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener(holder.mItem);
-                }
-            }
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return mChapters.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public regionChapterItem mItem;
-
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+        public String getCURRENT_LAYOUT() {
+            return this.CURRENT_LAYOUT;
         }
 
         @Override
@@ -151,4 +93,3 @@ public class regionChaptersRecyclerViewAdapter extends RecyclerView.Adapter<regi
         }
     }
 }
-*/

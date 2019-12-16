@@ -7,6 +7,21 @@
     tools:context=".Main_Menyu_Fragements.region_fragments.region_5_fragment">
 
     <LinearLayout
+        android:id="@+id/region_5_backbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/molopoly_hotel"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/Maleficere_Mansion_layout"
         android:orientation="horizontal"
         android:layout_width="wrap_content"

@@ -27,6 +27,7 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
     private static final String CITYPT = "this_cityPt";
     private static final String PlayerLevel = "pl";
 
+    private String CURRENT_LAYOUT = "REGION_MAP_CITY";
     private regions this_region;
     private cityPt this_cityPt;
     private int pl;
@@ -74,12 +75,9 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            System.out.println("Create RecycleViewer.");
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             final regionChaptersRecyclerViewAdapter adapter = new regionChaptersRecyclerViewAdapter(chapters, mListener, this_pl);
-            System.out.println("new adapter");
             recyclerView.setAdapter(adapter);
-            System.out.println("set adapter");
         }
         return view;
     }
