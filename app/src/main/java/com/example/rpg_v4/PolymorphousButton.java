@@ -1,8 +1,10 @@
 package com.example.rpg_v4;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -48,8 +50,12 @@ public class PolymorphousButton extends AppCompatImageView {
 
                 // Get the pixel at the touch location, which means getting the
                 // pixel color.
-
-                touchLocationColor = this.getDrawingCache().getPixel(xTouchLocation, yTouchLocation);
+                Bitmap bitty = this.getDrawingCache();
+                if (bitty == null) {
+                    Log.d("UNKNOWN",">>Bitmap is null<<");
+                    return false;
+                }
+                touchLocationColor = bitty.getPixel(xTouchLocation, yTouchLocation);
 
             } catch (IllegalArgumentException e) {
 

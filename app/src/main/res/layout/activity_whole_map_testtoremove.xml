@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".wholeMapActivity"
+    android:background="@drawable/wholemap">
+
+    <LinearLayout
+        android:id="@+id/worldmap_backbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/molopoly_hotel"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/worldmap_infobox"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:alpha=".4">
+    </LinearLayout>
+
+    <com.example.rpg_v4.PolymorphousButton
+        android:id="@+id/wmVenelandBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <!-- android:src="@drawable/wm_veneland" -->
+    <com.example.rpg_v4.PolymorphousButton
+        android:id="@+id/wmPietasBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <!-- android:src="@drawable/wm_pietas" -->
+    <com.example.rpg_v4.PolymorphousButton
+        android:id="@+id/wmTossedStonesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <!-- android:src="@drawable/wm_tossedstones" -->
+    <com.example.rpg_v4.PolymorphousButton
+        android:id="@+id/wmHDRBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <!-- android:src="@drawable/wm_hdr" -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

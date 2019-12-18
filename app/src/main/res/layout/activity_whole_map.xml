@@ -39,119 +39,135 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_veneland"/>
+        />
+    <!-- android:src="@drawable/wm_veneland" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmPietasBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_pietas"/>
+        />
+    <!-- android:src="@drawable/wm_pietas" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmTossedStonesBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_tossedstones"/>
+        />
+    <!-- android:src="@drawable/wm_tossedstones" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmHDRBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_hdr"/>
+        />
+    <!-- android:src="@drawable/wm_hdr" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmRegion6Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_region6"/>
+        />
+    <!-- android:src="@drawable/wm_region6" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmRegion7Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_region7"/>
+        />
+    <!-- android:src="@drawable/wm_region7" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmRegion89Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_region89"/>
+        />
+    <!-- android:src="@drawable/wm_region89" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmRegion10Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_region10"/>
+        />
+    <!-- android:src="@drawable/wm_region10" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmRegion11Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_region11"/>
+        />
+    <!-- android:src="@drawable/wm_region11" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmNebulaBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_nebula"/>
+        />
+    <!-- android:src="@drawable/wm_nebula" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmRegion13Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_region13"/>
+        />
+    <!-- android:src="@drawable/wm_region13" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmIceCubeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_icecube"/>
+        />
+    <!-- android:src="@drawable/wm_icecube" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmRupesBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_rupes"/>
+        />
+    <!-- android:src="@drawable/wm_rupes" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmPetrasepireBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_petrasepire"/>
+        />
+    <!-- android:src="@drawable/wm_petrasepire" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmJuslynBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_juslyn"/>
+        />
+    <!-- android:src="@drawable/wm_juslyn" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmMaceriaUnionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_maceriaunion"/>
+        />
+    <!-- android:src="@drawable/wm_maceriaunion" -->
     <com.example.rpg_v4.PolymorphousButton
         android:id="@+id/wmGreatNorthBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/wm_greatnorth"/>
-
+        />
+    <!-- android:src="@drawable/wm_greatnorth" -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
