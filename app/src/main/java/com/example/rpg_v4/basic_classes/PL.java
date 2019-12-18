@@ -112,13 +112,18 @@ public abstract class PL {
     //LET US REMEMBER: THERE IS NO '0' PL; IF PL IS USED AS AN INDEX, YOU SUBTRACT 1
 
     public regions getRegion(String name) {
-        int the_region = 0;
+        int the_region = -1;
         for (int i = 0; i < all_regions.length; i++) {
             if (all_regions[i].getNom().equals(name))
                 the_region = i;
                 break;
         }
-        return all_regions[the_region];
+        if (the_region == -1) {
+            return null;
+        }
+        else {
+            return all_regions[the_region];
+        }
     }
 
     public cityPt getCityPt(String name, regions region) {

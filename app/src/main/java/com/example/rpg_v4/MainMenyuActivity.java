@@ -61,6 +61,8 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private menyu_itemsbar itemsBar;
     private main_menyu_frontcharacter characterIcon;
     private main_menyu_regionChapters_fragment regionChapterListRecycler;
+    private View bufferbackgTop, bufferbackgBottom, bufferbackgLeft, bufferbackgRight, mmc_backbox ;
+
 
     private class layoutClass {
         private String CURRENT_LAYOUT;
@@ -211,6 +213,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
         activity_whole = findViewById(R.id.main_menyu_background);
         backbox_top_text = findViewById(R.id.mmc_backbox_top);
+        bufferbackgTop = findViewById(R.id.false_background_top);
+        bufferbackgBottom = findViewById(R.id.false_background_bottom);
+        bufferbackgLeft = findViewById(R.id.false_background_left);
+        bufferbackgRight = findViewById(R.id.false_background_right);
+        mmc_backbox = findViewById(R.id.menyu_mmc_backbox);
 
         userDataChecker = new checkUserData();
 
@@ -330,6 +337,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 ft.remove(mainMenyuRegionMapBtn);
                 ft.addToBackStack(null);
                 ft.commit();
+                bufferbackgBottom.setAlpha(0);
+                bufferbackgTop.setAlpha(0);
+                bufferbackgLeft.setAlpha(0);
+                bufferbackgRight.setAlpha(0);
+                mmc_backbox.setBackground(null);
                 layoutSetter.changeLayout(((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
                 //intro mainmenyu2region (move region icons on)
             }
@@ -388,6 +400,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         backbox_top_text.setText(chapter.getNom());
         ft.addToBackStack(null);
         ft.commit();
+
         layoutSetter.changeLayout("REGION_MAP_CHAPTER");
     }
 
@@ -406,6 +419,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
         ft.addToBackStack(null);
         ft.commit();
+        bufferbackgBottom.setAlpha(1);
+        bufferbackgTop.setAlpha(1);
+        bufferbackgLeft.setAlpha(1);
+        bufferbackgRight.setAlpha(1);
+        mmc_backbox.setBackgroundColor(getColor(R.color.genericElectric));
         layoutSetter.changeLayout("MAIN_MENYU_LAYOUT");
     }
 
@@ -421,7 +439,14 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     public void menyuItemsBarInventoryPressed() {}
     public void menyuItemsBarMapPressed() {
         //okay i think we're opening a new activity... lets see how much this fucks up our data
-        //Intent intented = new Intent(MainMenyuActivity.this, );
+        Intent intented = new Intent(MainMenyuActivity.this, wholeMapActivity.class);
+        Bundle args = new Bundle();
+        args.putString("CURRENT_REGION", userDataChecker.getCur_region().getNom());
+        args.putInt("PlayerLevel",pl);
+        intented.putExtras(args);
+        startActivity(intented);
+
+
     }
 
     public void clearFragments(String layout) {
