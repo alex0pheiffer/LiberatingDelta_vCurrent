@@ -1,8 +1,11 @@
 package com.example.rpg_v4.basic_classes;
 
+import android.util.Log;
+
 public abstract class Card {
 
     private String nom;
+    private String instanceName;
     private int cardImg;
     private boolean isWeaponSpecific;
     private boolean isComboSpecific;
@@ -11,9 +14,11 @@ public abstract class Card {
     private int targetCharAmt;
     private int weight; //how powerful the card is: 0-5
     private int wait;   //"points" the char must wait after card use
+    private final String[] charequipers = {"Vivian", "Katherine", "Delta"};
 
     public Card(String name, int img, boolean weapon, boolean combo, boolean character, boolean allies, int targetAmt, int weight, int wait) {
         this.nom = name;
+        this.instanceName = this.getClass().getName(); //instanceName must be overwritten for subclasses!! and concat instanceNum to end.
         this.cardImg = img;
         this.isWeaponSpecific = weapon;
         this.isComboSpecific = combo;
@@ -26,6 +31,10 @@ public abstract class Card {
 
     public String getNom() {
         return nom;
+    }
+
+    public String getInstanceName() {
+        return instanceName;
     }
 
     public int getWait() {
@@ -60,7 +69,27 @@ public abstract class Card {
         return isCharacterSpecific;
     }
 
+    public String getSpecificCharacter() {
+        if (isCharacterSpecific) {
+            Log.d("CARDINFO","Warning: This method should be overwritten");
+            return null;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public Weapon getSpecificWeapon() {
+        if (isWeaponSpecific) {
+            Log.d("CARDINFO","Warning: This method should be overwritten");
+            return null;
+        }
+        else {
+            return null;
+        }
+    }
+
     public void preformCard(battle_character user, battle_character target) {}
 
-    public String toString() {return "Card";}
+    public String toString() {return this.getClass().getName();}
 }

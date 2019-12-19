@@ -70,7 +70,7 @@ public class wholeMapActivity extends AppCompatActivity {
         this_pl = PL_VendingMachine.getPL(this.pl);
         current_region = this.this_pl.getRegion(args.getString(CURRENT_REGION));
         getAndLoadViews();
-        
+
         backbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 regionSelected();

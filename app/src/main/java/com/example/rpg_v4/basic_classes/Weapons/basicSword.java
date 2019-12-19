@@ -7,7 +7,8 @@ public class basicSword extends Weapon {
 
     public basicSword() {
         super("Basic Sword",
-                new stats_object(2,1,0,0,0,0, 0,0,0,0));
+                new stats_object(2,1,0,0,0,0, 0,0,0,0),
+                0);
     }
 
 }

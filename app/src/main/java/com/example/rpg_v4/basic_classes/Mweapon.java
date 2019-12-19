@@ -6,7 +6,7 @@ public abstract class Mweapon extends Weapon {
     private int mPerc;
 
     public Mweapon(String name, stats_object buff, String type, int mPerc) {
-        super(name, buff);
+        super(name, buff, 0);
         this.type = type;
         this.mPerc = mPerc;
     }

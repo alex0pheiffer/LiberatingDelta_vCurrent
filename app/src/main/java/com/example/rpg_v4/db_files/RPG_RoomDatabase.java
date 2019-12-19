@@ -34,8 +34,8 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
         //INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
         //       RPG_RoomDatabase.class, "rpg_database").addMigrations(MIGRATION_2_3).build();
 
-        //context.deleteDatabase("rpg_database");
-        //System.out.println("Database deleted");
+        context.deleteDatabase("rpg_database");
+        System.out.println("Database deleted");
 
         if (INSTANCE == null) {
             synchronized (RPG_RoomDatabase.class) {

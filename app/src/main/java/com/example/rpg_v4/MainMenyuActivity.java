@@ -435,7 +435,14 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     public void menyuItemsBarSettingsPressed() {}
     public void menyuItemsBarCharactersPressed() {}
     public void menyuItemsBarPlotPressed() {}
-    public void menyuItemsBarDecksPressed() {}
+    public void menyuItemsBarDecksPressed() {
+        //bring in the charswitch arrows
+        //remove the region btn
+        //replace the itemsbar with a titlebar flush right (half the screen..)
+        //add a backbtn
+        //add deck scroller
+        //make sure that the middle deck in the deck scroller is the equipped deck. In the case of all char, it can be the last viewed deck... but you'll never open to all characters
+    }
     public void menyuItemsBarInventoryPressed() {}
     public void menyuItemsBarMapPressed() {
         //okay i think we're opening a new activity... lets see how much this fucks up our data
@@ -445,9 +452,10 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         args.putInt("PlayerLevel",pl);
         intented.putExtras(args);
         startActivity(intented);
-
-
     }
+
+    //DecksViewer
+
 
     public void clearFragments(String layout) {
         if (layoutSetter.compareParsed(layout,"REGION_MAP_LAYOUT")) {
