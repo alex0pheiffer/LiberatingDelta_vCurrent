@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClassName("com.example.twoactivitycrash", "com.example.twoactivitycrash.MyBroadcastReceiver");
         intent.setAction("com.example.twoactivitycrash.MyBroadcastReceiver");
-        intent.putExtra("MESSAGEA", message);
+        intent.putExtra("MESSAGE_A", message);
         sendBroadcast(intent);
     }
 }
