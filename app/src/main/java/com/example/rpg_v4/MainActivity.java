@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         private final String default_pass = "none";
         public checkLogin() {
             System.out.println("CHECKLOGIN CREATED");
-            sendMessage("Checklogin Created");
         }
         public void setlValues(List<User_Values> vals) {
             lValues = vals;
@@ -95,14 +94,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sendMessage("MainActivityCreated");
         //create once to trigger setters...
         //final PL staticplayerlevel = new PL();
 
         final checkLogin loginChecker = new checkLogin();
 
         rpgViewModel = new ViewModelProvider(this).get(RPG_ViewModel.class);
-        sendMessage("Viewmodel Created");
 
         rpgViewModel.getlUserValues().observe(this,new Observer<List<User_Values>>() {
             @Override
@@ -173,13 +170,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    public void sendMessage(String message){
-        Intent intent = new Intent();
-        intent.setClassName("com.example.twoactivitycrash", "com.example.twoactivitycrash.MyBroadcastReceiver");
-        intent.setAction("com.example.twoactivitycrash.MyBroadcastReceiver");
-        intent.putExtra("MESSAGE_A", message);
-        sendBroadcast(intent);
     }
 }

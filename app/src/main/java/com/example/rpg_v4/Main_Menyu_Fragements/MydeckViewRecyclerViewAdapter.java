@@ -1,6 +1,6 @@
 package com.example.rpg_v4.Main_Menyu_Fragements;
 
-/*
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.rpg_v4.Main_Menyu_Fragements.deckViewFragment.OnListFragmentInteractionListener;
 import com.example.rpg_v4.Main_Menyu_Fragements.dummy.DummyContent.DummyItem;
+import com.example.rpg_v4.R;
 
 import java.util.List;
 
@@ -72,5 +73,3 @@ public class MydeckViewRecyclerViewAdapter extends RecyclerView.Adapter<MydeckVi
         }
     }
 }
-
- */

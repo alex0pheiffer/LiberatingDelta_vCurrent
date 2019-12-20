@@ -20,7 +20,6 @@ public class RPG_ViewModel extends AndroidViewModel {
 
     public RPG_ViewModel(Application application) {
         super(application);
-        sendMessage("Reached Viewmodel Constructor", application);
         repository = new RPG_RoomRepository(application);
         lUserValues = repository.getlUserValues();
         System.out.println("inside viewModel: "+lUserValues);
@@ -129,12 +128,5 @@ public class RPG_ViewModel extends AndroidViewModel {
     }
     public void updateAmount(User_Inventory userInventory) {
         repository.updateAmount(userInventory);
-    }
-    public void sendMessage(String message, Application application){
-        Intent intent = new Intent();
-        intent.setClassName("com.example.twoactivitycrash", "com.example.twoactivitycrash.MyBroadcastReceiver");
-        intent.setAction("com.example.twoactivitycrash.MyBroadcastReceiver");
-        intent.putExtra("MESSAGEA", message);
-        application.sendBroadcast(intent);
     }
 }

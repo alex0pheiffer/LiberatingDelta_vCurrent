@@ -34,14 +34,14 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
 
     static RPG_RoomDatabase getDatabase(final Context context) {
         //updateRequire
-        forMessaging = context;
-        sendMessage("in database",context);
-        INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-               RPG_RoomDatabase.class, "rpg_database").addMigrations(MIGRATION_5_1).build();
-        sendMessage("INSTANCE mitigated, now removing",context);
-        context.deleteDatabase("rpg_database");
-        System.out.println("Database deleted");
-        sendMessage("Database deleted",context);
+        //forMessaging = context;
+        //sendMessage("in database",context);
+        //INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+        //       RPG_RoomDatabase.class, "rpg_database").addMigrations(MIGRATION_5_1).build();
+        //sendMessage("INSTANCE mitigated, now removing",context);
+        //context.deleteDatabase("rpg_database");
+        //System.out.println("Database deleted");
+        //sendMessage("Database deleted",context);
 
         if (INSTANCE == null) {
             synchronized (RPG_RoomDatabase.class) {
@@ -49,7 +49,7 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
                     //normal
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RPG_RoomDatabase.class, "rpg_database").addCallback(sRoomDatabaseCallback).build();
-                    sendMessage("Database created; ver: ",context);
+                    //sendMessage("Database created; ver: ",context);
                 }
             }
         }
@@ -60,7 +60,7 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
 
-            sendMessage("mitigationTest ver: "+database.getVersion(),forMessaging);
+            //sendMessage("mitigationTest ver: "+database.getVersion(),forMessaging);
 
             // Since we didn't alter the table, there's nothing else to do here.
             //IF YOU DO MODIFY, EX:
@@ -70,6 +70,7 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
                             + " ADD COLUMN REGION TEXT NOT NULL");
              */
             //create new table
+
             /*
             database.execSQL("CREATE TABLE IF NOT EXISTS TABLE_NAME_TEMP " +
                     "(`PL` INT NOT NULL, " +
@@ -88,8 +89,7 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
             database.execSQL("DROP TABLE User_Values_Table");
             //replace table name
             database.execSQL("ALTER TABLE TABLE_NAME_TEMP RENAME TO User_Values_Table");
-
-             */
+            */
         }
     };
 
@@ -103,13 +103,14 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
         @Override
         public void onOpen (@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-            sendMessage("db Opened: ver: "+db.getVersion(),forMessaging);
+            //sendMessage("db Opened: ver: "+db.getVersion(),forMessaging);
             System.out.println("DB HAS BEEN OPENED");
             new PopulateDbAsync(INSTANCE).execute();
-            sendMessage("populated db",forMessaging);
+            //sendMessage("populated db",forMessaging);
         }
     };
 
+    /*
     public static void sendMessage(String message, Context context){
         Intent intent = new Intent();
         intent.setClassName("com.example.twoactivitycrash", "com.example.twoactivitycrash.MyBroadcastReceiver");
@@ -117,4 +118,5 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
         intent.putExtra("MESSAGE_A", message);
         context.sendBroadcast(intent);
     }
+    */
 }

@@ -25,7 +25,6 @@ public class RPG_RoomRepository {
     private LiveData<List<User_EQPlayed>> lUserEQPlayed;
 
     public RPG_RoomRepository(Application application) {
-        sendMessage("reached repository constructor", application);
         RPG_RoomDatabase db = RPG_RoomDatabase.getDatabase(application);
         userValuesDao = db.UserValuesDao();
         userCharactersDao = db.UserCharactersDao();
@@ -526,13 +525,5 @@ public class RPG_RoomRepository {
             mAsyncTaskDao.updateAmount(params[0].getAmount(),params[0].getId());
             return null;
         }
-    }
-
-    public void sendMessage(String message, Application application){
-        Intent intent = new Intent();
-        intent.setClassName("com.example.twoactivitycrash", "com.example.twoactivitycrash.MyBroadcastReceiver");
-        intent.setAction("com.example.twoactivitycrash.MyBroadcastReceiver");
-        intent.putExtra("MESSAGE_A", message);
-        application.sendBroadcast(intent);
     }
 }
