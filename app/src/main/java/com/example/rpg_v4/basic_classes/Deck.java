@@ -333,7 +333,7 @@ public class Deck extends inventI {
         cardAmt = cards.size();
     }
 
-    //todo? is this going to be a thing... order really doesnt matter?  
+    //todo? is this going to be a thing... order really doesnt matter?
     //when moving a card in the deck to a differnet position in the deck
     //public boolean moveCard(Card card, int location) {
     //    boolean moved = true;
