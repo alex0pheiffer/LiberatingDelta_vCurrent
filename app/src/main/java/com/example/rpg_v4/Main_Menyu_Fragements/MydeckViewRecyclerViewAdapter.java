@@ -73,3 +73,4 @@ public class MydeckViewRecyclerViewAdapter extends RecyclerView.Adapter<MydeckVi
         }
     }
 }
+

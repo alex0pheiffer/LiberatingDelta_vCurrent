@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         final checkLogin loginChecker = new checkLogin();
 
         rpgViewModel = new ViewModelProvider(this).get(RPG_ViewModel.class);
-
         rpgViewModel.getlUserValues().observe(this,new Observer<List<User_Values>>() {
             @Override
             public void onChanged(@Nullable final List<User_Values> vals) {

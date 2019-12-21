@@ -21,5 +21,5 @@ public abstract class Weapon extends inventI{
         return charequip;
     }
 
-    public String toString() {return "Weapon";}
+    public String toString() {return getClass().getSimpleName();}
 }

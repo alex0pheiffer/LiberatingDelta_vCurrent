@@ -6,6 +6,7 @@ public abstract class Card {
 
     private String nom;
     private String instanceName;
+    private static int deckAmt;        //number of decks this TYPE of card is in
     private int cardImg;
     private boolean isWeaponSpecific;
     private boolean isComboSpecific;
@@ -18,7 +19,7 @@ public abstract class Card {
 
     public Card(String name, int img, boolean weapon, boolean combo, boolean character, boolean allies, int targetAmt, int weight, int wait) {
         this.nom = name;
-        this.instanceName = this.getClass().getName(); //instanceName must be overwritten for subclasses!! and concat instanceNum to end.
+        this.instanceName = this.getClass().getSimpleName(); //instanceName must be overwritten for subclasses!! and concat instanceNum to end.
         this.cardImg = img;
         this.isWeaponSpecific = weapon;
         this.isComboSpecific = combo;
@@ -35,6 +36,18 @@ public abstract class Card {
 
     public String getInstanceName() {
         return instanceName;
+    }
+
+    public static int getDeckAmt() {
+        return deckAmt;
+    }
+
+    public static void addDeckAmt() {
+        deckAmt++;
+    }
+
+    public static void removeDeckAmt() {
+        deckAmt--;
     }
 
     public int getWait() {
@@ -89,7 +102,8 @@ public abstract class Card {
         }
     }
 
+    //should be over written
     public void preformCard(battle_character user, battle_character target) {}
 
-    public String toString() {return this.getClass().getName();}
+    public String toString() {return this.getClass().getSimpleName();}
 }

@@ -21,10 +21,16 @@ import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_region_map_btn;
 import com.example.rpg_v4.Main_Menyu_Fragements.menyu_itemsbar;
 import com.example.rpg_v4.Main_Menyu_Fragements.region_fragments.RegionFragmentInterface;
 import com.example.rpg_v4.Main_Menyu_Fragements.region_fragments.region_1_fragment;
+import com.example.rpg_v4.basic_classes.BlankDeck;
+import com.example.rpg_v4.basic_classes.Card;
+import com.example.rpg_v4.basic_classes.Cards.*;
 import com.example.rpg_v4.basic_classes.Chapter;
 import com.example.rpg_v4.basic_classes.Characters;
+import com.example.rpg_v4.basic_classes.Deck;
 import com.example.rpg_v4.basic_classes.PL;
+import com.example.rpg_v4.basic_classes.Weapon;
 import com.example.rpg_v4.basic_classes.cityPt;
+import com.example.rpg_v4.basic_classes.inventI;
 import com.example.rpg_v4.basic_classes.regions;
 import com.example.rpg_v4.basic_classes.the_MCs.Katherine;
 import com.example.rpg_v4.basic_classes.the_cities.chipper_towne;
@@ -38,7 +44,13 @@ import com.example.rpg_v4.db_files.User_EQPlayed;
 import com.example.rpg_v4.db_files.User_Inventory;
 import com.example.rpg_v4.db_files.User_Values;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener {
 
@@ -52,6 +64,8 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private int updateUserCardsCounter;
     private int updateUserDecksCounter;
     private int updateUserInventoryCounter;
+    //todo: check the max through the db...#rows
+    private int MAX_INVENTORY = 100;
 
     private View activity_whole;
     private TextView backbox_top_text;
@@ -150,13 +164,17 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
         public void setlCharacters(List<User_Characters> lCharacters) {this.lCharacters = lCharacters;}
         public void setlEQPlayed(List<User_EQPlayed> lEQPlayed) {this.lEQPlayed = lEQPlayed;}
-        public void setlCards(List<User_Cards> vals) {this.lCards = vals;}
+        public void setlCards(List<User_Cards> vals) { this.lCards = vals; }
         public void setlDecks(List<User_Decks> vals) {this.lDecks = vals;}
         public void setlInventory(List<User_Inventory> vals) {this.lInventory = vals;}
 
         public checkUserData() {
             cur_region = new Veneland();
             pl = 1;
+        }
+
+        public void fillDecks() {
+            thisUserInventory.fillDecks((ArrayList<User_Decks>)lDecks, (ArrayList<User_Cards>)lCards);
         }
 
         private regions getCurrentRegion() {
@@ -203,6 +221,299 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
     checkUserData userDataChecker;
 
+    private class userInventory {
+        private BlankDeck allCards;
+        private ArrayList<Deck> allDecks;
+        private ArrayList<String> allDecksNames;
+        //please don't load the following unless inventory is opened...the exception is those equipped by characters
+        private ArrayList<Weapon> allWeapons;
+        private ArrayList<inventI> allNonWeapons;
+        private ArrayList<inventI> allItems;
+
+        //todo update this as you add more card classes
+        private Class[] cardClasses = {Distract.class,DiveLeft.class,RockToss.class,Shove.class,Splash.class,Struggle.class,TreeHide.class};
+        private ArrayList<String> cardClassesNames;
+
+        public userInventory() {
+            allCards = new BlankDeck();
+            allDecks = new ArrayList<Deck>();
+            allWeapons = new ArrayList<Weapon>();
+            allNonWeapons = new ArrayList<inventI>();
+            allItems = new ArrayList<inventI>();
+            cardClassesNames = new ArrayList<String>();
+            allDecksNames = new ArrayList<String>();
+            for (Class n : cardClasses) {
+                cardClassesNames.add(n.getName());
+            }
+            alphabetizeClassCard();
+        }
+
+        public void fillDecks(ArrayList<User_Decks> lDecks, ArrayList<User_Cards> lCards) {
+            //the db cards need to be in alphabetical order
+            lCards = alphabetizelCards(lCards);
+
+            if (allDecks.size() == 0) {
+
+                for (User_Decks d : lDecks) {
+                    String charer;
+                    charer = d.getChar_equip();
+                    if (d.getChar_equip().equals("None")) {
+                        charer = null;
+                    }
+                    addDeck(new Deck(d.getName(),charer),true);
+                }
+
+                String previous_card = "";
+                String previous_deck = "";
+                int deckAmt = 0;
+                Card temp = null;
+                int sudoCardIndex = 0;
+                Class tempClass = null;
+                for (User_Cards c : lCards) {
+                    //if card is not the same as the previous OR null, create a new card instance
+                    if (temp == null || !previous_card.equals(c.getName())) {
+                        tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
+                        try{ temp = (Card) tempClass.newInstance(); }
+                        catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                        sudoCardIndex = allCards.addCard(temp);
+                        if (!c.getDeck().equals("None")) {
+                            allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
+                        }
+                        previous_deck = c.getDeck();
+                        deckAmt = 1;
+                        previous_card = c.getName();
+                    }
+                    //same as the previous card
+                    else {
+                        if (previous_deck.equals(c.getDeck())) {
+                            //same deck as the last card
+                            if (deckAmt < allCards.getSudoCard(sudoCardIndex).getAmount()) {
+                                //this type of card in this deck has less than the number of cards created
+                                //>>thus use a card in allCards sudoCard
+                                if (!c.getDeck().equals("None")) {
+                                    allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(allCards.getSudoCard(sudoCardIndex).getCard(deckAmt));
+                                }
+                            }
+                            else {
+                                //the amount of cards in this deck are the same or greater than cards current created
+                                //please create more
+                                if (deckAmt >= c.getAmount()) {
+                                    throw new RuntimeException("cards "+c.getName()+" created exceed the said db amount");
+                                }
+                                try{ temp = (Card) tempClass.newInstance(); }
+                                catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                                allCards.addCard(temp);
+                                if (!c.getDeck().equals("None")) {
+                                    allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
+                                }
+                            }
+                            deckAmt++;
+                        }
+                        else {
+                            //new (diff) deck from the last card
+                            previous_deck = c.getDeck();
+                            deckAmt = 1;
+                            if (!c.getDeck().equals("None")) {
+                                allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(allCards.getSudoCard(sudoCardIndex).getCard(0));
+                            }
+                            else {
+                                //if the deck is "None" you probably need to make a new card...
+                                if(c.getAmount() > allCards.getSudoCard(sudoCardIndex).getAmount()) {
+                                    //we still need to make a new card
+                                    try{ temp = (Card) tempClass.newInstance(); }
+                                    catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                                    allCards.addCard(temp);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            else {
+                throw new RuntimeException("Cannot fill decks when they're not empty");
+            }
+        }
+
+        public void addCardtoDeck(Deck deck, Card card) {
+            //todo add to db
+            deck.addCard(card);
+        }
+
+        public void addCard(Card card) {
+            //todo add to                                                                                                                                                                                                                                                                                                                                                                                                                                             db
+            allCards.addCard(card);
+        }
+
+        public void removeCardfromDeck(Deck deck, Card card) {
+            //todo remove from db
+            deck.removeCard(card);
+        }
+
+        public void removeCard(Card card) {
+            //todo remove from db
+            allCards.removeCard(card);
+        }
+
+        private void alphabetizeClassCard() {
+            //insertion sort
+            String tempStr;
+            Class tempCl;
+            for (int i = 0; i < cardClasses.length; i++)
+            {
+                for (int j = i + 1; j < cardClasses.length; j++)
+                {
+                    if (cardClassesNames.get(i).compareTo(cardClassesNames.get(j))>0)
+                    {
+                        tempStr = cardClassesNames.get(i);
+                        tempCl = cardClasses[i];
+                        cardClassesNames.set(i,cardClassesNames.get(j));
+                        cardClasses[i] = cardClasses[j];
+                        cardClassesNames.set(j, tempStr);
+                        cardClasses[j] = tempCl;
+                    }
+                }
+            }
+        }
+
+        private ArrayList<User_Cards> alphabetizelCards(ArrayList<User_Cards> lCards) {
+            boolean stillLarger = true;
+            ArrayList<User_Cards> alphabetcards = new ArrayList<User_Cards>();
+            int j;
+            int newIndex = 0;
+            alphabetcards.add(lCards.get(0));
+            for (int i=1; i < lCards.size();i++) {
+                alphabetcards.add(lCards.get(i));
+                j = i;
+                stillLarger = true;
+                while (stillLarger) {
+                    j--;
+                    if (alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) < 0) {
+                        stillLarger = false;
+                        newIndex = j+1;
+                    }
+                    else if (alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) == 0) {
+                        //the names are the same...sort by deck
+                        if (alphabetcards.get(j).getDeck().compareTo(alphabetcards.get(i).getDeck()) == 0) {
+                            stillLarger = false;
+                            newIndex = j+1;
+                        }
+                        else {
+                            while(stillLarger) {
+                                if(alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) == 0) {
+                                    if (alphabetcards.get(j).getDeck().compareTo(alphabetcards.get(i).getDeck()) <= 0) {
+                                        stillLarger = false;
+                                        newIndex = j+1;
+                                    }
+                                    else if (j==0) {
+                                        stillLarger = false;
+                                        newIndex = 0;
+                                    }
+                                }
+                                else {
+                                    stillLarger = false;
+                                    newIndex = j+1;
+                                }
+                                j--;
+                            }
+                        }
+                    }
+                    else if (j==0) {
+                        stillLarger = false;
+                        newIndex = 0;
+                    }
+                }
+                alphabetcards.add(newIndex,alphabetcards.get(i));
+                alphabetcards.remove(i+1);
+            }
+            return alphabetcards;
+        }
+
+        public void addDeck(Deck addedDeck, boolean indb) {
+            //insertion sort
+            if (allDecks.size() == 0) {
+                allDecks.add(addedDeck);
+                allDecksNames.add(addedDeck.getNom());
+            }
+            else {
+                boolean stillLarger = true;
+                int newIndex = 0;
+                int j = allDecks.size();
+                stillLarger = true;
+                while (stillLarger) {
+                    j--;
+                    int compare = allDecks.get(j).getInstanceName().compareTo(addedDeck.getInstanceName());
+                    if ( compare < 0) {
+                        stillLarger = false;
+                        newIndex = j+1;
+                    }
+                    else if(compare == 0) {
+                        //eventually you'll need to give the user a dialog box telling them to edit the name of their deck
+                        throw new RuntimeException("INVALID DECK NAME: deck name is the same as another deck...");
+                    }
+                    else if (j==0) {
+                        stillLarger = false;
+                        newIndex = 0;
+                    }
+                }
+                allDecks.add(newIndex, addedDeck);
+                allDecksNames.add(newIndex, addedDeck.getNom());
+            }
+            if (!indb) {
+                //todo add this new deck to the db
+            }
+        }
+
+        public BlankDeck getAllCards() {
+            return allCards;
+        }
+
+        public ArrayList<Deck> getAllDecks() {
+            return allDecks;
+        }
+
+        public ArrayList<Weapon> getAllWeapons() {
+            if (allWeapons.size() == 0) {
+                //create inventory options
+            }
+            return allWeapons;
+        }
+
+        public ArrayList<inventI> getAllNonWeapons() {
+            if (allNonWeapons.size() == 0) {
+                //create inventory options
+            }
+            return allNonWeapons;
+        }
+
+        public ArrayList<inventI> getAllItems() {
+            if (allWeapons.size() == 0) {
+                //create inventory options
+            }
+            return allItems;
+        }
+
+        public void createInventoryOptions() {
+            //not finished
+            if (allWeapons.size() == 0) {
+                //create all Weapons
+            }
+            if (allNonWeapons.size() == 0) {
+                //create all non weapons
+            }
+            if (allItems.size() == 0) {
+
+                for (int i = 0; i<allWeapons.size(); i++){
+                    allItems.add(allWeapons.get(i));
+                }
+                for (int i = 0; i<allNonWeapons.size(); i++) {
+                    allItems.add(allNonWeapons.get(i));
+                }
+            }
+        }
+
+    }
+    userInventory thisUserInventory;
 
     //public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -220,6 +531,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         mmc_backbox = findViewById(R.id.menyu_mmc_backbox);
 
         userDataChecker = new checkUserData();
+        thisUserInventory = new userInventory();
 
         rpgViewModel = new ViewModelProvider(this).get(RPG_ViewModel.class);
 
@@ -283,6 +595,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 userDataChecker.setlCards(vals);
                 if (updateUserCardsCounter==1) {
                     //init UI updates here
+                    if(updateUserDecksCounter==1) {
+                        userDataChecker.fillDecks();
+                    }
                 }
             }
         } );
@@ -293,6 +608,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 userDataChecker.setlDecks(vals);
                 if (updateUserDecksCounter==1) {
                     //init UI updates here
+                    if(updateUserCardsCounter==1) {
+                        userDataChecker.fillDecks();
+                    }
                 }
             }
         } );

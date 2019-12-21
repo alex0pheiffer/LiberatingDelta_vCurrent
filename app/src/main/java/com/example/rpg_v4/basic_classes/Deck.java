@@ -8,6 +8,7 @@ public class Deck extends inventI {
 
     private String instanceName;
 
+    //todo why do i have both decks, can't i just use the alphabet one?
     private ArrayList<Card> cards;
     private ArrayList<Card> alphabetcards;
     private int cardAmt;
@@ -16,6 +17,7 @@ public class Deck extends inventI {
     private String charHolding; //what character __has__ this deck equipped?
     private boolean isValid;
     private boolean isWeaponSpec;
+    //todo consider making a list for card,cardAmt like the specWeapon list...
     private ArrayList<specWeapon> specificWeapons; //the weapons that cards may refer to in this deck
     private class specWeapon {
         private int cardAmt;
@@ -53,7 +55,9 @@ public class Deck extends inventI {
     public Deck(String name, ArrayList<Card> cards, @Nullable String charHolding) {
         super(name, false, null);
         this.cards = cards;
-        this.charHolding = charHolding;
+        if (charHolding != null) {
+            this.charHolding = charHolding;
+        }
         this.alphabetcards = new ArrayList<Card>();
         alphabetizeDeck(true);
         this.cardAmt = cards.size();
@@ -61,6 +65,20 @@ public class Deck extends inventI {
         this.charequip = checkCharEquip();
         this.totalWeight = getTotalWeight();
         this.instanceName = getClass().getName()+" "+numInstance;
+        this.charequip = charequipers[0];
+        numInstance++;
+    }
+
+    public Deck(String name, @Nullable String charHolding) {
+        super(name, false, null);
+        this.cards = new ArrayList<Card>();
+        if (charHolding != null) {
+            this.charHolding = charHolding;
+        }
+        this.alphabetcards = new ArrayList<Card>();
+        this.cardAmt = 0;
+        this.instanceName = getClass().getName()+" "+numInstance;
+        this.charequip = charequipers[0];
         numInstance++;
     }
 
@@ -80,11 +98,11 @@ public class Deck extends inventI {
             stillLarger = true;
             while (stillLarger) {
                 j--;
-                if (alphabetcards.get(j).getInstanceName().compareTo(alphabetcards.get(i).getInstanceName()) > 0) {
+                if (alphabetcards.get(j).getInstanceName().compareTo(alphabetcards.get(i).getInstanceName()) <= 0) {
                     stillLarger = false;
                     newIndex = j+1;
                 }
-                if (j==0) {
+                else if (j==0) {
                     stillLarger = false;
                     newIndex = 0;
                 }
@@ -99,15 +117,15 @@ public class Deck extends inventI {
     public int numCardInstance(Card card) {
         int amount = 0;
         int location = binarySearch(card, 0, alphabetcards.size() - 1);
-        if (location == 0) {
+        if (location == -1) {
             return amount;
         }
         String x = card.toString();
-        while (alphabetcards.get(location-1).toString().compareTo(x) == 0) {
+        while (location != 0 && alphabetcards.get(location-1).toString().compareTo(x) == 0) {
             //the card before this is also the same card
             location--;
         }
-        while (alphabetcards.get(location).toString().compareTo(x) == 0) {
+        while (location != alphabetcards.size()-1 && alphabetcards.get(location).toString().compareTo(x) == 0) {
             amount++;
             location++;
         }
@@ -117,18 +135,17 @@ public class Deck extends inventI {
 
     //typical binary search: starting input... card, 0, alphabetcards.size()-1
     private int binarySearch(Card card, int startIndex, int endIndex) {
-        String x = card.toString();
+        String x = card.getInstanceName();
         if (endIndex >= startIndex) {
-            int mid = startIndex + (endIndex - startIndex) / 2;
-
+            int mid = startIndex + (int)(((double)(endIndex - startIndex) / 2)+.5);
             // If the element is present at the
             // middle itself
-            if (alphabetcards.get(mid).toString().compareTo(x) == 0)
+            if (alphabetcards.get(mid).getInstanceName().compareTo(x) == 0)
                 return mid;
 
             // If element is smaller than mid, then
             // it can only be present in left subarray
-            if (alphabetcards.get(mid).toString().compareTo(x) < 0)
+            if (alphabetcards.get(mid).getInstanceName().compareTo(x) > 0)
                 return binarySearch(card, startIndex, mid - 1);
 
             // Else the element can only be present
@@ -249,47 +266,48 @@ public class Deck extends inventI {
 
     //when bringing a new card into the deck
     public void addCard(Card card) {
-        //return true if the card is added,
-        //return false if the card could not be added
-
         //update the charequip if its not already invalid
         if (!charequip.equals(charequipers[4]))
             updateCharEquip(card, true);
 
+        int cardinst = numCardInstance(card);
+        if (cardinst == 0) {
+            card.addDeckAmt();
+        }
         //if the deck isnt invalid, find out if this card makes it invalid
         if (isValid) {
             if (charequip.equals(charequipers[4]))
                 isValid = false;
-            if (isValid && cards.size()+1>MAX_DECK_SIZE) {
+            if (isValid && cards.size() + 1 > MAX_DECK_SIZE) {
                 isValid = false;
             }
-            if (isValid && totalWeight+card.getWeight() > MAX_WEIGHT) {
+            if (isValid && totalWeight + card.getWeight() > MAX_WEIGHT) {
                 isValid = false;
             }
-            if (isValid && numCardInstance(card) >= MAX_CARD_AMT)
+            if (isValid && cardinst >= MAX_CARD_AMT)
                 isValid = false;
-            if (isValid && card.getIsWeaponSpecific()) {
-                Weapon cardWeapon = card.getSpecificWeapon();
-                if (isWeaponSpec) {
-                    if (!cardWeapon.getCharEquip().equals(charequip))
-                        isValid = false;
-                    else {
-                        addWeaponSpec(cardWeapon);
-                    }
+
+        }
+        if (card.getIsWeaponSpecific()) {
+            Weapon cardWeapon = card.getSpecificWeapon();
+            if (isValid && isWeaponSpec) {
+                if (!cardWeapon.getCharEquip().equals(charequip))
+                    isValid = false;
+            }
+            else if (isValid){
+                //all characters -> char of this weapon
+                //this should be redundant because the card's charequip should take care of this
+                if (charequip.equals(charequipers[0])) {
+                    charequip = cardWeapon.getCharEquip();
+                    throw new RuntimeException("card's charequip is all but it's specific weapon is char-spec: "+card.getNom());
                 }
-                else {
-                    //all characters -> char of this weapon
-                    if (charequip.equals(charequipers[0])) {
-                        charequip = cardWeapon.getCharEquip();
-                    }
-                    //the card's specific weapon's specific character is >NOT< the same as the card's current specific character
-                    else if (!card.getSpecificWeapon().getCharEquip().equals(charequip)) {
-                        isValid = false;
-                    }
-                    isWeaponSpec = true;
-                    addWeaponSpec(cardWeapon);
+                //the card's specific weapon's specific character is >NOT< the same as the card's current specific character
+                else if (!card.getSpecificWeapon().getCharEquip().equals(charequip)) {
+                    isValid = false;
                 }
+                isWeaponSpec = true;
             }
+            addWeaponSpec(cardWeapon);
         }
 
         totalWeight=totalWeight+card.getWeight();
@@ -301,8 +319,10 @@ public class Deck extends inventI {
 
     //when removing a card from the deck
     public void removeCard(Card card) {
-        //return true if the card is removed,
-        //return false if the card could not be removed
+        int numinst = numCardInstance(card);
+        if (numinst == 1) {
+            card.removeDeckAmt();
+        }
         if (card.getIsWeaponSpecific()) {
             removeWeaponSpec(card.getSpecificWeapon());
         }
@@ -319,11 +339,12 @@ public class Deck extends inventI {
         if (isValid && totalWeight > MAX_WEIGHT) {
             isValid = false;
         }
-        if (isValid && numCardInstance(card)-1 > MAX_CARD_AMT) {
+        if (isValid && numinst-1 > MAX_CARD_AMT) {
             isValid = false;
         }
 
         cards.remove(card);
+        alphabetcards.remove(card);
 
         totalWeight=totalWeight-card.getWeight();
         cardAmt--;
@@ -331,6 +352,14 @@ public class Deck extends inventI {
 
     public void updateCardAmt() {
         cardAmt = cards.size();
+    }
+
+    public int getCardAmt() {
+        return alphabetcards.size();
+    }
+
+    public Card getCard(int index) {
+        return alphabetcards.get(index);
     }
 
     //todo? is this going to be a thing... order really doesnt matter?

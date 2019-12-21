@@ -32,13 +32,13 @@ public class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(final Void... params) {
         this.removeAll();
-        User_Values useval = new User_Values(1, 0, 0,"Katie","none","none","Veneland");
+        User_Values useval = new User_Values(1, 0, 0,"Katherine","none","none","Veneland");
         userValues.insert(useval);
-        User_Characters usechar = new User_Characters("Katie", 0,0,"SimpleStaff", "BasicDeck","PotionA");
+        User_Characters usechar = new User_Characters("Katherine", 0,0,"SimpleStaff", "BasicDeck","PotionA");
         userCharacters.insert(usechar);
         usechar = new User_Characters("Delta",0,0,"SimpleSword","none","none");
         userCharacters.insert(usechar);
-        usechar = new User_Characters("Viv",0,0,"SimpleBow","none","none");
+        usechar = new User_Characters("Vivian",0,0,"SimpleBow","none","none");
         userCharacters.insert(usechar);
         User_Cards usecard = new User_Cards("RockToss",3,"BasicDeck",0);
         userCards.insert(usecard);
@@ -82,7 +82,7 @@ public class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
         userCards.insert(usecard);
         usecard = new User_Cards("Struggle",3,"BasicDeck",20);
         userCards.insert(usecard);
-        User_Decks usedeck = new User_Decks("BasicDeck","Thalass",21);
+        User_Decks usedeck = new User_Decks("BasicDeck","Katherine",21);
         userDecks.insert(usedeck);
         User_EQPlayed useEQP = new User_EQPlayed("ChallengeA",0,0);
         userEQPlayed.insert(useEQP);
