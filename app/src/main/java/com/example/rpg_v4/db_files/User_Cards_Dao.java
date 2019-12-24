@@ -27,8 +27,12 @@ public interface User_Cards_Dao {
     void deleteAll();
 
     //returns a list of User_Cards
-    @Query("SELECT * FROM User_Cards_Table ORDER BY id ASC")
+    @Query("SELECT * FROM User_Cards_Table ORDER BY LABEL, DECK ASC")
     LiveData<List<User_Cards>> getAll();
+
+    //returns a list of User_Cards that have the deck 'cardName'
+    @Query("SELECT * FROM User_Cards_Table WHERE LABEL =:cardName")
+    LiveData<List<User_Cards>> getCardName(String cardName);
 
     //updating the AMT by order id
     @Query("UPDATE User_Cards_Table SET AMT=:amount WHERE id =:index")

@@ -17,6 +17,7 @@ public class RPG_ViewModel extends AndroidViewModel {
     private LiveData<List<User_Cards>> lUserCards;
     private LiveData<List<User_Decks>> lUserDecks;
     private LiveData<List<User_EQPlayed>> lUserEQPlayed;
+    private LiveData<List<User_Cards>> cardNameSearchResults;
 
     public RPG_ViewModel(Application application) {
         super(application);
@@ -28,6 +29,7 @@ public class RPG_ViewModel extends AndroidViewModel {
         lUserCards = repository.getlUserCards();
         lUserInventory = repository.getlUserInventory();
         lUserEQPlayed = repository.getlUserEQPlayed();
+        cardNameSearchResults = repository.getCardNameSearchResults();
     }
 
     public LiveData<List<User_EQPlayed>> getlUserEQPlayed() {
@@ -48,6 +50,7 @@ public class RPG_ViewModel extends AndroidViewModel {
     public LiveData<List<User_Characters>> getlUserCharacters() {
         return lUserCharacters;
     }
+    public LiveData<List<User_Cards>> getNameCards() {return cardNameSearchResults;}
 
     //wrapper for repository's insert method so the insert is completely hidden from the UI
     public void insert(User_Values userValues) {
@@ -67,6 +70,20 @@ public class RPG_ViewModel extends AndroidViewModel {
     }
     public void insert(User_Cards userCards) {
         repository.insert(userCards);
+    }
+
+
+    public void deleteCard(User_Cards userCards) {
+        repository.deleteCard(userCards);
+    }
+    public void deleteDeck(User_Decks userDecks) {
+        repository.deleteDeck(userDecks);
+    }
+    public void deleteInventory(User_Inventory userInventory) {
+        repository.deleteInventory(userInventory);
+    }
+    public void deleteEQPlayed(User_EQPlayed userEQPlayed) {
+        repository.deleteEQPlayed(userEQPlayed);
     }
 
     public void updateFrontChar(User_Values userValues) {
@@ -128,5 +145,8 @@ public class RPG_ViewModel extends AndroidViewModel {
     }
     public void updateAmount(User_Inventory userInventory) {
         repository.updateAmount(userInventory);
+    }
+    public void findNameCards(String string) {
+        repository.findNameCards(string);
     }
 }

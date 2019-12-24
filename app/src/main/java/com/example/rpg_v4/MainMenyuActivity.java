@@ -153,6 +153,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         private List<User_Cards> lCards;
         private List<User_Decks> lDecks;
         private List<User_Inventory> lInventory;
+        private List<User_Cards> deckNameCards;
         private regions cur_region;
         public void setlValues(List<User_Values> vals) {
             this.lValues = vals;
@@ -167,6 +168,33 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         public void setlCards(List<User_Cards> vals) { this.lCards = vals; }
         public void setlDecks(List<User_Decks> vals) {this.lDecks = vals;}
         public void setlInventory(List<User_Inventory> vals) {this.lInventory = vals;}
+        public void setDeckNameCards(List<User_Cards> vals) {this.deckNameCards = vals;}
+
+        public void deleteInventory(User_Inventory userInventory) {rpgViewModel.deleteInventory(userInventory);}
+        public void deleteCard(User_Cards userCard) {rpgViewModel.deleteCard(userCard);}
+        public void deleteDeck(User_Decks userDeck) {rpgViewModel.deleteDeck(userDeck);}
+        public void deleteEQPlayed(User_EQPlayed userEqPlayed) {rpgViewModel.deleteEQPlayed(userEqPlayed);}
+
+        //please remember these are located by ID NUMBER so the given userData must be FROM THE DB, >>NOT<< NEW
+        private void updateRegion(User_Values userValues) {rpgViewModel.updateRegion(userValues);}
+        private void updatePhase(User_Values userValues) {rpgViewModel.updatePhase(userValues);}
+        private void updateFrontChar(User_Values userValues) {rpgViewModel.updateFrontChar(userValues);}
+        private void updateOkane(User_Values userValues) {rpgViewModel.updateOkane(userValues);}
+        private void updateCompleted(User_EQPlayed userEQPlayed) {rpgViewModel.updateCompleted(userEQPlayed);}
+        private void updateExp(User_Characters userCharacters) {rpgViewModel.updateExp(userCharacters);}
+        private void updateDeck(User_Characters userCharacters) {rpgViewModel.updateDeck(userCharacters);}
+        private void updateItem(User_Characters userCharacters) {rpgViewModel.updateItem(userCharacters);}
+        private void updateAmount(User_Inventory userInventory) {rpgViewModel.updateAmount(userInventory);}
+        private void updateChar(User_Decks userDecks) {rpgViewModel.updateChar(userDecks);}
+        private void updateLabel(User_Decks userDecks) {rpgViewModel.updateLabel(userDecks);}
+        private void updateLen(User_Decks userDecks) {rpgViewModel.updateLen(userDecks);}
+        private void updateAmount(User_Cards userCards) {rpgViewModel.updateAmount(userCards);}
+        private void updatePosition(User_Cards userCards) {rpgViewModel.updatePosition(userCards);}
+
+        public List<User_Cards> getNameCards(String cardName) {
+            rpgViewModel.findNameCards(cardName);
+            return deckNameCards;
+        }
 
         public checkUserData() {
             cur_region = new Veneland();
@@ -202,12 +230,30 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             return weapon;
         }
 
-        public User_Values changeCharacter(Characters character) {
-            return new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),lValues.get(0).getCur_okane(),character.getName(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
+        public void changeCharacter(Characters character) {
+            User_Values value = lValues.get(0);
+            value.setFront_char(character.getName());
+            updateFrontChar(value);
         }
 
-        public User_Values changeOkane(int okane) {
-            return new User_Values(lValues.get(0).getCur_PL(), lValues.get(0).getCur_phase(),okane,lValues.get(0).getFront_char(),lValues.get(0).getUsername(),lValues.get(0).getPassword(),lValues.get(0).getCur_region());
+        public void changeSize(User_Decks deck, int size) {
+            deck.setLength(size);
+            updateLen(deck);
+        }
+
+        public void changeOkane(int okane) {
+            User_Values value = lValues.get(0);
+            value.setCur_okane(okane);
+            updateOkane(value);
+        }
+
+        public void changeAmt(User_Cards card, int amt) {
+            card.setAmount(amt);
+            updateAmount(card);
+        }
+
+        public User_Decks getDeck(int index) {
+            return lDecks.get(index);
         }
 
         public regions getCur_region() {
@@ -346,13 +392,77 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
 
         public void removeCardfromDeck(Deck deck, Card card) {
-            //todo remove from db
+            ArrayList<User_Cards> alphaUserCards = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.getNom()));
+            User_Cards toRemove = cardsOfDeck(deck.getNom(),alphaUserCards).get(0);
+            //!!!new plan. for each card there will be a "None" card in the db...
+            //im assuming fillDecks() will work with this...... you'll need to do an indv test later one to make sure!!!
+            removeUserCardFromDeck(toRemove);
             deck.removeCard(card);
         }
 
+        private void removeUserCardFromDeck(User_Cards card) {
+            userDataChecker.deleteCard(card);
+            User_Decks userDeck = userDataChecker.getDeck((Collections.binarySearch(allDecksNames,card.getDeck())));
+            userDataChecker.changeSize(userDeck,userDeck.getLength()-1);
+        }
+
         public void removeCard(Card card) {
-            //todo remove from db
+            ArrayList<User_Cards> alphaUserCards = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.getNom()));
+            User_Cards toRemove = cardsOfDeck("None", alphaUserCards).get(0);
+            userDataChecker.deleteCard(toRemove);
+            alphaUserCards.remove(toRemove);
+            int amount = toRemove.getAmount()-1;
+            String prev_deck="";
+            for (int i = 0; i<alphaUserCards.size(); i++) {
+                //change the amt quantity in all of the cards
+                userDataChecker.changeAmt(alphaUserCards.get(i),amount);
+                //check that the amt in each deck doesn't exceed this new amount
+                if (!prev_deck.equals("") && !prev_deck.equals(alphaUserCards.get(i).getDeck())) {
+                    //first, check the previous cards to make sure their deck_amt !> amount
+                    int temp_deck_index = Collections.binarySearch(allDecksNames,prev_deck);
+                    Deck temp_deck = allDecks.get(temp_deck_index);
+                    if (temp_deck.getSudoCard(alphaUserCards.get(i).getName()).getAmount() > amount) {
+                        //rmove card from the deck
+                        removeUserCardFromDeck(toRemove);
+                        temp_deck.removeLastCard(toRemove.getName());
+                    }
+                }
+                else if(prev_deck.equals("")) {
+                    prev_deck = alphaUserCards.get(i).getDeck();
+                }
+            }
+
             allCards.removeCard(card);
+        }
+
+        public ArrayList<User_Cards> cardsOfDeck(String deckName, ArrayList<User_Cards> lCards) {
+            ArrayList<User_Cards> cards = new ArrayList<User_Cards>();
+            int location = binarySearchlCards(0,lCards.size()-1, deckName, lCards);
+            if (location == -1) {
+                return null;
+            }
+            while (location != 0 && lCards.get(location-1).getDeck().compareTo(deckName) == 0) {
+                //the card before this is also the same card
+                location--;
+            }
+            while (location != lCards.size()-1 && lCards.get(location).toString().compareTo(deckName) == 0) {
+                cards.add(lCards.get(location));
+                location++;
+            }
+            return cards;
+        }
+
+        public ArrayList<Card> lCards2Cards(ArrayList<User_Cards> lCards) {
+            Class tempClass = null;
+            Card temp = null;
+            ArrayList<Card> cards = new ArrayList<Card>();
+            for (User_Cards c : lCards) {
+                tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
+                try{ temp = (Card) tempClass.newInstance(); }
+                catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                cards.add(temp);
+            }
+            return cards;
         }
 
         private void alphabetizeClassCard() {
@@ -464,7 +574,30 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             }
         }
 
-        public BlankDeck getAllCards() {
+        private int binarySearchlCards(int startIndex, int endIndex, String deckName, ArrayList<User_Cards> lCards) {
+                if (endIndex >= startIndex) {
+                    int mid = startIndex + (int)(((double)(endIndex - startIndex) / 2)+.5);
+                    // If the element is present at the
+                    // middle itself
+                    if (lCards.get(mid).getDeck().compareTo(deckName) == 0)
+                        return mid;
+
+                    // If element is smaller than mid, then
+                    // it can only be present in left subarray
+                    if (lCards.get(mid).getDeck().compareTo(deckName) > 0)
+                        return binarySearchlCards(startIndex, mid - 1, deckName, lCards);
+
+                    // Else the element can only be present
+                    // in right subarray
+                    return binarySearchlCards(mid + 1, endIndex, deckName, lCards);
+                }
+
+                // We reach here when element is not present
+                // in array
+                return -1;
+            }
+
+            public BlankDeck getAllCards() {
             return allCards;
         }
 
@@ -622,6 +755,12 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 if (updateUserInventoryCounter==1) {
                     //init UI updates here
                 }
+            }
+        } );
+        rpgViewModel.getDeckNameCards().observe(this,new Observer<List<User_Inventory>>() {
+            @Override
+            public void onChanged(@Nullable final List<User_Inventory> vals) {
+                userDataChecker.setDeckNameCards(vals);
             }
         } );
     }

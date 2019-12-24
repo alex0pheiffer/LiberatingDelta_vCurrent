@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class RPG_RoomRepository {
     private LiveData<List<User_Cards>> lUserCards;
     private LiveData<List<User_Decks>> lUserDecks;
     private LiveData<List<User_EQPlayed>> lUserEQPlayed;
+    private MutableLiveData<List<User_Cards>> cardNameSearchResults = new MutableLiveData<>();
 
     public RPG_RoomRepository(Application application) {
         RPG_RoomDatabase db = RPG_RoomDatabase.getDatabase(application);
@@ -60,6 +62,7 @@ public class RPG_RoomRepository {
     public LiveData<List<User_EQPlayed>> getlUserEQPlayed() {
         return lUserEQPlayed;
     }
+    public LiveData<List<User_Cards>> getCardNameSearchResults() {return cardNameSearchResults;}
 
     //add wrapper for insert()
     //MUST BE CALLED ON A NON-UI thread
@@ -141,7 +144,22 @@ public class RPG_RoomRepository {
     public void updateAmount(User_Inventory userInventory) {
         new updateAmountAsyncTaskInventory(userInventoryDao).execute(userInventory);
     }
-
+    public void deleteCard(User_Cards userCards) {
+        new deleteAsyncTaskCards(userCardsDao).execute(userCards);
+    }
+    public void deleteDeck(User_Decks userDecks) {
+        new deleteAsyncTaskDecks(userDecksDao).execute(userDecks);
+    }
+    public void deleteInventory(User_Inventory userInventory) {
+        new deleteAsyncTaskInventory(userInventoryDao).execute(userInventory);
+    }
+    public void deleteEQPlayed(User_EQPlayed userEQPlayed) {
+        new deleteAsyncTaskEQPlayed(userEQPlayedDao).execute(userEQPlayed);
+    }
+    //returns a list of Cards with this card name
+    public void findNameCards(String name) {
+        new getCardNameAsyncTaskCard(userCardsDao).execute(name);
+    }
     //insertAsyncTask classes
     private static class insertAsyncTaskValues extends AsyncTask<User_Values, Void, Void> {
 
@@ -224,6 +242,64 @@ public class RPG_RoomRepository {
         @Override
         protected Void doInBackground(final User_Inventory... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    //deleteAsyncTask classes
+    private static class deleteAsyncTaskInventory extends AsyncTask<User_Inventory, Void, Void> {
+
+        private User_Inventory_Dao mAsyncTaskDao;
+
+        deleteAsyncTaskInventory(User_Inventory_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Inventory... params) {
+            mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+    private static class deleteAsyncTaskCards extends AsyncTask<User_Cards, Void, Void> {
+
+        private User_Cards_Dao mAsyncTaskDao;
+
+        deleteAsyncTaskCards(User_Cards_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Cards... params) {
+            mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+    private static class deleteAsyncTaskDecks extends AsyncTask<User_Decks, Void, Void> {
+
+        private User_Decks_Dao mAsyncTaskDao;
+
+        deleteAsyncTaskDecks(User_Decks_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Decks... params) {
+            mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+    private static class deleteAsyncTaskEQPlayed extends AsyncTask<User_EQPlayed, Void, Void> {
+
+        private User_EQPlayed_Dao mAsyncTaskDao;
+
+        deleteAsyncTaskEQPlayed(User_EQPlayed_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_EQPlayed... params) {
+            mAsyncTaskDao.delete(params[0]);
             return null;
         }
     }
@@ -525,5 +601,29 @@ public class RPG_RoomRepository {
             mAsyncTaskDao.updateAmount(params[0].getAmount(),params[0].getId());
             return null;
         }
+    }
+
+    //FIND CARDS:
+    //
+    private static class getCardNameAsyncTaskCard extends AsyncTask<String, Void, List<User_Cards>> {
+        private User_Cards_Dao mAsyncTaskDao;
+        private RPG_RoomRepository delegate = null;
+
+        getCardNameAsyncTaskCard(User_Cards_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<User_Cards> doInBackground(final String... params) {
+            return mAsyncTaskDao.getCardName(params[0]).getValue();
+        }
+
+        @Override
+        protected void onPostExecute(List<User_Cards> result) {
+            delegate.getNameAsyncTaskCardFinished(result);
+        }
+    }
+    private void getNameAsyncTaskCardFinished(List<User_Cards> results) {
+        cardNameSearchResults.setValue(results);
     }
 }

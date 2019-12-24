@@ -43,7 +43,7 @@ public interface User_Decks_Dao {
     void deleteAll();
 
     //return list of UserDecks
-    @Query("SELECT * FROM User_Decks_Table ORDER BY id ASC")
+    @Query("SELECT * FROM User_Decks_Table ORDER BY LABEL ASC")
     LiveData<List<User_Decks>> getAll();
 
     /*

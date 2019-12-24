@@ -2,22 +2,21 @@ package com.example.rpg_v4.basic_classes;
 
 import androidx.annotation.Nullable;
 
+import com.example.rpg_v4.basic_classes.Cards.sudoCard;
+
 import java.util.ArrayList;
 
 public class Deck extends inventI {
 
     private String instanceName;
 
-    //todo why do i have both decks, can't i just use the alphabet one?
-    private ArrayList<Card> cards;
-    private ArrayList<Card> alphabetcards;
-    private int cardAmt;
+    private ArrayList<sudoCard> alphaSudoCards;
+    private int cardAmt;        //total number of cards in the deck
     private int totalWeight;
     private String charequip;   //what char can validly hold this deck
     private String charHolding; //what character __has__ this deck equipped?
     private boolean isValid;
     private boolean isWeaponSpec;
-    //todo consider making a list for card,cardAmt like the specWeapon list...
     private ArrayList<specWeapon> specificWeapons; //the weapons that cards may refer to in this deck
     private class specWeapon {
         private int cardAmt;
@@ -52,12 +51,14 @@ public class Deck extends inventI {
 
     private final String[] charequipers = {"All", "Vivian", "Katherine", "Delta", "Invalid"};
 
+    /*
     public Deck(String name, ArrayList<Card> cards, @Nullable String charHolding) {
         super(name, false, null);
         this.cards = cards;
         if (charHolding != null) {
             this.charHolding = charHolding;
         }
+
         this.alphabetcards = new ArrayList<Card>();
         alphabetizeDeck(true);
         this.cardAmt = cards.size();
@@ -68,84 +69,65 @@ public class Deck extends inventI {
         this.charequip = charequipers[0];
         numInstance++;
     }
+    */
 
     public Deck(String name, @Nullable String charHolding) {
         super(name, false, null);
-        this.cards = new ArrayList<Card>();
+        this.alphaSudoCards= new ArrayList<sudoCard>();
         if (charHolding != null) {
             this.charHolding = charHolding;
         }
-        this.alphabetcards = new ArrayList<Card>();
         this.cardAmt = 0;
-        this.instanceName = getClass().getName()+" "+numInstance;
         this.charequip = charequipers[0];
         numInstance++;
+        this.instanceName = getClass().getName()+" "+numInstance;
     }
 
-    public void alphabetizeDeck(boolean first) {
-        //insertion sort
+    //only sorts the very last card...
+    private void alphabetizeDeck() {
         boolean stillLarger = true;
-        int j;
+        int i = alphaSudoCards.size()-1;
         int newIndex = 0;
-        if (first) {
-            alphabetcards.add(cards.get(0));
-        }
-        for (int i=1; i < cardAmt;i++) {
-            if (first) {
-                alphabetcards.add(cards.get(i));
+        int j = i;
+        stillLarger = true;
+        while (stillLarger) {
+            j--;
+            if (alphaSudoCards.get(j).getCard(0).toString().compareTo(alphaSudoCards.get(i).getCard(0).toString()) <= 0) {
+                stillLarger = false;
+                newIndex = j+1;
             }
-            j = i;
-            stillLarger = true;
-            while (stillLarger) {
-                j--;
-                if (alphabetcards.get(j).getInstanceName().compareTo(alphabetcards.get(i).getInstanceName()) <= 0) {
-                    stillLarger = false;
-                    newIndex = j+1;
-                }
-                else if (j==0) {
-                    stillLarger = false;
-                    newIndex = 0;
-                }
+            else if (j==0) {
+                stillLarger = false;
+                newIndex = 0;
             }
-            alphabetcards.add(newIndex,alphabetcards.get(i));
-            alphabetcards.remove(i+1);
         }
+        alphaSudoCards.add(newIndex,alphaSudoCards.get(i));
+        alphaSudoCards.remove(i+1);
     }
 
-    //tells you the amount of this card in the deck. if the card is in the deck, it will be counted in the value
-    //if the card is NOT in the deck yet, it will not be counted in the count
     public int numCardInstance(Card card) {
-        int amount = 0;
-        int location = binarySearch(card, 0, alphabetcards.size() - 1);
-        if (location == -1) {
-            return amount;
+        int index = binarySearch(card,0,alphaSudoCards.size()-1);
+        if (index != -1) {
+            return alphaSudoCards.get(index).getAmount();
         }
-        String x = card.toString();
-        while (location != 0 && alphabetcards.get(location-1).toString().compareTo(x) == 0) {
-            //the card before this is also the same card
-            location--;
+        else {
+            return 0;
         }
-        while (location != alphabetcards.size()-1 && alphabetcards.get(location).toString().compareTo(x) == 0) {
-            amount++;
-            location++;
-        }
-        return amount;
-
     }
 
-    //typical binary search: starting input... card, 0, alphabetcards.size()-1
+    //typical binary search: starting input... card, 0, alphaSudoCards.size()-1
     private int binarySearch(Card card, int startIndex, int endIndex) {
-        String x = card.getInstanceName();
+        String x = card.toString();
         if (endIndex >= startIndex) {
             int mid = startIndex + (int)(((double)(endIndex - startIndex) / 2)+.5);
             // If the element is present at the
             // middle itself
-            if (alphabetcards.get(mid).getInstanceName().compareTo(x) == 0)
+            if (alphaSudoCards.get(mid).getCard(0).toString().compareTo(x) == 0)
                 return mid;
 
             // If element is smaller than mid, then
             // it can only be present in left subarray
-            if (alphabetcards.get(mid).getInstanceName().compareTo(x) > 0)
+            if (alphaSudoCards.get(mid).getCard(0).toString().compareTo(x) > 0)
                 return binarySearch(card, startIndex, mid - 1);
 
             // Else the element can only be present
@@ -158,13 +140,38 @@ public class Deck extends inventI {
         return -1;
     }
 
+    //typical binary search: starting input... card, 0, alphaSudoCards.size()-1
+    private int binarySearch(String cardName, int startIndex, int endIndex) {
+        String x = cardName;
+        if (endIndex >= startIndex) {
+            int mid = startIndex + (int)(((double)(endIndex - startIndex) / 2)+.5);
+            // If the element is present at the
+            // middle itself
+            if (alphaSudoCards.get(mid).getCard(0).toString().compareTo(x) == 0)
+                return mid;
+
+            // If element is smaller than mid, then
+            // it can only be present in left subarray
+            if (alphaSudoCards.get(mid).getCard(0).toString().compareTo(x) > 0)
+                return binarySearch(cardName, startIndex, mid - 1);
+
+            // Else the element can only be present
+            // in right subarray
+            return binarySearch(cardName, mid + 1, endIndex);
+        }
+
+        // We reach here when element is not present
+        // in array
+        return -1;
+    }
+
     public String checkCharEquip() {
         String belongs = charequipers[0];
-        for (Card card : this.cards) {
-            if (card.getIsCharcterSpecific()) {
-                if (!belongs.equals(card.getSpecificCharacter())) {
+        for (sudoCard card : this.alphaSudoCards) {
+            if (card.getCard(0).getIsCharcterSpecific()) {
+                if (!belongs.equals(card.getCard(0).getSpecificCharacter())) {
                     if (belongs.equals(charequipers[0])) {
-                        belongs = card.getSpecificCharacter();
+                        belongs = card.getCard(0).getSpecificCharacter();
                     } else {
                         return charequipers[4];
                     }
@@ -175,21 +182,31 @@ public class Deck extends inventI {
     }
 
     public String checkCharEquip(Card exceptionCard) {
-        String belongs = charequipers[0];
-        for (Card card : this.cards) {
-            if (!card.getInstanceName().equals(exceptionCard.getInstanceName())) {
-                if (card.getIsCharcterSpecific()) {
-                    if (!belongs.equals(card.getSpecificCharacter())) {
-                        if (belongs.equals(charequipers[0])) {
-                            belongs = card.getSpecificCharacter();
-                        } else {
-                            return charequipers[4];
+        int index = binarySearch(exceptionCard,0,alphaSudoCards.size()-1);
+        if (index == -1) {
+            throw new RuntimeException("exception card DNE");
+        }
+        else if(alphaSudoCards.get(index).getAmount() > 1) {
+            //the card being removed wont change the charEquip
+            return charequip;
+        }
+        else {
+            String belongs = charequipers[0];
+            for (sudoCard card : this.alphaSudoCards) {
+                if (!card.getCard(0).getInstanceName().equals(exceptionCard.getInstanceName())) {
+                    if (card.getCard(0).getIsCharcterSpecific()) {
+                        if (!belongs.equals(card.getCard(0).getSpecificCharacter())) {
+                            if (belongs.equals(charequipers[0])) {
+                                belongs = card.getCard(0).getSpecificCharacter();
+                            } else {
+                                return charequipers[4];
+                            }
                         }
                     }
                 }
             }
+            return belongs;
         }
-        return belongs;
     }
 
     public void updateCharEquip(Card card, boolean adding) {
@@ -215,8 +232,8 @@ public class Deck extends inventI {
     }
 
     public boolean checkWeaponSpec() {
-        for (Card card : cards) {
-            if (card.getIsWeaponSpecific())
+        for (sudoCard card : alphaSudoCards) {
+            if (card.getCard(0).getIsWeaponSpecific())
                 return true;
         }
         return false;
@@ -278,7 +295,7 @@ public class Deck extends inventI {
         if (isValid) {
             if (charequip.equals(charequipers[4]))
                 isValid = false;
-            if (isValid && cards.size() + 1 > MAX_DECK_SIZE) {
+            if (isValid && cardAmt + 1 > MAX_DECK_SIZE) {
                 isValid = false;
             }
             if (isValid && totalWeight + card.getWeight() > MAX_WEIGHT) {
@@ -311,10 +328,8 @@ public class Deck extends inventI {
         }
 
         totalWeight=totalWeight+card.getWeight();
-        cards.add(card);
         cardAmt++;
-        alphabetcards.add(card);
-        alphabetizeDeck(false);
+        addToSudoDeck(card);
     }
 
     //when removing a card from the deck
@@ -333,7 +348,7 @@ public class Deck extends inventI {
         if (charequip.equals(charequipers[4])) {
             isValid = false;
         }
-        if (isValid && cards.size() > MAX_DECK_SIZE) {
+        if (isValid && cardAmt > MAX_DECK_SIZE) {
             isValid = false;
         }
         if (isValid && totalWeight > MAX_WEIGHT) {
@@ -343,31 +358,107 @@ public class Deck extends inventI {
             isValid = false;
         }
 
-        cards.remove(card);
-        alphabetcards.remove(card);
+        removeFromSudoDeck(card);
 
         totalWeight=totalWeight-card.getWeight();
         cardAmt--;
     }
 
+    private void addToSudoDeck(Card card) {
+        //check to make sure the deck isn't empty
+        int newIndex = -1;
+        if(alphaSudoCards.size() == 0) {
+            alphaSudoCards.add(new sudoCard(card));
+            newIndex = 0;
+        }
+        else {
+            //try to find the sudocard deck for this card
+            int index = binarySearch(card, 0, alphaSudoCards.size() - 1);
+            System.out.println();
+            if (index != -1) {
+                alphaSudoCards.get(index).addCard(card);
+                newIndex = index;
+            } else {
+                alphaSudoCards.add(new sudoCard(card));
+                alphabetizeDeck();
+                //throw new RuntimeException("CHECK!!");
+            }
+        }
+        cardAmt++;
+    }
+
+    //when removing a card from your inventory...you will no longer own this card
+    private void removeFromSudoDeck(Card card) {
+        int index = binarySearch(card, 0, alphaSudoCards.size() - 1);
+        //find the sudocard that matches this card
+        if (index != -1) {
+            throw new RuntimeException("error: card "+card.getNom()+" DNE in allCards");
+        }
+        else {
+            if (alphaSudoCards.get(index).getAmount() < 2 ) {
+                //there is only one (or 0) instances of this card in the deck...remove the sudoCard
+                alphaSudoCards.remove(index);
+            }
+            else {
+                boolean cardExists = false;
+                for (int i = 0; i < alphaSudoCards.get(index).getAmount(); i++) {
+                    if (alphaSudoCards.get(index).getCard(i).getInstanceName().equals(card.getInstanceName())) {
+                        //the card is the same as this card
+                        alphaSudoCards.get(index).removeCard(card);
+                        cardExists = true;
+                    }
+                }
+                if (!cardExists) {
+                    throw new RuntimeException("card instance "+card.getInstanceName()+" DNE in it's sudocard");
+                }
+            }
+        }
+        cardAmt--;
+    }
+
     public void updateCardAmt() {
-        cardAmt = cards.size();
+        int amt = 0;
+        if (alphaSudoCards.size() == 0) {
+           cardAmt = 0;
+        }
+        else {
+            for (int n = 0; n < alphaSudoCards.size(); n++) {
+                amt = amt + alphaSudoCards.get(n).getAmount();
+            }
+        }
+        cardAmt = amt;
     }
 
     public int getCardAmt() {
-        return alphabetcards.size();
+        return cardAmt;
     }
 
-    public Card getCard(int index) {
-        return alphabetcards.get(index);
+    public Card getGeneralCard(int index) {
+        return alphaSudoCards.get(index).getCard(0);
     }
 
-    //todo? is this going to be a thing... order really doesnt matter?
+    public Card getGeneralCard(String name) {
+        int index = binarySearch(name, 0, alphaSudoCards.size() - 1);
+        return alphaSudoCards.get(index).getCard(0);
+    }
+
+    public sudoCard getSudoCard(int index) {
+        return alphaSudoCards.get(index);
+    }
+
+    public sudoCard getSudoCard(String name) {
+        int index = binarySearch(name, 0, alphaSudoCards.size() - 1);
+        return alphaSudoCards.get(index);
+    }
+
+    public void removeLastCard(String name) {
+        sudoCard tempSudo = getSudoCard(name);
+        removeCard(tempSudo.getCard(tempSudo.getAmount()-1));
+    }
+
     //when moving a card in the deck to a differnet position in the deck
     //public boolean moveCard(Card card, int location) {
     //    boolean moved = true;
-
-
     //}
 
     public static int getNumInstance() {
@@ -376,8 +467,8 @@ public class Deck extends inventI {
 
     public int getTotalWeight() {
         int total = 0;
-        for (int n=0; n<cards.size(); n++) {
-            total = total+cards.get(n).getWeight();
+        for (int n=0; n<alphaSudoCards.size(); n++) {
+            total = total+alphaSudoCards.get(n).getCard(0).getWeight()*alphaSudoCards.get(n).getAmount();
         }
         return total;
     }

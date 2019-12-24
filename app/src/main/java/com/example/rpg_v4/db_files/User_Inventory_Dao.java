@@ -2,6 +2,7 @@ package com.example.rpg_v4.db_files;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -17,6 +18,10 @@ public interface User_Inventory_Dao {
     //add a new row to the table
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(User_Inventory userInventory);
+
+    //removes an item
+    @Delete
+    void delete(User_Inventory userInventory);
 
     //to update a field with a matching user
     @Update
