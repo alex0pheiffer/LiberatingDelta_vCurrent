@@ -21,6 +21,7 @@ import com.example.rpg_v4.basic_classes.PL;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
 public class deckViewFragment extends Fragment {
 
     private static final String PlayerLevel = "PL";
@@ -98,3 +99,5 @@ public class deckViewFragment extends Fragment {
         void onListFragmentInteraction(DummyItem item);
     }
 }
+
+ */

@@ -77,7 +77,6 @@ public class BlankDeck {
         else {
             //try to find the sudocard deck for this card
             int index = binarySearch(card, 0, alphabetcards.size() - 1);
-            System.out.println();
             if (index != -1) {
                 alphabetcards.get(index).addCard(card);
                 newIndex = index;

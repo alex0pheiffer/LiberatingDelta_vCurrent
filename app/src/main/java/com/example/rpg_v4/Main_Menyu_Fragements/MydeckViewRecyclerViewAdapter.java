@@ -1,5 +1,6 @@
 package com.example.rpg_v4.Main_Menyu_Fragements;
 
+/*
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,4 +74,6 @@ public class MydeckViewRecyclerViewAdapter extends RecyclerView.Adapter<MydeckVi
         }
     }
 }
+
+ */
 

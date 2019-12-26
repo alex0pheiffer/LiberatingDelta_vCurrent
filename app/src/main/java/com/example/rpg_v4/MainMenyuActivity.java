@@ -146,435 +146,492 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment[] regions_frag = new Fragment[18];
 
-    private class checkUserData {
-        private List<User_Values> lValues;
-        private List<User_EQPlayed> lEQPlayed;
-        private List<User_Characters> lCharacters;
-        private List<User_Cards> lCards;
-        private List<User_Decks> lDecks;
-        private List<User_Inventory> lInventory;
-        private List<User_Cards> deckNameCards;
-        private regions cur_region;
-        public void setlValues(List<User_Values> vals) {
-            this.lValues = vals;
-            if (pl < 3 || this_pl == null) {
-                pl = getPL();
-                this_pl = PL_VendingMachine.getPL(pl);
+    private class dataController {
+        //combination of checkUserData and userInventory in order to prevent utmost confusion...
+
+        private class checkUserData {
+            private List<User_Values> lValues;
+            private List<User_EQPlayed> lEQPlayed;
+            private List<User_Characters> lCharacters;
+            private List<User_Cards> lCards;
+            private List<User_Decks> lDecks;
+            private List<User_Inventory> lInventory;
+            private List<User_Cards> deckNameCards;
+            private regions cur_region;
+            public void setlValues(List<User_Values> vals) {
+                this.lValues = vals;
+                if (pl < 3 || this_pl == null) {
+                    pl = getPL();
+                    this_pl = PL_VendingMachine.getPL(pl);
+                }
+                cur_region = getCurrentRegion();
             }
-            cur_region = getCurrentRegion();
-        }
-        public void setlCharacters(List<User_Characters> lCharacters) {this.lCharacters = lCharacters;}
-        public void setlEQPlayed(List<User_EQPlayed> lEQPlayed) {this.lEQPlayed = lEQPlayed;}
-        public void setlCards(List<User_Cards> vals) { this.lCards = vals; }
-        public void setlDecks(List<User_Decks> vals) {this.lDecks = vals;}
-        public void setlInventory(List<User_Inventory> vals) {this.lInventory = vals;}
-        public void setDeckNameCards(List<User_Cards> vals) {this.deckNameCards = vals;}
+            public void setlCharacters(List<User_Characters> lCharacters) {this.lCharacters = lCharacters;}
+            public void setlEQPlayed(List<User_EQPlayed> lEQPlayed) {this.lEQPlayed = lEQPlayed;}
+            public void setlCards(List<User_Cards> vals) { this.lCards = vals; }
+            public void setlDecks(List<User_Decks> vals) {this.lDecks = vals;}
+            public void setlInventory(List<User_Inventory> vals) {this.lInventory = vals;}
+            public void setDeckNameCards(List<User_Cards> vals) {this.deckNameCards = vals;}
 
-        public void deleteInventory(User_Inventory userInventory) {rpgViewModel.deleteInventory(userInventory);}
-        public void deleteCard(User_Cards userCard) {rpgViewModel.deleteCard(userCard);}
-        public void deleteDeck(User_Decks userDeck) {rpgViewModel.deleteDeck(userDeck);}
-        public void deleteEQPlayed(User_EQPlayed userEqPlayed) {rpgViewModel.deleteEQPlayed(userEqPlayed);}
+            public void addCard(User_Cards userCard) {rpgViewModel.insert(userCard);}
+            public void addDeck(User_Decks userDeck) {rpgViewModel.insert(userDeck);}
+            public void addInventory(User_Inventory userInventory) {rpgViewModel.insert(userInventory);}
+            public void addEQPlayed(User_EQPlayed userEQPlayed) {rpgViewModel.insert(userEQPlayed);}
 
-        //please remember these are located by ID NUMBER so the given userData must be FROM THE DB, >>NOT<< NEW
-        private void updateRegion(User_Values userValues) {rpgViewModel.updateRegion(userValues);}
-        private void updatePhase(User_Values userValues) {rpgViewModel.updatePhase(userValues);}
-        private void updateFrontChar(User_Values userValues) {rpgViewModel.updateFrontChar(userValues);}
-        private void updateOkane(User_Values userValues) {rpgViewModel.updateOkane(userValues);}
-        private void updateCompleted(User_EQPlayed userEQPlayed) {rpgViewModel.updateCompleted(userEQPlayed);}
-        private void updateExp(User_Characters userCharacters) {rpgViewModel.updateExp(userCharacters);}
-        private void updateDeck(User_Characters userCharacters) {rpgViewModel.updateDeck(userCharacters);}
-        private void updateItem(User_Characters userCharacters) {rpgViewModel.updateItem(userCharacters);}
-        private void updateAmount(User_Inventory userInventory) {rpgViewModel.updateAmount(userInventory);}
-        private void updateChar(User_Decks userDecks) {rpgViewModel.updateChar(userDecks);}
-        private void updateLabel(User_Decks userDecks) {rpgViewModel.updateLabel(userDecks);}
-        private void updateLen(User_Decks userDecks) {rpgViewModel.updateLen(userDecks);}
-        private void updateAmount(User_Cards userCards) {rpgViewModel.updateAmount(userCards);}
-        private void updatePosition(User_Cards userCards) {rpgViewModel.updatePosition(userCards);}
+            public void deleteInventory(User_Inventory userInventory) {rpgViewModel.deleteInventory(userInventory);}
+            public void deleteCard(User_Cards userCard) {rpgViewModel.deleteCard(userCard);}
+            public void deleteDeck(User_Decks userDeck) {rpgViewModel.deleteDeck(userDeck);}
+            public void deleteEQPlayed(User_EQPlayed userEqPlayed) {rpgViewModel.deleteEQPlayed(userEqPlayed);}
 
-        public List<User_Cards> getNameCards(String cardName) {
-            rpgViewModel.findNameCards(cardName);
-            return deckNameCards;
-        }
+            //please remember these are located by ID NUMBER so the given userData must be FROM THE DB, >>NOT<< NEW
+            private void updateRegion(User_Values userValues) {rpgViewModel.updateRegion(userValues);}
+            private void updatePhase(User_Values userValues) {rpgViewModel.updatePhase(userValues);}
+            private void updateFrontChar(User_Values userValues) {rpgViewModel.updateFrontChar(userValues);}
+            private void updateOkane(User_Values userValues) {rpgViewModel.updateOkane(userValues);}
+            private void updateCompleted(User_EQPlayed userEQPlayed) {rpgViewModel.updateCompleted(userEQPlayed);}
+            private void updateExp(User_Characters userCharacters) {rpgViewModel.updateExp(userCharacters);}
+            private void updateDeck(User_Characters userCharacters) {rpgViewModel.updateDeck(userCharacters);}
+            private void updateItem(User_Characters userCharacters) {rpgViewModel.updateItem(userCharacters);}
+            private void updateAmount(User_Inventory userInventory) {rpgViewModel.updateAmount(userInventory);}
+            private void updateChar(User_Decks userDecks) {rpgViewModel.updateChar(userDecks);}
+            private void updateLabel(User_Decks userDecks) {rpgViewModel.updateLabel(userDecks);}
+            private void updateLen(User_Decks userDecks) {rpgViewModel.updateLen(userDecks);}
+            private void updateAmount(User_Cards userCards) {rpgViewModel.updateAmount(userCards);}
+            private void updatePosition(User_Cards userCards) {rpgViewModel.updatePosition(userCards);}
 
-        public checkUserData() {
-            cur_region = new Veneland();
-            pl = 1;
-        }
-
-        public void fillDecks() {
-            thisUserInventory.fillDecks((ArrayList<User_Decks>)lDecks, (ArrayList<User_Cards>)lCards);
-        }
-
-        private regions getCurrentRegion() {
-            return this_pl.getRegion(lValues.get(0).getCur_region());
-        }
-
-        private Characters getCur_character() {
-            Characters character = new Katherine();
-            if (lValues != null) {
-                this_pl.getCharacter(lValues.get(0).getFront_char());
+            public List<User_Cards> getNameCards(String cardName) {
+                rpgViewModel.findNameCards(cardName);
+                return deckNameCards;
             }
-            return character;
-        }
-        //change this to be a real weapon object plz
-        private String getCur_weapon() {
-            String weapon = "default";
-            if (lCharacters != null) {
-                for (int n = 0; n < lCharacters.size(); n++) {
-                    if (lCharacters.get(n).getName().equals(getCur_character().getName())) {
-                        weapon = lCharacters.get(n).getWeapon_equip();
-                        break;
+
+            public checkUserData() {
+                cur_region = new Veneland();
+                pl = 1;
+            }
+
+            public void fillDecks() {
+                thisUserInventory.fillDecks((ArrayList<User_Decks>)lDecks, (ArrayList<User_Cards>)lCards);
+            }
+
+            public void removeDeck(String name) {
+                //first remove the User_Cards in this deck
+                for (int n = 0; n < lCards.size(); n++) {
+                    if (lCards.get(n).getDeck().compareTo(name) == 0) {
+                        //the card is in the deck
+                        deleteCard(lCards.get(n));
+                        Log.d("NOTICE","index is modified... might be removing a card");
+                        //this index is decreased because lCards is assumed to get modified because the db is modified
+                        n--;
                     }
                 }
-            }
-            return weapon;
-        }
-
-        public void changeCharacter(Characters character) {
-            User_Values value = lValues.get(0);
-            value.setFront_char(character.getName());
-            updateFrontChar(value);
-        }
-
-        public void changeSize(User_Decks deck, int size) {
-            deck.setLength(size);
-            updateLen(deck);
-        }
-
-        public void changeOkane(int okane) {
-            User_Values value = lValues.get(0);
-            value.setCur_okane(okane);
-            updateOkane(value);
-        }
-
-        public void changeAmt(User_Cards card, int amt) {
-            card.setAmount(amt);
-            updateAmount(card);
-        }
-
-        public User_Decks getDeck(int index) {
-            return lDecks.get(index);
-        }
-
-        public regions getCur_region() {
-            return cur_region;
-        }
-
-        public int getPL() {
-            if (lValues != null) return lValues.get(0).getCur_PL();
-            else return 1;
-        }
-    }
-    checkUserData userDataChecker;
-
-    private class userInventory {
-        private BlankDeck allCards;
-        private ArrayList<Deck> allDecks;
-        private ArrayList<String> allDecksNames;
-        //please don't load the following unless inventory is opened...the exception is those equipped by characters
-        private ArrayList<Weapon> allWeapons;
-        private ArrayList<inventI> allNonWeapons;
-        private ArrayList<inventI> allItems;
-
-        //todo update this as you add more card classes
-        private Class[] cardClasses = {Distract.class,DiveLeft.class,RockToss.class,Shove.class,Splash.class,Struggle.class,TreeHide.class};
-        private ArrayList<String> cardClassesNames;
-
-        public userInventory() {
-            allCards = new BlankDeck();
-            allDecks = new ArrayList<Deck>();
-            allWeapons = new ArrayList<Weapon>();
-            allNonWeapons = new ArrayList<inventI>();
-            allItems = new ArrayList<inventI>();
-            cardClassesNames = new ArrayList<String>();
-            allDecksNames = new ArrayList<String>();
-            for (Class n : cardClasses) {
-                cardClassesNames.add(n.getName());
-            }
-            alphabetizeClassCard();
-        }
-
-        public void fillDecks(ArrayList<User_Decks> lDecks, ArrayList<User_Cards> lCards) {
-            //the db cards need to be in alphabetical order
-            lCards = alphabetizelCards(lCards);
-
-            if (allDecks.size() == 0) {
-
-                for (User_Decks d : lDecks) {
-                    String charer;
-                    charer = d.getChar_equip();
-                    if (d.getChar_equip().equals("None")) {
-                        charer = null;
+                //remove the actual User_Decks from the db
+                User_Decks tempdeck = null;
+                for (int n = 0; n < lDecks.size(); n++) {
+                    if (lDecks.get(n).getName().compareTo(name) == 0) {
+                        tempdeck = lDecks.get(n);
                     }
-                    addDeck(new Deck(d.getName(),charer),true);
                 }
+                if (tempdeck == null) {
+                    throw new RuntimeException("Trying to remove deck: "+name+", but it DNE in db");
+                }
+                deleteDeck(tempdeck);
+            }
 
-                String previous_card = "";
-                String previous_deck = "";
-                int deckAmt = 0;
-                Card temp = null;
-                int sudoCardIndex = 0;
-                Class tempClass = null;
-                for (User_Cards c : lCards) {
-                    //if card is not the same as the previous OR null, create a new card instance
-                    if (temp == null || !previous_card.equals(c.getName())) {
-                        tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
-                        try{ temp = (Card) tempClass.newInstance(); }
-                        catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
-                        sudoCardIndex = allCards.addCard(temp);
-                        if (!c.getDeck().equals("None")) {
-                            allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
+            private regions getCurrentRegion() {
+                return this_pl.getRegion(lValues.get(0).getCur_region());
+            }
+
+            private Characters getCur_character() {
+                Characters character = new Katherine();
+                if (lValues != null) {
+                    this_pl.getCharacter(lValues.get(0).getFront_char());
+                }
+                return character;
+            }
+            //change this to be a real weapon object plz
+            private String getCur_weapon() {
+                String weapon = "default";
+                if (lCharacters != null) {
+                    for (int n = 0; n < lCharacters.size(); n++) {
+                        if (lCharacters.get(n).getName().equals(getCur_character().getName())) {
+                            weapon = lCharacters.get(n).getWeapon_equip();
+                            break;
                         }
-                        previous_deck = c.getDeck();
-                        deckAmt = 1;
-                        previous_card = c.getName();
                     }
-                    //same as the previous card
-                    else {
-                        if (previous_deck.equals(c.getDeck())) {
-                            //same deck as the last card
-                            if (deckAmt < allCards.getSudoCard(sudoCardIndex).getAmount()) {
-                                //this type of card in this deck has less than the number of cards created
-                                //>>thus use a card in allCards sudoCard
-                                if (!c.getDeck().equals("None")) {
-                                    allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(allCards.getSudoCard(sudoCardIndex).getCard(deckAmt));
-                                }
-                            }
-                            else {
-                                //the amount of cards in this deck are the same or greater than cards current created
-                                //please create more
-                                if (deckAmt >= c.getAmount()) {
-                                    throw new RuntimeException("cards "+c.getName()+" created exceed the said db amount");
-                                }
-                                try{ temp = (Card) tempClass.newInstance(); }
-                                catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
-                                allCards.addCard(temp);
-                                if (!c.getDeck().equals("None")) {
-                                    allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
-                                }
-                            }
-                            deckAmt++;
+                }
+                return weapon;
+            }
+
+            public void changeCharacter(Characters character) {
+                User_Values value = lValues.get(0);
+                value.setFront_char(character.getName());
+                updateFrontChar(value);
+            }
+
+            public void changeSize(User_Decks deck, int size) {
+                deck.setLength(size);
+                updateLen(deck);
+            }
+
+            public void changeOkane(int okane) {
+                User_Values value = lValues.get(0);
+                value.setCur_okane(okane);
+                updateOkane(value);
+            }
+
+            public void changeAmt(User_Cards card, int amt) {
+                card.setAmount(amt);
+                updateAmount(card);
+            }
+
+            public User_Decks getDeck(int index) {
+                return lDecks.get(index);
+            }
+
+            public regions getCur_region() {
+                return cur_region;
+            }
+
+            public int getPL() {
+                if (lValues != null) return lValues.get(0).getCur_PL();
+                else return 1;
+            }
+        }
+        checkUserData userDataChecker;
+
+        private class userInventory {
+            private BlankDeck allCards;
+            private ArrayList<Deck> allDecks;
+            private ArrayList<String> allDecksNames;
+            //please don't load the following unless inventory is opened...the exception is those equipped by characters
+            private ArrayList<Weapon> allWeapons;
+            private ArrayList<inventI> allNonWeapons;
+            private ArrayList<inventI> allItems;
+
+            //todo update this as you add more card classes
+            private Class[] cardClasses = {Distract.class,DiveLeft.class,RockToss.class,Shove.class,Splash.class,Struggle.class,TreeHide.class};
+            private ArrayList<String> cardClassesNames;
+
+            public userInventory() {
+                allCards = new BlankDeck();
+                allDecks = new ArrayList<Deck>();
+                allWeapons = new ArrayList<Weapon>();
+                allNonWeapons = new ArrayList<inventI>();
+                allItems = new ArrayList<inventI>();
+                cardClassesNames = new ArrayList<String>();
+                allDecksNames = new ArrayList<String>();
+                for (Class n : cardClasses) {
+                    cardClassesNames.add(n.getSimpleName());
+                }
+                alphabetizeClassCard();
+            }
+
+            public void fillDecks(ArrayList<User_Decks> lDecks, ArrayList<User_Cards> lCards) {
+                //the db cards need to be in alphabetical order
+                lCards = alphabetizelCards(lCards);
+
+                if (allDecks.size() == 0) {
+
+                    for (User_Decks d : lDecks) {
+                        String charer;
+                        charer = d.getChar_equip();
+                        if (d.getChar_equip().equals("None")) {
+                            charer = null;
                         }
-                        else {
-                            //new (diff) deck from the last card
+                        addDeck(new Deck(d.getName(),charer),true);
+                    }
+
+                    String previous_card = "";
+                    String previous_deck = "";
+                    int deckAmt = 0;
+                    Card temp = null;
+                    int sudoCardIndex = 0;
+                    Class tempClass = null;
+                    for (User_Cards c : lCards) {
+                        //if card is not the same as the previous OR null, create a new card instance
+                        if (temp == null || !previous_card.equals(c.getName())) {
+                            tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
+                            try{ temp = (Card) tempClass.newInstance(); }
+                            catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                            sudoCardIndex = allCards.addCard(temp);
+                            if (!c.getDeck().equals("None")) {
+                                allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
+                            }
                             previous_deck = c.getDeck();
                             deckAmt = 1;
-                            if (!c.getDeck().equals("None")) {
-                                allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(allCards.getSudoCard(sudoCardIndex).getCard(0));
-                            }
-                            else {
-                                //if the deck is "None" you probably need to make a new card...
-                                if(c.getAmount() > allCards.getSudoCard(sudoCardIndex).getAmount()) {
-                                    //we still need to make a new card
-                                    try{ temp = (Card) tempClass.newInstance(); }
-                                    catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
-                                    allCards.addCard(temp);
-                                }
-                            }
+                            previous_card = c.getName();
                         }
-                    }
-                }
-
-            }
-            else {
-                throw new RuntimeException("Cannot fill decks when they're not empty");
-            }
-        }
-
-        public void addCardtoDeck(Deck deck, Card card) {
-            //todo add to db
-            deck.addCard(card);
-        }
-
-        public void addCard(Card card) {
-            //todo add to                                                                                                                                                                                                                                                                                                                                                                                                                                             db
-            allCards.addCard(card);
-        }
-
-        public void removeCardfromDeck(Deck deck, Card card) {
-            ArrayList<User_Cards> alphaUserCards = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.getNom()));
-            User_Cards toRemove = cardsOfDeck(deck.getNom(),alphaUserCards).get(0);
-            //!!!new plan. for each card there will be a "None" card in the db...
-            //im assuming fillDecks() will work with this...... you'll need to do an indv test later one to make sure!!!
-            removeUserCardFromDeck(toRemove);
-            deck.removeCard(card);
-        }
-
-        private void removeUserCardFromDeck(User_Cards card) {
-            userDataChecker.deleteCard(card);
-            User_Decks userDeck = userDataChecker.getDeck((Collections.binarySearch(allDecksNames,card.getDeck())));
-            userDataChecker.changeSize(userDeck,userDeck.getLength()-1);
-        }
-
-        public void removeCard(Card card) {
-            ArrayList<User_Cards> alphaUserCards = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.getNom()));
-            User_Cards toRemove = cardsOfDeck("None", alphaUserCards).get(0);
-            userDataChecker.deleteCard(toRemove);
-            alphaUserCards.remove(toRemove);
-            int amount = toRemove.getAmount()-1;
-            String prev_deck="";
-            for (int i = 0; i<alphaUserCards.size(); i++) {
-                //change the amt quantity in all of the cards
-                userDataChecker.changeAmt(alphaUserCards.get(i),amount);
-                //check that the amt in each deck doesn't exceed this new amount
-                if (!prev_deck.equals("") && !prev_deck.equals(alphaUserCards.get(i).getDeck())) {
-                    //first, check the previous cards to make sure their deck_amt !> amount
-                    int temp_deck_index = Collections.binarySearch(allDecksNames,prev_deck);
-                    Deck temp_deck = allDecks.get(temp_deck_index);
-                    if (temp_deck.getSudoCard(alphaUserCards.get(i).getName()).getAmount() > amount) {
-                        //rmove card from the deck
-                        removeUserCardFromDeck(toRemove);
-                        temp_deck.removeLastCard(toRemove.getName());
-                    }
-                }
-                else if(prev_deck.equals("")) {
-                    prev_deck = alphaUserCards.get(i).getDeck();
-                }
-            }
-
-            allCards.removeCard(card);
-        }
-
-        public ArrayList<User_Cards> cardsOfDeck(String deckName, ArrayList<User_Cards> lCards) {
-            ArrayList<User_Cards> cards = new ArrayList<User_Cards>();
-            int location = binarySearchlCards(0,lCards.size()-1, deckName, lCards);
-            if (location == -1) {
-                return null;
-            }
-            while (location != 0 && lCards.get(location-1).getDeck().compareTo(deckName) == 0) {
-                //the card before this is also the same card
-                location--;
-            }
-            while (location != lCards.size()-1 && lCards.get(location).toString().compareTo(deckName) == 0) {
-                cards.add(lCards.get(location));
-                location++;
-            }
-            return cards;
-        }
-
-        public ArrayList<Card> lCards2Cards(ArrayList<User_Cards> lCards) {
-            Class tempClass = null;
-            Card temp = null;
-            ArrayList<Card> cards = new ArrayList<Card>();
-            for (User_Cards c : lCards) {
-                tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
-                try{ temp = (Card) tempClass.newInstance(); }
-                catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
-                cards.add(temp);
-            }
-            return cards;
-        }
-
-        private void alphabetizeClassCard() {
-            //insertion sort
-            String tempStr;
-            Class tempCl;
-            for (int i = 0; i < cardClasses.length; i++)
-            {
-                for (int j = i + 1; j < cardClasses.length; j++)
-                {
-                    if (cardClassesNames.get(i).compareTo(cardClassesNames.get(j))>0)
-                    {
-                        tempStr = cardClassesNames.get(i);
-                        tempCl = cardClasses[i];
-                        cardClassesNames.set(i,cardClassesNames.get(j));
-                        cardClasses[i] = cardClasses[j];
-                        cardClassesNames.set(j, tempStr);
-                        cardClasses[j] = tempCl;
-                    }
-                }
-            }
-        }
-
-        private ArrayList<User_Cards> alphabetizelCards(ArrayList<User_Cards> lCards) {
-            boolean stillLarger = true;
-            ArrayList<User_Cards> alphabetcards = new ArrayList<User_Cards>();
-            int j;
-            int newIndex = 0;
-            alphabetcards.add(lCards.get(0));
-            for (int i=1; i < lCards.size();i++) {
-                alphabetcards.add(lCards.get(i));
-                j = i;
-                stillLarger = true;
-                while (stillLarger) {
-                    j--;
-                    if (alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) < 0) {
-                        stillLarger = false;
-                        newIndex = j+1;
-                    }
-                    else if (alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) == 0) {
-                        //the names are the same...sort by deck
-                        if (alphabetcards.get(j).getDeck().compareTo(alphabetcards.get(i).getDeck()) == 0) {
-                            stillLarger = false;
-                            newIndex = j+1;
-                        }
+                        //same as the previous card
                         else {
-                            while(stillLarger) {
-                                if(alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) == 0) {
-                                    if (alphabetcards.get(j).getDeck().compareTo(alphabetcards.get(i).getDeck()) <= 0) {
-                                        stillLarger = false;
-                                        newIndex = j+1;
-                                    }
-                                    else if (j==0) {
-                                        stillLarger = false;
-                                        newIndex = 0;
+                            if (previous_deck.equals(c.getDeck())) {
+                                //same deck as the last card
+                                if (deckAmt < allCards.getSudoCard(sudoCardIndex).getAmount()) {
+                                    //this type of card in this deck has less than the number of cards created
+                                    //>>thus use a card in allCards sudoCard
+                                    if (!c.getDeck().equals("None")) {
+                                        allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(allCards.getSudoCard(sudoCardIndex).getCard(deckAmt));
                                     }
                                 }
                                 else {
-                                    stillLarger = false;
-                                    newIndex = j+1;
+                                    //the amount of cards in this deck are the same or greater than cards current created
+                                    //please create more
+                                    if (deckAmt >= c.getAmount()) {
+                                        throw new RuntimeException("cards "+c.getName()+" created exceed the said db amount");
+                                    }
+                                    try{ temp = (Card) tempClass.newInstance(); }
+                                    catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                                    allCards.addCard(temp);
+                                    if (!c.getDeck().equals("None")) {
+                                        allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
+                                    }
                                 }
-                                j--;
+                                deckAmt++;
+                            }
+                            else {
+                                //new (diff) deck from the last card
+                                previous_deck = c.getDeck();
+                                deckAmt = 1;
+                                if (!c.getDeck().equals("None")) {
+                                    allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(allCards.getSudoCard(sudoCardIndex).getCard(0));
+                                }
+                                else {
+                                    //if the deck is "None" you probably need to make a new card...
+                                    if(c.getAmount() > allCards.getSudoCard(sudoCardIndex).getAmount()) {
+                                        //we still need to make a new card
+                                        try{ temp = (Card) tempClass.newInstance(); }
+                                        catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                                        allCards.addCard(temp);
+                                    }
+                                }
                             }
                         }
                     }
-                    else if (j==0) {
-                        stillLarger = false;
-                        newIndex = 0;
+
+                }
+                else {
+                    throw new RuntimeException("Cannot fill decks when they're not empty");
+                }
+            }
+
+            public void addCardtoDeck(Deck deck, Card card) {
+                int amt = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.toString())).get(0).getAmount();
+                User_Cards toAdd = new User_Cards(card.toString(),amt,deck.getNom(),0);
+                addUserCardToDeck(toAdd);
+                deck.addCard(card);
+            }
+
+            public void addCard(Card card) {
+                ArrayList<User_Cards> alphaUserCards = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.toString()));
+                User_Cards newCard = new User_Cards(card.toString(),alphaUserCards.get(0).getAmount()+1,"None",0);
+                for (int n=0; n<alphaUserCards.size(); n++) {
+                    alphaUserCards.get(n).setAmount(newCard.getAmount());
+                    userDataChecker.updateAmount(alphaUserCards.get(n));
+                }
+                userDataChecker.addCard(newCard);
+                allCards.addCard(card);
+            }
+
+            public void removeCardfromDeck(Deck deck, Card card) {
+                ArrayList<User_Cards> alphaUserCards = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.toString()));
+                User_Cards toRemove = cardsOfDeck(deck.getNom(),alphaUserCards).get(0);
+                //!!!new plan. for each card there will be a "None" card in the db...
+                //im assuming fillDecks() will work with this...... you'll need to do an indv test later one to make sure!!!
+                removeUserCardFromDeck(toRemove);
+                deck.removeCard(card);
+            }
+
+            private void removeUserCardFromDeck(User_Cards card) {
+                //userDataChecker.deleteCard(card);
+                User_Decks userDeck = userDataChecker.getDeck((Collections.binarySearch(allDecksNames,card.getDeck())));
+                userDataChecker.changeSize(userDeck,userDeck.getLength()-1);
+            }
+
+            private void addUserCardToDeck(User_Cards card) {
+                User_Decks userDeck = userDataChecker.getDeck((Collections.binarySearch(allDecksNames,card.getDeck())));
+                userDataChecker.changeSize(userDeck,userDeck.getLength()+1);
+            }
+
+            public void removeCard(Card card) {
+                ArrayList<User_Cards> alphaUserCards = alphabetizelCards((ArrayList<User_Cards>)userDataChecker.getNameCards(card.toString()));
+                User_Cards toRemove = cardsOfDeck("None", alphaUserCards).get(0);
+                userDataChecker.deleteCard(toRemove);
+                alphaUserCards.remove(toRemove);
+                int amount = toRemove.getAmount()-1;
+                String prev_deck="";
+                for (int i = 0; i<alphaUserCards.size(); i++) {
+                    //change the amt quantity in all of the cards
+                    userDataChecker.changeAmt(alphaUserCards.get(i),amount);
+                    //check that the amt in each deck doesn't exceed this new amount
+                    if (!prev_deck.equals("") && !prev_deck.equals(alphaUserCards.get(i).getDeck())) {
+                        //first, check the previous cards to make sure their deck_amt !> amount
+                        int temp_deck_index = Collections.binarySearch(allDecksNames,prev_deck);
+                        Deck temp_deck = allDecks.get(temp_deck_index);
+                        if (temp_deck.getSudoCard(alphaUserCards.get(i).getName()).getAmount() > amount) {
+                            //rmove card from the deck
+                            removeUserCardFromDeck(toRemove);
+                            temp_deck.removeLastCard(toRemove.getName());
+                        }
+                    }
+                    else if(prev_deck.equals("")) {
+                        prev_deck = alphaUserCards.get(i).getDeck();
                     }
                 }
-                alphabetcards.add(newIndex,alphabetcards.get(i));
-                alphabetcards.remove(i+1);
-            }
-            return alphabetcards;
-        }
 
-        public void addDeck(Deck addedDeck, boolean indb) {
-            //insertion sort
-            if (allDecks.size() == 0) {
-                allDecks.add(addedDeck);
-                allDecksNames.add(addedDeck.getNom());
+                allCards.removeCard(card);
             }
-            else {
+
+            public ArrayList<User_Cards> cardsOfDeck(String deckName, ArrayList<User_Cards> lCards) {
+                ArrayList<User_Cards> cards = new ArrayList<User_Cards>();
+                int location = binarySearchlCards(0,lCards.size()-1, deckName, lCards);
+                if (location == -1) {
+                    return null;
+                }
+                while (location != 0 && lCards.get(location-1).getDeck().compareTo(deckName) == 0) {
+                    //the card before this is also the same card
+                    location--;
+                }
+                while (location != lCards.size()-1 && lCards.get(location).toString().compareTo(deckName) == 0) {
+                    cards.add(lCards.get(location));
+                    location++;
+                }
+                return cards;
+            }
+
+            public ArrayList<Card> lCards2Cards(ArrayList<User_Cards> lCards) {
+                Class tempClass = null;
+                Card temp = null;
+                ArrayList<Card> cards = new ArrayList<Card>();
+                for (User_Cards c : lCards) {
+                    tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
+                    try{ temp = (Card) tempClass.newInstance(); }
+                    catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                    cards.add(temp);
+                }
+                return cards;
+            }
+
+            private void alphabetizeClassCard() {
+                //insertion sort
+                String tempStr;
+                Class tempCl;
+                for (int i = 0; i < cardClasses.length; i++)
+                {
+                    for (int j = i + 1; j < cardClasses.length; j++)
+                    {
+                        if (cardClassesNames.get(i).compareTo(cardClassesNames.get(j))>0)
+                        {
+                            tempStr = cardClassesNames.get(i);
+                            tempCl = cardClasses[i];
+                            cardClassesNames.set(i,cardClassesNames.get(j));
+                            cardClasses[i] = cardClasses[j];
+                            cardClassesNames.set(j, tempStr);
+                            cardClasses[j] = tempCl;
+                        }
+                    }
+                }
+            }
+
+            private ArrayList<User_Cards> alphabetizelCards(ArrayList<User_Cards> lCards) {
                 boolean stillLarger = true;
+                ArrayList<User_Cards> alphabetcards = new ArrayList<User_Cards>();
+                int j;
                 int newIndex = 0;
-                int j = allDecks.size();
-                stillLarger = true;
-                while (stillLarger) {
-                    j--;
-                    int compare = allDecks.get(j).getInstanceName().compareTo(addedDeck.getInstanceName());
-                    if ( compare < 0) {
-                        stillLarger = false;
-                        newIndex = j+1;
+                alphabetcards.add(lCards.get(0));
+                for (int i=1; i < lCards.size();i++) {
+                    alphabetcards.add(lCards.get(i));
+                    j = i;
+                    stillLarger = true;
+                    while (stillLarger) {
+                        j--;
+                        if (alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) < 0) {
+                            stillLarger = false;
+                            newIndex = j+1;
+                        }
+                        else if (alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) == 0) {
+                            //the names are the same...sort by deck
+                            if (alphabetcards.get(j).getDeck().compareTo(alphabetcards.get(i).getDeck()) == 0) {
+                                stillLarger = false;
+                                newIndex = j+1;
+                            }
+                            else {
+                                while(stillLarger) {
+                                    if(alphabetcards.get(j).getName().compareTo(alphabetcards.get(i).getName()) == 0) {
+                                        if (alphabetcards.get(j).getDeck().compareTo(alphabetcards.get(i).getDeck()) <= 0) {
+                                            stillLarger = false;
+                                            newIndex = j+1;
+                                        }
+                                        else if (j==0) {
+                                            stillLarger = false;
+                                            newIndex = 0;
+                                        }
+                                    }
+                                    else {
+                                        stillLarger = false;
+                                        newIndex = j+1;
+                                    }
+                                    j--;
+                                }
+                            }
+                        }
+                        else if (j==0) {
+                            stillLarger = false;
+                            newIndex = 0;
+                        }
                     }
-                    else if(compare == 0) {
-                        //eventually you'll need to give the user a dialog box telling them to edit the name of their deck
-                        throw new RuntimeException("INVALID DECK NAME: deck name is the same as another deck...");
-                    }
-                    else if (j==0) {
-                        stillLarger = false;
-                        newIndex = 0;
-                    }
+                    alphabetcards.add(newIndex,alphabetcards.get(i));
+                    alphabetcards.remove(i+1);
                 }
-                allDecks.add(newIndex, addedDeck);
-                allDecksNames.add(newIndex, addedDeck.getNom());
+                return alphabetcards;
             }
-            if (!indb) {
-                //todo add this new deck to the db
-            }
-        }
 
-        private int binarySearchlCards(int startIndex, int endIndex, String deckName, ArrayList<User_Cards> lCards) {
+            //indb == if the deck is already in the db or not
+            public void addDeck(Deck addedDeck, boolean indb) {
+                //insertion sort
+                if (allDecks.size() == 0) {
+                    allDecks.add(addedDeck);
+                    allDecksNames.add(addedDeck.getNom());
+                }
+                else {
+                    boolean stillLarger = true;
+                    int newIndex = 0;
+                    int j = allDecks.size();
+                    stillLarger = true;
+                    while (stillLarger) {
+                        j--;
+                        int compare = allDecks.get(j).getInstanceName().compareTo(addedDeck.getInstanceName());
+                        if ( compare < 0) {
+                            stillLarger = false;
+                            newIndex = j+1;
+                        }
+                        else if(compare == 0) {
+                            //eventually you'll need to give the user a dialog box telling them to edit the name of their deck
+                            throw new RuntimeException("INVALID DECK NAME: deck name is the same as another deck...");
+                        }
+                        else if (j==0) {
+                            stillLarger = false;
+                            newIndex = 0;
+                        }
+                    }
+                    allDecks.add(newIndex, addedDeck);
+                    allDecksNames.add(newIndex, addedDeck.getNom());
+                }
+                if (!indb) {
+                    userDataChecker.addDeck(new User_Decks(addedDeck.getNom(),"None",addedDeck.getCardAmt()));
+                }
+            }
+
+            public void removeDeck(Deck removeDeck) {
+                //all this does is update the deck instances of Cards
+                //it doesnt remove the cards from the lists in the deck... hence why it is still used in the following:
+                removeDeck.removeAll();
+                //this will remove the deck card instances from the db...perhaps theres a better way to do this?
+                userDataChecker.removeDeck(removeDeck.getNom());
+                //removing deck from relative allDecks object
+                allDecks.remove(removeDeck);
+                //todo check if a character has this deck equipped... you'll need to modify that too if it's true, db and relative
+            }
+
+            private int binarySearchlCards(int startIndex, int endIndex, String deckName, ArrayList<User_Cards> lCards) {
                 if (endIndex >= startIndex) {
                     int mid = startIndex + (int)(((double)(endIndex - startIndex) / 2)+.5);
                     // If the element is present at the
@@ -598,55 +655,94 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             }
 
             public BlankDeck getAllCards() {
-            return allCards;
-        }
-
-        public ArrayList<Deck> getAllDecks() {
-            return allDecks;
-        }
-
-        public ArrayList<Weapon> getAllWeapons() {
-            if (allWeapons.size() == 0) {
-                //create inventory options
+                return allCards;
             }
-            return allWeapons;
-        }
 
-        public ArrayList<inventI> getAllNonWeapons() {
-            if (allNonWeapons.size() == 0) {
-                //create inventory options
+            public ArrayList<Deck> getAllDecks() {
+                return allDecks;
             }
-            return allNonWeapons;
-        }
 
-        public ArrayList<inventI> getAllItems() {
-            if (allWeapons.size() == 0) {
-                //create inventory options
-            }
-            return allItems;
-        }
-
-        public void createInventoryOptions() {
-            //not finished
-            if (allWeapons.size() == 0) {
-                //create all Weapons
-            }
-            if (allNonWeapons.size() == 0) {
-                //create all non weapons
-            }
-            if (allItems.size() == 0) {
-
-                for (int i = 0; i<allWeapons.size(); i++){
-                    allItems.add(allWeapons.get(i));
+            public ArrayList<Weapon> getAllWeapons() {
+                if (allWeapons.size() == 0) {
+                    //create inventory options
                 }
-                for (int i = 0; i<allNonWeapons.size(); i++) {
-                    allItems.add(allNonWeapons.get(i));
+                return allWeapons;
+            }
+
+            public ArrayList<inventI> getAllNonWeapons() {
+                if (allNonWeapons.size() == 0) {
+                    //create inventory options
+                }
+                return allNonWeapons;
+            }
+
+            public ArrayList<inventI> getAllItems() {
+                if (allWeapons.size() == 0) {
+                    //create inventory options
+                }
+                return allItems;
+            }
+
+            public void createInventoryOptions() {
+                //not finished
+                if (allWeapons.size() == 0) {
+                    //create all Weapons
+                }
+                if (allNonWeapons.size() == 0) {
+                    //create all non weapons
+                }
+                if (allItems.size() == 0) {
+
+                    for (int i = 0; i<allWeapons.size(); i++){
+                        allItems.add(allWeapons.get(i));
+                    }
+                    for (int i = 0; i<allNonWeapons.size(); i++) {
+                        allItems.add(allNonWeapons.get(i));
+                    }
                 }
             }
+
         }
+        userInventory thisUserInventory;
+
+        dataController() {
+            userDataChecker = new checkUserData();
+            thisUserInventory = new userInventory();
+        }
+
+        public void setlValues(List<User_Values> vals) {userDataChecker.setlValues(vals);}
+        public void setlCharacters(List<User_Characters> lCharacters) {userDataChecker.setlCharacters(lCharacters);}
+        public void setlEQPlayed(List<User_EQPlayed> lEQPlayed) {userDataChecker.setlEQPlayed(lEQPlayed);}
+        public void setlCards(List<User_Cards> vals) { userDataChecker.setlCards(vals); }
+        public void setlDecks(List<User_Decks> vals) {userDataChecker.setlDecks(vals);}
+        public void setlInventory(List<User_Inventory> vals) {userDataChecker.setlInventory(vals);}
+        public void setDeckNameCards(List<User_Cards> vals) {userDataChecker.setDeckNameCards(vals);}
+
+        public regions getCur_region() {return userDataChecker.getCur_region();}
+        public Characters getCur_character() {return userDataChecker.getCur_character();}
+        public String getCur_weapon() {return userDataChecker.getCur_weapon();}
+        public int getPL() {return userDataChecker.getPL();}
+
+        public void fillDecks() {userDataChecker.fillDecks();}
+        //an existing card is added to a deck
+        public void addCardtoDeck(Deck deck, Card card) {thisUserInventory.addCardtoDeck(deck,card);}
+        //an existing card is removed from a deck, but continues to exist
+        public void removeCardfromDeck(Deck deck, Card card) {thisUserInventory.removeCardfromDeck(deck,card);}
+        //does not add to a deck, card instance is assumed to not exist
+        public void addCard(Card card) {thisUserInventory.addCard(card);}
+        //an existing card is removed from inventory entirely, including all decks
+        public void removeCard(Card card) {thisUserInventory.removeCard(card);}
+        //creating a new deck...it is assumed this does not already exist in the db
+        public void addDeck(Deck deck) {thisUserInventory.addDeck(deck, false);}
+        public void removeDeck(Deck deck) {thisUserInventory.removeDeck(deck);}
+
+        //returns a BlankDeck...not a list
+        public BlankDeck getAllCards() {return thisUserInventory.getAllCards();}
+        public ArrayList<Deck> getAllDecks() {return thisUserInventory.getAllDecks();}
 
     }
-    userInventory thisUserInventory;
+    dataController myDataController;
+
 
     //public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -663,8 +759,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         bufferbackgRight = findViewById(R.id.false_background_right);
         mmc_backbox = findViewById(R.id.menyu_mmc_backbox);
 
-        userDataChecker = new checkUserData();
-        thisUserInventory = new userInventory();
+        myDataController = new dataController();
 
         rpgViewModel = new ViewModelProvider(this).get(RPG_ViewModel.class);
 
@@ -672,9 +767,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
         //adding fragments
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        mainMenyuRegionMapBtn = main_menyu_region_map_btn.newInstance(userDataChecker.getCur_region().getNom(), pl);
+        mainMenyuRegionMapBtn = main_menyu_region_map_btn.newInstance(myDataController.getCur_region().getNom(), pl);
         itemsBar = menyu_itemsbar.newInstance();
-        characterIcon = main_menyu_frontcharacter.newInstance(userDataChecker.getCur_character().getName(), userDataChecker.getCur_weapon(),userDataChecker.getPL());
+        characterIcon = main_menyu_frontcharacter.newInstance(myDataController.getCur_character().getName(), myDataController.getCur_weapon(),myDataController.getPL());
         ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
         ft.add(R.id.itemsbar,itemsBar);
         ft.add(R.id.menyu_mmc_frag,characterIcon);
@@ -693,9 +788,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             @Override
             public void onChanged(@Nullable final List<User_Values> vals) {
                 updateUserValuesCounter++;
-                userDataChecker.setlValues(vals);
+                myDataController.setlValues(vals);
                 if (updateUserValuesCounter==1) {
-                    activity_whole.setBackground(getDrawable(userDataChecker.getCur_region().getDrawable_background()));
+                    activity_whole.setBackground(getDrawable(myDataController.getCur_region().getDrawable_background()));
                     //filling region fragment list
                     //fillRegions_frag();
                 }
@@ -705,7 +800,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             @Override
             public void onChanged(@Nullable final List<User_EQPlayed> vals) {
                 updateUserEQPlayedCounter++;
-                userDataChecker.setlEQPlayed(vals);
+                myDataController.setlEQPlayed(vals);
                 if (updateUserEQPlayedCounter==1) {
                     //init UI updates here
                 }
@@ -715,7 +810,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             @Override
             public void onChanged(@Nullable final List<User_Characters> vals) {
                 updateUserCharactersCounter++;
-                userDataChecker.setlCharacters(vals);
+                myDataController.setlCharacters(vals);
                 if (updateUserCharactersCounter==1) {
                     //init UI updates here
                 }
@@ -725,11 +820,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             @Override
             public void onChanged(@Nullable final List<User_Cards> vals) {
                 updateUserCardsCounter++;
-                userDataChecker.setlCards(vals);
+                myDataController.setlCards(vals);
                 if (updateUserCardsCounter==1) {
                     //init UI updates here
                     if(updateUserDecksCounter==1) {
-                        userDataChecker.fillDecks();
+                        myDataController.fillDecks();
                     }
                 }
             }
@@ -738,11 +833,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             @Override
             public void onChanged(@Nullable final List<User_Decks> vals) {
                 updateUserDecksCounter++;
-                userDataChecker.setlDecks(vals);
+                myDataController.setlDecks(vals);
                 if (updateUserDecksCounter==1) {
                     //init UI updates here
                     if(updateUserCardsCounter==1) {
-                        userDataChecker.fillDecks();
+                        myDataController.fillDecks();
                     }
                 }
             }
@@ -751,24 +846,24 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             @Override
             public void onChanged(@Nullable final List<User_Inventory> vals) {
                 updateUserInventoryCounter++;
-                userDataChecker.setlInventory(vals);
+                myDataController.setlInventory(vals);
                 if (updateUserInventoryCounter==1) {
                     //init UI updates here
                 }
             }
         } );
-        rpgViewModel.getDeckNameCards().observe(this,new Observer<List<User_Inventory>>() {
+        rpgViewModel.getNameCards().observe(this,new Observer<List<User_Cards>>() {
             @Override
-            public void onChanged(@Nullable final List<User_Inventory> vals) {
-                userDataChecker.setDeckNameCards(vals);
+            public void onChanged(@Nullable final List<User_Cards> vals) {
+                myDataController.setDeckNameCards(vals);
             }
         } );
     }
 
     //todo
     public void fillRegions_frag() {
-        System.out.println("OUR CUR PL: "+userDataChecker.getPL());
-        regions_frag[0] = region_1_fragment.newInstance(userDataChecker.getPL());
+        System.out.println("OUR CUR PL: "+myDataController.getPL());
+        regions_frag[0] = region_1_fragment.newInstance(myDataController.getPL());
         //regions_frag[1] = region_2_fragment.newInstance(userDataChecker.getPL());
     }
 
@@ -782,12 +877,12 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
     public void regionBtnPressed() {
         if (layoutSetter.compareWithCurrent(mainMenyuRegionMapBtn.getCURRENT_LAYOUT())) {
-            boolean regions_match = userDataChecker.getCur_region().getNom().equals(mainMenyuRegionMapBtn.getRegion().getNom());
+            boolean regions_match = myDataController.getCur_region().getNom().equals(mainMenyuRegionMapBtn.getRegion().getNom());
             if (regions_match) {
                 //terminate the fragment
                 System.out.println("Terminating RegionBtn");
                 FragmentTransaction ft = fragmentManager.beginTransaction();
-                regionFragment = region_1_fragment.newInstance(userDataChecker.getPL());
+                regionFragment = region_1_fragment.newInstance(myDataController.getPL());
                 ft.add(R.id.menyu_regionmap_btn_frag,regionFragment);
                 ft.remove(characterIcon);
                 ft.remove(itemsBar);
@@ -813,7 +908,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
     //regionBtns
     public void cityPtPressed(String city) {
-        boolean regions_match = userDataChecker.getCur_region().getNom().equals(((RegionFragmentInterface)regionFragment).getRegion().getNom());
+        boolean regions_match = myDataController.getCur_region().getNom().equals(((RegionFragmentInterface)regionFragment).getRegion().getNom());
         if (regions_match) {
 
             cityPt town;
@@ -821,7 +916,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             if (city.equals("Maleficere Mansion")) {
                 town = new maleficere_mansion();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
-                regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), town.getNom(),userDataChecker.getPL());
+                regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(myDataController.getCur_region().getNom(), town.getNom(),myDataController.getPL());
                 ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
                 backbox_top_text.setText(town.getNom());
                 ft.addToBackStack(null);
@@ -832,7 +927,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             else if (city.equals("Chipper Towne")) {
                 town = new chipper_towne();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
-                regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(userDataChecker.getCur_region().getNom(), town.getNom(),userDataChecker.getPL());
+                regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(myDataController.getCur_region().getNom(), town.getNom(),myDataController.getPL());
                 ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
                 backbox_top_text.setText(town.getNom());
                 ft.addToBackStack(null);
@@ -905,7 +1000,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         //okay i think we're opening a new activity... lets see how much this fucks up our data
         Intent intented = new Intent(MainMenyuActivity.this, wholeMapActivity.class);
         Bundle args = new Bundle();
-        args.putString("CURRENT_REGION", userDataChecker.getCur_region().getNom());
+        args.putString("CURRENT_REGION", myDataController.getCur_region().getNom());
         args.putInt("PlayerLevel",pl);
         intented.putExtras(args);
         startActivity(intented);
