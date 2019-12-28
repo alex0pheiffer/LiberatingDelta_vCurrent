@@ -1,5 +1,7 @@
 package com.example.rpg_v4.basic_classes;
 
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.example.rpg_v4.basic_classes.Cards.sudoCard;
@@ -459,6 +461,12 @@ public class Deck extends inventI {
         return allCards.get(index);
     }
 
+    public boolean getIsValid() {return isValid;}
+
+    public String getCharequip() {return charequip;}
+
+    public String getCharHolding() {return charHolding;}
+
     public void removeLastCard(String name) {
         sudoCard tempSudo = getSudoCard(name);
         removeCard(tempSudo.getCard(tempSudo.getAmount()-1));
@@ -494,6 +502,10 @@ public class Deck extends inventI {
 
     public String getInstanceName() {
         return instanceName;
+    }
+
+    public String toString() {
+        return getClass().getSimpleName();
     }
 
 }

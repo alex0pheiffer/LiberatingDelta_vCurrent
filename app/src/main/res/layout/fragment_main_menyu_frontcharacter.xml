@@ -11,5 +11,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/dummy_mmc_img" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mmc_upArrow"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="50dp"
+        android:layout_height="30dp"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mmc_downArrow"
+        android:rotation="180"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom|center"
+        android:layout_width="50dp"
+        android:layout_height="30dp"/>
 
 </FrameLayout>

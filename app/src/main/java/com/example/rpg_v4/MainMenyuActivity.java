@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.rpg_v4.Main_Menyu_Fragements.CharacterArrowFragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended;
+import com.example.rpg_v4.Main_Menyu_Fragements.deckViewFragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_frontcharacter;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_regionChapters_fragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_region_map_btn;
@@ -45,14 +47,10 @@ import com.example.rpg_v4.db_files.User_Inventory;
 import com.example.rpg_v4.db_files.User_Values;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.ListIterator;
 
-public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener {
+public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction {
 
     private int pl;
     private PL this_pl;
@@ -74,6 +72,8 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private chapterExtended chapterExtendedFragment;
     private menyu_itemsbar itemsBar;
     private main_menyu_frontcharacter characterIcon;
+    private deckViewFragment deckViewerRecycler;
+    private CharacterArrowFragment MMCarrowUp, MMCarrowDown;
     private main_menyu_regionChapters_fragment regionChapterListRecycler;
     private View bufferbackgTop, bufferbackgBottom, bufferbackgLeft, bufferbackgRight, mmc_backbox ;
 
@@ -722,6 +722,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         public Characters getCur_character() {return userDataChecker.getCur_character();}
         public String getCur_weapon() {return userDataChecker.getCur_weapon();}
         public int getPL() {return userDataChecker.getPL();}
+        public void changeCharacter(Characters character) {
+            userDataChecker.changeCharacter(character);
+        }
 
         public void fillDecks() {userDataChecker.fillDecks();}
         //an existing card is added to a deck
@@ -994,6 +997,22 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         //add a backbtn
         //add deck scroller
         //make sure that the middle deck in the deck scroller is the equipped deck. In the case of all char, it can be the last viewed deck... but you'll never open to all characters
+        Log.d("VIEW_CHANGE","Opening Deck Viewer");
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        deckViewerRecycler = deckViewFragment.newInstance(myDataController.getPL(),myDataController.getAllDecks().get(0).getNom());
+        ft.add(R.id.whole_container_frag,deckViewerRecycler);
+        ft.remove(itemsBar);
+        ft.remove(mainMenyuRegionMapBtn);
+        ft.addToBackStack(null);
+        ft.commit();
+        deployArrowsMMC();
+        bufferbackgBottom.setAlpha(0);
+        bufferbackgTop.setAlpha(0);
+        bufferbackgLeft.setAlpha(0);
+        bufferbackgRight.setAlpha(0);
+        mmc_backbox.setBackground(null);
+        layoutSetter.changeLayout("DECK_VIEW_LAYOUT");//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
+        //intro mainmenyu2region (move region icons on)
     }
     public void menyuItemsBarInventoryPressed() {}
     public void menyuItemsBarMapPressed() {
@@ -1007,7 +1026,39 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
 
     //DecksViewer
+    public ArrayList<Deck> getAllDecks() {
+        return myDataController.getAllDecks();
+    }
+    public void deckRecyclerDeckPressed(Deck deck) { Log.d("TESTING",deck.getNom()+" was pressed.");}
+    public void deckRecyclerAddDeckPressed() {Log.d("TESTING","Adding_deck was pressed.");}
+    public int getMMC_rightDist() {
+        return characterIcon.getView().getRight();
+    }
+    public boolean getEmptyCharacter() {
+        return characterIcon.getEmptyCharacter();
+    }
 
+    //MMC_Character
+    public void deployArrowsMMC() {
+        //add the character change arrows
+        MMCarrowUp = CharacterArrowFragment.newInstance(true,true);
+        MMCarrowDown = CharacterArrowFragment.newInstance(false,true);
+        characterIcon.deployArrowsMMC(MMCarrowUp, MMCarrowDown);
+    }
+    public void reignArrowsMMC() {
+        //removes the character change arrows
+        //todo
+        //check that the current character isn't "empty", UPDATE THE CUR-CHAR IN DB
+        //if (newCharacter != null) myDataController.changeCharacter(newCharacter);
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.remove(MMCarrowUp);
+        ft.remove(MMCarrowDown);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+    public void characterArrowPressed(boolean isUp, boolean hasEmpty) {
+        characterIcon.characterArrowPressed(isUp, hasEmpty);
+    }
 
     public void clearFragments(String layout) {
         if (layoutSetter.compareParsed(layout,"REGION_MAP_LAYOUT")) {
@@ -1024,7 +1075,10 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             backbox_top_text.setText("");
         }
         else if (layoutSetter.compareParsed(layout,"CHARACTER_VIEW_LAYOUT")) {
-
+            reignArrowsMMC();
+        }
+        else if(layoutSetter.compareParsed(layout,"DECK_VIEW_LAYOUT")) {
+            reignArrowsMMC();
         }
         System.out.println("layouts cleared");
     }

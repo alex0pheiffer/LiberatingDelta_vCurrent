@@ -12,37 +12,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.rpg_v4.PL_VendingMachine;
 import com.example.rpg_v4.R;
-import com.example.rpg_v4.Main_Menyu_Fragements.dummy.DummyContent;
-import com.example.rpg_v4.Main_Menyu_Fragements.dummy.DummyContent.DummyItem;
 import com.example.rpg_v4.basic_classes.Deck;
 import com.example.rpg_v4.basic_classes.PL;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+
 public class deckViewFragment extends Fragment {
 
     private static final String PlayerLevel = "PL";
-    private static final String CURRRENT_DECK = "CURRENT_DECK";
-    private static final String ALL_DECKS = "ALL_DECKS";
+    private static final String CURRENT_DECK = "CURRENT_DECK";
 
     private int mColumnCount = 1;
     private int pl;
     private PL this_pl;
-    private Deck current;
-    private OnListFragmentInteractionListener mListener;
+    private String current;
+    private deckRecyclerListener mListener;
 
     public deckViewFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static deckViewFragment newInstance(int columnCount) {
+    public static deckViewFragment newInstance(int pl, String currentDeck) {
         deckViewFragment fragment = new deckViewFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putInt(PlayerLevel, pl);
+        args.putString(CURRENT_DECK,currentDeck);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +49,9 @@ public class deckViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            pl = getArguments().getInt(PlayerLevel);
+            this_pl = PL_VendingMachine.getPL(this.pl);
+            current = getArguments().getString(CURRENT_DECK);
         }
     }
 
@@ -66,11 +65,11 @@ public class deckViewFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MydeckViewRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MydeckViewRecyclerViewAdapter(mListener));
         }
         return view;
     }
@@ -79,11 +78,11 @@ public class deckViewFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof deckRecyclerListener) {
+            mListener = (deckRecyclerListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement deckRecyclerListener");
         }
     }
 
@@ -94,10 +93,11 @@ public class deckViewFragment extends Fragment {
     }
 
 
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+    public interface deckRecyclerListener {
+        ArrayList<Deck> getAllDecks();
+        void deckRecyclerDeckPressed(Deck deck);
+        void deckRecyclerAddDeckPressed();
+        int getMMC_rightDist();
+        boolean getEmptyCharacter();
     }
 }
-
- */

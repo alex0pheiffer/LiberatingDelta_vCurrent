@@ -137,7 +137,7 @@ public abstract class PL {
         return the_city;
     }
 
-    public main_character getCharacter(String name) {
+    private int getChar(String name) {
         int the_character=0;
         for (int n=0; n<all_MC_nom.length; n++){
             if (name.equals(all_MC_nom[n])) {
@@ -145,7 +145,40 @@ public abstract class PL {
                 break;
             }
         }
-        return all_MC[the_character];
+        return the_character;
+    }
+
+    public main_character getCharacter(String name) {
+        return all_MC[getChar(name)];
+    }
+
+    public main_character rotateCharacter(String cur_char, boolean isUp, boolean hasEmpty) {
+        //hasEmpty --> tells if we can return an "empty" character
+        int index;
+
+        if (cur_char.compareTo("empty") == 0)
+        {
+            if (isUp) index = all_MC.length-1;
+            else index = 0;
+        }
+        else {
+            index = getChar(cur_char);
+            if (isUp) {
+                if (index == 0) {
+                    if (hasEmpty) return null;
+                    else index = all_MC.length - 1;
+                } else {
+                    index--;
+                }
+            } else {
+                index++;
+                if (index >= all_MC.length) {
+                    if (hasEmpty) return null;
+                    else index = 0;
+                }
+            }
+        }
+        return all_MC[index];
     }
 
     //public cityPt[] getAllCities() { return all_cities;}
