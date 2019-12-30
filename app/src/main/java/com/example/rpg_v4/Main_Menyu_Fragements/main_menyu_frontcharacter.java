@@ -91,17 +91,13 @@ public class main_menyu_frontcharacter extends Fragment {
         else character = this_pl.rotateCharacter(character.getName(), isUp, hasEmpty);
         if (character != null) {
             Log.d("CHARARROW", "charArrowPressed; " + character.getName() + " showing");
+            //frontcharacter.setImageDrawable(getActivity().getDrawable(character.getCharacterImgDrawable()));
+            frontcharacter.setImageDrawable(getActivity().getDrawable(R.drawable.dummycat));
         }
         else {
             Log.d("CHARARROW", "charArrowPressed; " + "null" + " showing");
-        }
-        if (character != null) {
-            //frontcharacter.setImageDrawable(getActivity().getDrawable(character.getCharacterImgDrawable()));
-            frontcharacter = getView().findViewById(R.id.menyu_mmc_img);
-        } else {
             frontcharacter.setImageDrawable(null);
         }
-        //notice how if
     }
 
     public boolean getEmptyCharacter() {

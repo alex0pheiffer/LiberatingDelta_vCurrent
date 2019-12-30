@@ -26,6 +26,10 @@ public class deckViewFragment extends Fragment {
     private static final String PlayerLevel = "PL";
     private static final String CURRENT_DECK = "CURRENT_DECK";
 
+    private final String ADD_DECK = "__adding";
+    private final String BLANK_ITEM = "__blank";
+    private List<Deck> allDecks;
+
     private int mColumnCount = 1;
     private int pl;
     private PL this_pl;
@@ -53,6 +57,14 @@ public class deckViewFragment extends Fragment {
             this_pl = PL_VendingMachine.getPL(this.pl);
             current = getArguments().getString(CURRENT_DECK);
         }
+        allDecks = mListener.getAllDecks();
+        allDecks.add(new Deck(ADD_DECK,null));
+        allDecks.add(0,new Deck(BLANK_ITEM, null));
+
+        while (allDecks.size() < 6) {
+            //make the deck size 6 (5 decks)
+            allDecks.add(new Deck(BLANK_ITEM,null));
+        }
     }
 
     @Override
@@ -69,7 +81,21 @@ public class deckViewFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MydeckViewRecyclerViewAdapter(mListener));
+            recyclerView.setAdapter(new MydeckViewRecyclerViewAdapter(mListener, allDecks));
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    //the following is not really used rn,... but itll be needed for inf scroll?
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    super.onScrolled(recyclerView, dx, dy);
+                    int firstItemVisible = linearLayoutManager.findFirstVisibleItemPosition();
+                    if (firstItemVisible != 0 && firstItemVisible % allDecks.size() == 0) {
+                        recyclerView.getLayoutManager().scrollToPosition(0);
+                    }
+                    //this is needed...
+                    mListener.decksScrolled();
+                }
+            });
         }
         return view;
     }
@@ -92,12 +118,12 @@ public class deckViewFragment extends Fragment {
         mListener = null;
     }
 
-
     public interface deckRecyclerListener {
         ArrayList<Deck> getAllDecks();
         void deckRecyclerDeckPressed(Deck deck);
         void deckRecyclerAddDeckPressed();
         int getMMC_rightDist();
         boolean getEmptyCharacter();
+        void decksScrolled();
     }
 }

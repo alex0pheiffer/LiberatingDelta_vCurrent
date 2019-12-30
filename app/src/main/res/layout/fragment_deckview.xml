@@ -8,10 +8,13 @@
 
 
     <LinearLayout
+        android:id="@+id/recyclerDeckViewerLinearLayer"
         android:layout_width="match_parent"
         android:layout_height="270dp"
         android:background="@color/genericBlue"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
     <TextView
         android:id="@+id/deckView_name"
         android:layout_width="wrap_content"

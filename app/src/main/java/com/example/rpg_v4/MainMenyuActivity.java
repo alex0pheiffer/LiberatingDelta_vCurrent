@@ -15,8 +15,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.rpg_v4.Main_Menyu_Fragements.CharacterArrowFragment;
+import com.example.rpg_v4.Main_Menyu_Fragements.backButtonRegionShapedForNonRegions;
 import com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended;
 import com.example.rpg_v4.Main_Menyu_Fragements.deckViewFragment;
+import com.example.rpg_v4.Main_Menyu_Fragements.deckViewer_deckBar;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_frontcharacter;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_regionChapters_fragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_region_map_btn;
@@ -50,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction {
+public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction, backButtonRegionShapedForNonRegions.nonRegionBackButtonListener, deckViewer_deckBar.deckViewerDeckBarListener {
 
     private int pl;
     private PL this_pl;
@@ -73,6 +75,8 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private menyu_itemsbar itemsBar;
     private main_menyu_frontcharacter characterIcon;
     private deckViewFragment deckViewerRecycler;
+    private deckViewer_deckBar deckViewerBar;
+    private backButtonRegionShapedForNonRegions nonRegionBackBtn;
     private CharacterArrowFragment MMCarrowUp, MMCarrowDown;
     private main_menyu_regionChapters_fragment regionChapterListRecycler;
     private View bufferbackgTop, bufferbackgBottom, bufferbackgLeft, bufferbackgRight, mmc_backbox ;
@@ -968,12 +972,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         //pressing the back button will always return you to Main Menyu
         System.out.println("mm backpressed");
         clearFragments(layout);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.menyu_mmc_frag,characterIcon);
-        ft.add(R.id.itemsbar,itemsBar);
-        ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
-        ft.addToBackStack(null);
-        ft.commit();
+        addFragments(layout);
         bufferbackgBottom.setAlpha(1);
         bufferbackgTop.setAlpha(1);
         bufferbackgLeft.setAlpha(1);
@@ -1000,8 +999,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         Log.d("VIEW_CHANGE","Opening Deck Viewer");
         FragmentTransaction ft = fragmentManager.beginTransaction();
         deckViewerRecycler = deckViewFragment.newInstance(myDataController.getPL(),myDataController.getAllDecks().get(0).getNom());
+        deckViewerBar = deckViewer_deckBar.newInstance(pl,"falseString");
+        nonRegionBackBtn = backButtonRegionShapedForNonRegions.newInstance(pl,"DECK_VIEW_LAYOUT");
+        ft.add(R.id.menyu_regionmap_btn_frag,nonRegionBackBtn);
         ft.add(R.id.whole_container_frag,deckViewerRecycler);
-        ft.remove(itemsBar);
+        ft.replace(R.id.itemsbar,deckViewerBar);
         ft.remove(mainMenyuRegionMapBtn);
         ft.addToBackStack(null);
         ft.commit();
@@ -1029,13 +1031,33 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     public ArrayList<Deck> getAllDecks() {
         return myDataController.getAllDecks();
     }
-    public void deckRecyclerDeckPressed(Deck deck) { Log.d("TESTING",deck.getNom()+" was pressed.");}
+    public void deckRecyclerDeckPressed(Deck deck) {
+        Log.d("TESTING",deck.getNom()+" was pressed.");
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        deckViewerBar = deckViewer_deckBar.newInstance(pl,deck.getNom());
+        deckViewerBar.importDeck(deck);
+        ft.add(R.id.itemsbar,deckViewerBar);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
     public void deckRecyclerAddDeckPressed() {Log.d("TESTING","Adding_deck was pressed.");}
     public int getMMC_rightDist() {
         return characterIcon.getView().getRight();
     }
     public boolean getEmptyCharacter() {
         return characterIcon.getEmptyCharacter();
+    }
+    public void decksScrolled() {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.remove(deckViewerBar);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+    //DeckViewerBar
+    public void deckViewerBar_ViewDeckPressed(Deck deck) {}
+    public void deckViewerBar_EditDeckPressed(Deck deck) {}
+    public void deckViewerBar_DeleteDeckPressed(Deck deck) {
+        //send a confirmation box...pause the lower screens?
     }
 
     //MMC_Character
@@ -1060,7 +1082,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         characterIcon.characterArrowPressed(isUp, hasEmpty);
     }
 
-    public void clearFragments(String layout) {
+    private void clearFragments(String layout) {
         if (layoutSetter.compareParsed(layout,"REGION_MAP_LAYOUT")) {
             //everything gets removed but the background
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -1079,8 +1101,36 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
         else if(layoutSetter.compareParsed(layout,"DECK_VIEW_LAYOUT")) {
             reignArrowsMMC();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.remove(deckViewerRecycler);
+            ft.remove(nonRegionBackBtn);
+            ft.addToBackStack(null);
+            ft.commit();
         }
         System.out.println("layouts cleared");
+    }
+
+    private void addFragments(String layout) {
+        if (layoutSetter.compareParsed(layout,"REGION_MAP_LAYOUT")) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.add(R.id.menyu_mmc_frag,characterIcon);
+            ft.add(R.id.itemsbar,itemsBar);
+            ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        else if (layoutSetter.compareParsed(layout,"CHARACTER_VIEW_LAYOUT")) {
+            reignArrowsMMC();
+        }
+        else if(layoutSetter.compareParsed(layout,"DECK_VIEW_LAYOUT")) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.itemsbar,itemsBar);
+            ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        System.out.println("main_menyu_layout added");
+
     }
 
 }
