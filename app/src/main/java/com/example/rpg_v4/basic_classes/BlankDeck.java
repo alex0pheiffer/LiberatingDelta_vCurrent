@@ -8,18 +8,28 @@ import com.example.rpg_v4.db_files.User_Cards;
 
 import java.util.ArrayList;
 
-public class BlankDeck {
+public class BlankDeck implements abstractDeck{
 
-    private ArrayList<sudoCard> alphabetcards;
-    private int cardAmt;
+    private String name;
+    public ArrayList<sudoCard> alphabetcards;
+    public ArrayList<Card> allCards;   //this is in no particular order. its just a list of all the cards.
+    public int cardAmt;
+    private final int MAX_DECK_SIZE = 200;
 
     public BlankDeck() {
+        this.name = "BlankDeck";
         this.alphabetcards = new ArrayList<sudoCard>();
-        this.cardAmt = 0;
+        this.allCards = new ArrayList<Card>();
+        cardAmt = 0;
     }
 
-    //returns the newIndex ---- this will usually be ignored
-    private int alphabetizeDeck() {
+
+    public String getNom() {
+        return name;
+    }
+
+    //only sorts the very last card...
+    public int alphabetizeDeck() {
         boolean stillLarger = true;
         int i = alphabetcards.size()-1;
         int newIndex = 0;
@@ -42,7 +52,7 @@ public class BlankDeck {
     }
 
     //typical binary search: starting input... card, 0, alphabetcards.size()-1
-    private int binarySearch(Card card, int startIndex, int endIndex) {
+    public int binarySearch(Card card, int startIndex, int endIndex) {
         String x = card.toString();
         if (endIndex >= startIndex) {
             int mid = startIndex + (int)(((double)(endIndex - startIndex) / 2)+.5);
@@ -66,8 +76,24 @@ public class BlankDeck {
         return -1;
     }
 
+    public int numCardInstance(Card card) {
+        int index = binarySearch(card,0,alphabetcards.size()-1);
+        if (index != -1) {
+            return alphabetcards.get(index).getAmount();
+        }
+        else {
+            return 0;
+        }
+    }
+
+    //will be overwritten by real decks
     //when bringing a new card into the deck  ---- returns the new index of the sudoCard, will usually be ignored
     public int addCard(Card card) {
+        //todo replace with a mitigation...pop up window...
+        //todo also probably check that the decksize isn't full before beginning a mission...
+        if (cardAmt++ >= MAX_DECK_SIZE)
+            throw new RuntimeException("adding too many cards...");
+
         //check to make sure the deck isn't empty
         int newIndex = -1;
         if(alphabetcards.size() == 0) {
@@ -87,9 +113,11 @@ public class BlankDeck {
             }
         }
         cardAmt++;
+        allCards.add(card);
         return newIndex;
     }
 
+    //will be overwritten by real decks
     //when removing a card from your inventory...you will no longer own this card
     public void removeCard(Card card) {
         int index = binarySearch(card, 0, alphabetcards.size() - 1);
@@ -117,6 +145,12 @@ public class BlankDeck {
             }
         }
         cardAmt--;
+        allCards.remove(card);
+    }
+
+    //for accessing the allCards list...
+    public Card getCard(int index) {
+        return allCards.get(index);
     }
 
     //note: when you add a new card, it will give you an index... but it will change if you add another card so be careful
@@ -132,15 +166,17 @@ public class BlankDeck {
         else return null;
     }
 
-    public int getSudoCardIndex(Card card) {
-        return binarySearch(card,0,alphabetcards.size()-1);
-    }
-
     //returns the amount of sudocard bundles
     public int getSudoCardAmt() {
         return alphabetcards.size();
     }
 
+    public int getSudoCardIndex(Card card) {
+        return binarySearch(card,0,alphabetcards.size()-1);
+    }
+
+
+    //only applicable to BlankDeck
     //updates the total amount individual cards: cardAmt
     public void updateCardAmt() {
         int amt = 0;
@@ -152,11 +188,11 @@ public class BlankDeck {
 
     //updates the total amount individual cards: cardAmt
     public int getCardAmt() {
-        int amt = 0;
-        for (int i = 0; i < alphabetcards.size(); i++) {
-            amt = amt+alphabetcards.get(i).getAmount();
-        }
-        return amt;
+        return allCards.size();
+    }
+
+    public String toString() {
+        return getClass().getSimpleName();
     }
 
 }

@@ -20,6 +20,9 @@ public class backButtonRegionShapedForNonRegions extends Fragment {
     private static final String PlayerLevel = "PL";
     private static final String Layout = "layout";
 
+    private final String view_layout = "DECK_VIEW";
+    private final String edit_layout = "DECK_EDIT";
+
     private int pl;
     private PL this_pl;
     private String current_layout;
