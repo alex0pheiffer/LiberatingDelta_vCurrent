@@ -10,7 +10,7 @@ public class Veneland extends regions {
     //aka region1
 
     public Veneland() {
-        super("Veneland", R.drawable.zoomed_region_1_3,
+        super("Veneland",1, R.drawable.zoomed_region_1_3,
                 new cityPt[]{new maleficere_mansion(),new chipper_towne()});
     }
 }

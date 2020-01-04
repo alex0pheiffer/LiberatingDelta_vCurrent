@@ -8,7 +8,7 @@ public class Rupes extends regions {
     //aka region16
 
     public Rupes() {
-        super("Rupes", R.drawable.zoomed_region_1_3,
+        super("Rupes", 16, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

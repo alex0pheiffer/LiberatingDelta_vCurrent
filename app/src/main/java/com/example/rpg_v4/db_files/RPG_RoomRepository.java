@@ -108,8 +108,11 @@ public class RPG_RoomRepository {
     public void updateLabel(User_Characters userCharacters) {
         new updateLabelAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
     }
-    public void updateExp(User_Characters userCharacters) {
-        new updateExpAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    public void updateLevel(User_Characters userCharacters) {
+        new updateLevelAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRank(User_Characters userCharacters) {
+        new updateRankAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
     }
     public void updateWeapon(User_Characters userCharacters) {
         new updateWeaponAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
@@ -119,6 +122,57 @@ public class RPG_RoomRepository {
     }
     public void updateItem(User_Characters userCharacters) {
         new updateItemAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion1exp(User_Characters userCharacters) {
+        new updateRegion1expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion23exp(User_Characters userCharacters) {
+        new updateRegion23expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion4exp(User_Characters userCharacters) {
+        new updateRegion4expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion5exp(User_Characters userCharacters) {
+        new updateRegion5expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion6exp(User_Characters userCharacters) {
+        new updateRegion6expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion7exp(User_Characters userCharacters) {
+        new updateRegion7expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion89exp(User_Characters userCharacters) {
+        new updateRegion89expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion10exp(User_Characters userCharacters) {
+        new updateRegion10expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion11exp(User_Characters userCharacters) {
+        new updateRegion11expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion12exp(User_Characters userCharacters) {
+        new updateRegion12expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion13exp(User_Characters userCharacters) {
+        new updateRegion13expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion14exp(User_Characters userCharacters) {
+        new updateRegion14expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion16exp(User_Characters userCharacters) {
+        new updateRegion16expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion17exp(User_Characters userCharacters) {
+        new updateRegion17expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion18exp(User_Characters userCharacters) {
+        new updateRegion18expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion19exp(User_Characters userCharacters) {
+        new updateRegion19expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
+    }
+    public void updateRegion20exp(User_Characters userCharacters) {
+        new updateRegion20expAsyncTaskCharacters(userCharactersDao).execute(userCharacters);
     }
     public void updateAmount(User_Cards userCards) {
         new updateAmountAsyncTaskCards(userCardsDao).execute(userCards);
@@ -422,17 +476,31 @@ public class RPG_RoomRepository {
             return null;
         }
     }
-    private static class updateExpAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+    private static class updateLevelAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
 
         private User_Characters_Dao mAsyncTaskDao;
 
-        updateExpAsyncTaskCharacters(User_Characters_Dao dao) {
+        updateLevelAsyncTaskCharacters(User_Characters_Dao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(final User_Characters... params) {
-            mAsyncTaskDao.updateExp(params[0].getLevel(),params[0].getExp2next(),params[0].getId());
+            mAsyncTaskDao.updateLevel(params[0].getLevel(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRankAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRankAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRank(params[0].getRank(),params[0].getId());
             return null;
         }
     }
@@ -475,6 +543,244 @@ public class RPG_RoomRepository {
         @Override
         protected Void doInBackground(final User_Characters... params) {
             mAsyncTaskDao.updateItem(params[0].getItem_equip(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion1expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion1expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion1exp(params[0].getRegion1exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion23expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion23expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion23exp(params[0].getRegion23exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion4expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion4expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion4exp(params[0].getRegion4exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion5expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion5expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion5exp(params[0].getRegion5exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion6expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion6expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion6exp(params[0].getRegion6exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion7expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion7expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion7exp(params[0].getRegion7exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion89expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion89expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion89exp(params[0].getRegion89exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion10expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion10expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion10exp(params[0].getRegion10exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion11expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion11expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion11exp(params[0].getRegion11exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion12expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion12expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion12exp(params[0].getRegion12exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion13expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion13expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion13exp(params[0].getRegion13exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion14expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion14expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion14exp(params[0].getRegion14exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion16expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion16expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion16exp(params[0].getRegion16exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion17expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion17expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion17exp(params[0].getRegion17exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion18expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion18expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion18exp(params[0].getRegion18exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion19expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion19expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion19exp(params[0].getRegion19exp(),params[0].getId());
+            return null;
+        }
+    }
+    private static class updateRegion20expAsyncTaskCharacters extends AsyncTask<User_Characters, Void, Void> {
+
+        private User_Characters_Dao mAsyncTaskDao;
+
+        updateRegion20expAsyncTaskCharacters(User_Characters_Dao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final User_Characters... params) {
+            mAsyncTaskDao.updateRegion20exp(params[0].getRegion20exp(),params[0].getId());
             return null;
         }
     }

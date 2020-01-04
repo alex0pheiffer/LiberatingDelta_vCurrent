@@ -17,9 +17,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/molopoly_hotel"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"/>
+            android:src="@drawable/molopoly_hotel"/>
     </LinearLayout>
 
     <LinearLayout

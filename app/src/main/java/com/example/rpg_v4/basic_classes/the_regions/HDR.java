@@ -8,7 +8,7 @@ public class HDR extends regions {
     //aka region2+4
 
     public HDR() {
-        super("Human-Dragon Republic", R.drawable.zoomed_region_1_3,
+        super("Human-Dragon Republic", 5, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

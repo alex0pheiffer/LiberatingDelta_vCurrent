@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.rpg_v4.Main_Menyu_Fragements.CharacterArrowFragment;
-import com.example.rpg_v4.Main_Menyu_Fragements.backButtonRegionShapedForNonRegions;
+import com.example.rpg_v4.Main_Menyu_Fragements.dedicatedBackBtn;
 import com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended;
 import com.example.rpg_v4.Main_Menyu_Fragements.deckViewFragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.deckViewer_deckBar;
@@ -35,6 +35,7 @@ import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.basic_classes.Weapon;
 import com.example.rpg_v4.basic_classes.cityPt;
 import com.example.rpg_v4.basic_classes.inventI;
+import com.example.rpg_v4.basic_classes.main_character;
 import com.example.rpg_v4.basic_classes.regions;
 import com.example.rpg_v4.basic_classes.the_MCs.Katherine;
 import com.example.rpg_v4.basic_classes.the_cities.chipper_towne;
@@ -52,7 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction, backButtonRegionShapedForNonRegions.nonRegionBackButtonListener, deckViewer_deckBar.deckViewerDeckBarListener {
+public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction, dedicatedBackBtn.nonRegionBackButtonListener, deckViewer_deckBar.deckViewerDeckBarListener {
 
     private int pl;
     private PL this_pl;
@@ -76,7 +77,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private main_menyu_frontcharacter characterIcon;
     private deckViewFragment deckViewerRecycler;
     private deckViewer_deckBar deckViewerBar;
-    private backButtonRegionShapedForNonRegions nonRegionBackBtn;
+    private dedicatedBackBtn backBtn;
     private CharacterArrowFragment MMCarrowUp, MMCarrowDown;
     private main_menyu_regionChapters_fragment regionChapterListRecycler;
     private View bufferbackgTop, bufferbackgBottom, bufferbackgLeft, bufferbackgRight, mmc_backbox ;
@@ -193,9 +194,27 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             private void updateFrontChar(User_Values userValues) {rpgViewModel.updateFrontChar(userValues);}
             private void updateOkane(User_Values userValues) {rpgViewModel.updateOkane(userValues);}
             private void updateCompleted(User_EQPlayed userEQPlayed) {rpgViewModel.updateCompleted(userEQPlayed);}
-            private void updateExp(User_Characters userCharacters) {rpgViewModel.updateExp(userCharacters);}
+            private void updateLevel(User_Characters userCharacters) {rpgViewModel.updateLevel(userCharacters);}
+            private void updateRank(User_Characters userCharacters) {rpgViewModel.updateRank(userCharacters);}
             private void updateDeck(User_Characters userCharacters) {rpgViewModel.updateDeck(userCharacters);}
             private void updateItem(User_Characters userCharacters) {rpgViewModel.updateItem(userCharacters);}
+            private void updateVenelandEXP(User_Characters userCharacters) {rpgViewModel.updateRegion1exp(userCharacters);}
+            private void updatePietasEXP(User_Characters userCharacters) {rpgViewModel.updateRegion23exp(userCharacters);}
+            private void updateStonesEXP(User_Characters userCharacters) {rpgViewModel.updateRegion4exp(userCharacters);}
+            private void updateHdrEXP(User_Characters userCharacters) {rpgViewModel.updateRegion5exp(userCharacters);}
+            private void updateRegion6EXP(User_Characters userCharacters) {rpgViewModel.updateRegion6exp(userCharacters);}
+            private void updateRegion7EXP(User_Characters userCharacters) {rpgViewModel.updateRegion7exp(userCharacters);}
+            private void updateRegion89EXP(User_Characters userCharacters) {rpgViewModel.updateRegion89exp(userCharacters);}
+            private void updateRegion10EXP(User_Characters userCharacters) {rpgViewModel.updateRegion10exp(userCharacters);}
+            private void updateRegion11EXP(User_Characters userCharacters) {rpgViewModel.updateRegion11exp(userCharacters);}
+            private void updateNebulaEXP(User_Characters userCharacters) {rpgViewModel.updateRegion12exp(userCharacters);}
+            private void updateRegion13EXP(User_Characters userCharacters) {rpgViewModel.updateRegion13exp(userCharacters);}
+            private void updateIcecubeEXP(User_Characters userCharacters) {rpgViewModel.updateRegion14exp(userCharacters);}
+            private void updateRupesEXP(User_Characters userCharacters) {rpgViewModel.updateRegion16exp(userCharacters);}
+            private void updatePetraEXP(User_Characters userCharacters) {rpgViewModel.updateRegion17exp(userCharacters);}
+            private void updateJuslynEXP(User_Characters userCharacters) {rpgViewModel.updateRegion18exp(userCharacters);}
+            private void updateMaceriaEXP(User_Characters userCharacters) {rpgViewModel.updateRegion19exp(userCharacters);}
+            private void updateNorthEXP(User_Characters userCharacters) {rpgViewModel.updateRegion20exp(userCharacters);}
             private void updateAmount(User_Inventory userInventory) {rpgViewModel.updateAmount(userInventory);}
             private void updateChar(User_Decks userDecks) {rpgViewModel.updateChar(userDecks);}
             private void updateLabel(User_Decks userDecks) {rpgViewModel.updateLabel(userDecks);}
@@ -287,6 +306,64 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 card.setAmount(amt);
                 updateAmount(card);
             }
+
+            //todo finish
+            /*
+            public void changeRegionExp(regions region, main_character character, int newEXP) {
+                int regionNum = region.getRegionNum();
+                if (regionNum == 1) {
+                    updateVenelandEXP(userCharacters);
+                }
+                else if (regionNum == 23) {
+                    updatePietasEXP(userCharacters);
+                }
+                else if (regionNum == 4) {
+                    updateStonesEXP(userCharacters);
+                }
+                else if (regionNum == 5) {
+                    repository.updateRegion5exp(userCharacters);
+                }
+                else if (regionNum == 6) {
+                    repository.updateRegion6exp(userCharacters);
+                }
+                else if (regionNum == 7) {
+                    repository.updateRegion7exp(userCharacters);
+                }
+                else if (regionNum == 89) {
+                    repository.updateRegion89exp(userCharacters);
+                }
+                else if (regionNum == 10) {
+                    repository.updateRegion10exp(userCharacters);
+                }
+                else if (regionNum == 11) {
+                    repository.updateRegion11exp(userCharacters);
+                }
+                else if (regionNum == 12) {
+                    repository.updateRegion12exp(userCharacters);
+                }
+                else if (regionNum == 13) {
+                    repository.updateRegion13exp(userCharacters);
+                }
+                else if (regionNum == 14) {
+                    repository.updateRegion14exp(userCharacters);
+                }
+                else if (regionNum == 16) {
+                    repository.updateRegion16exp(userCharacters);
+                }
+                else if (regionNum == 17) {
+                    repository.updateRegion17exp(userCharacters);
+                }
+                else if (regionNum == 18) {
+                    repository.updateRegion18exp(userCharacters);
+                }
+                else if (regionNum == 19) {
+                    repository.updateRegion19exp(userCharacters);
+                }
+                else if (regionNum == 20) {
+                    repository.updateRegion20exp(userCharacters);
+                }
+            }
+             */
 
             public User_Decks getDeck(int index) {
                 return lDecks.get(index);
@@ -874,14 +951,6 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         //regions_frag[1] = region_2_fragment.newInstance(userDataChecker.getPL());
     }
 
-    public void setCharacter(Characters character) {
-        //first, update our db
-        //User_Values changecharacter = userDataChecker.changeCharacter(character);
-        //rpgViewModel.updateFrontChar(changecharacter);
-        //then change our char that appears
-
-    }
-
     public void regionBtnPressed() {
         if (layoutSetter.compareWithCurrent(mainMenyuRegionMapBtn.getCURRENT_LAYOUT())) {
             boolean regions_match = myDataController.getCur_region().getNom().equals(mainMenyuRegionMapBtn.getRegion().getNom());
@@ -890,6 +959,8 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 System.out.println("Terminating RegionBtn");
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 regionFragment = region_1_fragment.newInstance(myDataController.getPL());
+                backBtn = dedicatedBackBtn.newInstance(pl,((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT());
+                ft.add(R.id.dedicated_back_btn,backBtn);
                 ft.add(R.id.menyu_regionmap_btn_frag,regionFragment);
                 ft.remove(characterIcon);
                 ft.remove(itemsBar);
@@ -929,6 +1000,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 ft.addToBackStack(null);
                 ft.commit();
                 layoutSetter.changeLayout("REGION_MAP_CITY");
+                backBtn.modifyLayout(layoutSetter.getCURRENT_LAYOUT());
             }
 
             else if (city.equals("Chipper Towne")) {
@@ -940,6 +1012,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 ft.addToBackStack(null);
                 ft.commit();
                 layoutSetter.changeLayout("REGION_MAP_CITY");
+                backBtn.modifyLayout(layoutSetter.getCURRENT_LAYOUT());
             }
 
         }
@@ -961,6 +1034,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         ft.commit();
 
         layoutSetter.changeLayout("REGION_MAP_CHAPTER");
+        backBtn.modifyLayout(layoutSetter.getCURRENT_LAYOUT());
     }
 
     //regionChapterExtendedFragment
@@ -987,7 +1061,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
     //ItemsBarBtns
     public void menyuItemsBarSettingsPressed() {}
-    public void menyuItemsBarCharactersPressed() {}
+    public void menyuItemsBarCharactersPressed() {
+
+    }
     public void menyuItemsBarPlotPressed() {}
     public void menyuItemsBarDecksPressed() {
         //bring in the charswitch arrows
@@ -1000,20 +1076,20 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         FragmentTransaction ft = fragmentManager.beginTransaction();
         deckViewerRecycler = deckViewFragment.newInstance(myDataController.getPL(),myDataController.getAllDecks().get(0).getNom());
         deckViewerBar = deckViewer_deckBar.newInstance(pl,"falseString");
-        nonRegionBackBtn = backButtonRegionShapedForNonRegions.newInstance(pl,"DECK_VIEW_LAYOUT");
-        ft.add(R.id.menyu_regionmap_btn_frag,nonRegionBackBtn);
+        backBtn = dedicatedBackBtn.newInstance(pl,deckViewerRecycler.getCURRENT_LAYOUT());
+        ft.add(R.id.dedicated_back_btn,backBtn);
         ft.add(R.id.whole_container_frag,deckViewerRecycler);
         ft.replace(R.id.itemsbar,deckViewerBar);
         ft.remove(mainMenyuRegionMapBtn);
         ft.addToBackStack(null);
         ft.commit();
-        deployArrowsMMC();
+        deployArrowsMMC(true);
         bufferbackgBottom.setAlpha(0);
         bufferbackgTop.setAlpha(0);
         bufferbackgLeft.setAlpha(0);
         bufferbackgRight.setAlpha(0);
         mmc_backbox.setBackground(null);
-        layoutSetter.changeLayout("DECK_VIEW_LAYOUT");//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
+        layoutSetter.changeLayout(deckViewerRecycler.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
         //intro mainmenyu2region (move region icons on)
     }
     public void menyuItemsBarInventoryPressed() {}
@@ -1061,22 +1137,20 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
 
     //MMC_Character
-    public void deployArrowsMMC() {
+    public void deployArrowsMMC(boolean hasEmpty) {
         //add the character change arrows
-        MMCarrowUp = CharacterArrowFragment.newInstance(true,true);
-        MMCarrowDown = CharacterArrowFragment.newInstance(false,true);
+        MMCarrowUp = CharacterArrowFragment.newInstance(true,hasEmpty);
+        MMCarrowDown = CharacterArrowFragment.newInstance(false,hasEmpty);
         characterIcon.deployArrowsMMC(MMCarrowUp, MMCarrowDown);
     }
     public void reignArrowsMMC() {
-        //removes the character change arrows
-        //todo
-        //check that the current character isn't "empty", UPDATE THE CUR-CHAR IN DB
-        //if (newCharacter != null) myDataController.changeCharacter(newCharacter);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.remove(MMCarrowUp);
-        ft.remove(MMCarrowDown);
-        ft.addToBackStack(null);
-        ft.commit();
+        //character = null
+        if (characterIcon.getEmptyCharacter()) {
+            Log.d("DECKTESTING","character was null, changing...");
+            characterIcon.setPreviousCharacter();
+        }
+        Characters newCharacter = characterIcon.reignArrowsMMC(MMCarrowUp, MMCarrowDown);
+        myDataController.changeCharacter(newCharacter);
     }
     public void characterArrowPressed(boolean isUp, boolean hasEmpty) {
         characterIcon.characterArrowPressed(isUp, hasEmpty);
@@ -1103,13 +1177,14 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             reignArrowsMMC();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.remove(deckViewerRecycler);
-            ft.remove(nonRegionBackBtn);
+            ft.remove(backBtn);
             ft.addToBackStack(null);
             ft.commit();
         }
         System.out.println("layouts cleared");
     }
 
+    //adding fragments to the main menyu
     private void addFragments(String layout) {
         if (layoutSetter.compareParsed(layout,"REGION_MAP_LAYOUT")) {
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -1131,6 +1206,13 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
         System.out.println("main_menyu_layout added");
 
+    }
+
+    //key activity things
+    //
+    @Override
+    public void onBackPressed() {
+        //do nothing
     }
 
 }

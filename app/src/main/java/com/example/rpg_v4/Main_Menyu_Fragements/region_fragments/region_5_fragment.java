@@ -20,7 +20,7 @@ public class region_5_fragment extends Fragment {
 
     private int pl;
 
-    private LinearLayout backbtn, gobtn;
+    private LinearLayout gobtn;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,7 +69,6 @@ public class region_5_fragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void cityPtPressed(String city);
-        void backBtnPressed(String layout);
         void goBtnPressed();
     }
 
@@ -84,7 +83,6 @@ public class region_5_fragment extends Fragment {
         //ChipperTowneLayout = view.findViewById(R.id.Chipper_Towne_layout);
         //ChipperTowneBtn = view.findViewById(R.id.Chipper_Towne_img);
         //ChipperTowneText = view.findViewById(R.id.Chipper_Towne_tag);
-        backbtn = view.findViewById(R.id.region_5_backbtn);
         gobtn = view.findViewById(R.id.region_5_gobtn);
     }
 }

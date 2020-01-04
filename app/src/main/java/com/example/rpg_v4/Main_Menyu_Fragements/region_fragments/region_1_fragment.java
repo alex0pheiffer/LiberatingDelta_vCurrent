@@ -28,7 +28,7 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
     private regions thisRegion;
     private cityPt[] allCities; //of this region
     private cityPt[] unlockedCities;
-    private LinearLayout MaleficereMansionLayout, ChipperTowneLayout, backbtn, gobtn;
+    private LinearLayout MaleficereMansionLayout, ChipperTowneLayout, gobtn;
     private ImageView MaleficereMansionBtn, ChipperTowneBtn;
     private TextView MaleficereMansionText, ChipperTowneText;
 
@@ -91,12 +91,6 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
 
 
         }
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                mListener.backBtnPressed(CURRENT_LAYOUT);
-                System.out.println("backpressed");
-            }
-        });
         gobtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 mListener.goBtnPressed();
@@ -135,7 +129,6 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
         ChipperTowneLayout = view.findViewById(R.id.Chipper_Towne_layout);
         ChipperTowneBtn = view.findViewById(R.id.Chipper_Towne_img);
         ChipperTowneText = view.findViewById(R.id.Chipper_Towne_tag);
-        backbtn = view.findViewById(R.id.region_1_backbtn);
         gobtn = view.findViewById(R.id.region_1_gobtn);
     }
 

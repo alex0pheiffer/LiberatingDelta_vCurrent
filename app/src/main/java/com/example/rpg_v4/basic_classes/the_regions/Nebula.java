@@ -8,7 +8,7 @@ public class Nebula extends regions {
     //aka region12
 
     public Nebula() {
-        super("Nebula", R.drawable.zoomed_region_1_3,
+        super("Nebula", 12, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

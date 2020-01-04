@@ -170,4 +170,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    //key activity things
+    //
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }

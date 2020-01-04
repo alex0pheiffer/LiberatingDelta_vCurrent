@@ -26,6 +26,8 @@ public class deckViewFragment extends Fragment {
     private static final String PlayerLevel = "PL";
     private static final String CURRENT_DECK = "CURRENT_DECK";
 
+    private final String CURRENT_LAYOUT = "DECK_VIEW_LAYOUT";
+
     private final String ADD_DECK = "__adding";
     private final String BLANK_ITEM = "__blank";
     private List<Deck> allDecks;
@@ -116,6 +118,10 @@ public class deckViewFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public String getCURRENT_LAYOUT() {
+        return CURRENT_LAYOUT;
     }
 
     public interface deckRecyclerListener {

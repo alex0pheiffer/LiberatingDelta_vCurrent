@@ -343,4 +343,11 @@ public class wholeMapActivity extends AppCompatActivity {
         startActivity(intented);
         finish();
     }
+
+    //key activity things
+    //
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }

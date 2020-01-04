@@ -8,7 +8,7 @@ public class TheTossedStones extends regions {
     //aka region3
 
     public TheTossedStones() {
-        super("The Tossed Stones", R.drawable.zoomed_region_1_3,
+        super("The Tossed Stones",4, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

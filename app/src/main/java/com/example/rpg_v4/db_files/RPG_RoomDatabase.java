@@ -17,7 +17,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 //YOU MUST UPDATE THE VERSION NUMBER IF YOU MODIFY DB SCHEMA, AND CHANGE THE MIGRATION
 //https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
 
-@Database(entities = {User_Values.class,User_Characters.class, User_EQPlayed.class, User_Inventory.class, User_Cards.class, User_Decks.class}, version = 1)
+@Database(entities = {User_Values.class,User_Characters.class, User_EQPlayed.class, User_Inventory.class, User_Cards.class, User_Decks.class}, version = 2)
 public abstract class RPG_RoomDatabase extends RoomDatabase {
 
     //abstract getter for each DAO
@@ -37,7 +37,7 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
         //forMessaging = context;
         //sendMessage("in database",context);
         //INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-        //       RPG_RoomDatabase.class, "rpg_database").addMigrations(MIGRATION_5_1).build();
+        //       RPG_RoomDatabase.class, "rpg_database").addMigrations(MIGRATION_1_2).build();
         //sendMessage("INSTANCE mitigated, now removing",context);
         //context.deleteDatabase("rpg_database");
         //System.out.println("Database deleted");
@@ -56,7 +56,7 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    static final Migration MIGRATION_5_1 = new Migration(5, 1) {
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
 
@@ -71,25 +71,43 @@ public abstract class RPG_RoomDatabase extends RoomDatabase {
              */
             //create new table
 
-            /*
             database.execSQL("CREATE TABLE IF NOT EXISTS TABLE_NAME_TEMP " +
-                    "(`PL` INT NOT NULL, " +
-                    "`PHASE` INT NOT NULL, " +
-                    "`OKANE` INT NOT NULL, " +
-                    "`FRONTCHAR` TEXT NOT NULL, " +
-                    "`USERNAME` TEXT NOT NULL, " +
-                    "`PASSWORD` TEXT NOT NULL, " +
-                    "`REGION` TEXT NOT NULL, " +
-                    "PRIMARY KEY(`USERNAME`))");
+                    "(`id` INTEGER NOT NULL PRIMARY KEY, " +
+                    "`LABEL` TEXT NOT NULL, " +
+                    "`LVL` INTEGER NOT NULL, " +
+                    "`RANK` INTEGER NOT NULL, " +
+                    "`WEAPON` TEXT NOT NULL, " +
+                    "`DECK` TEXT NOT NULL, " +
+                    "`ITEM` TEXT NOT NULL, " +
+                    "`REGION1EXP` INTEGER NOT NULL, " +
+                    "`REGION23EXP` INTEGER NOT NULL, " +
+                    "`REGION4EXP` INTEGER NOT NULL, " +
+                    "`REGION5EXP` INTEGER NOT NULL, " +
+                    "`REGION6EXP` INTEGER NOT NULL, " +
+                    "`REGION7EXP` INTEGER NOT NULL, " +
+                    "`REGION89EXP` INTEGER NOT NULL, " +
+                    "`REGION10EXP` INTEGER NOT NULL, " +
+                    "`REGION11EXP` INTEGER NOT NULL, " +
+                    "`REGION12EXP` INTEGER NOT NULL, " +
+                    "`REGION13EXP` INTEGER NOT NULL, " +
+                    "`REGION14EXP` INTEGER NOT NULL, " +
+                    "`REGION16EXP` INTEGER NOT NULL, " +
+                    "`REGION17EXP` INTEGER NOT NULL, " +
+                    "`REGION18EXP` INTEGER NOT NULL, " +
+                    "`REGION19EXP` INTEGER NOT NULL, " +
+                    "`REGION20EXP` INTEGER NOT NULL)"
+            );
             //copy the data
-            database.execSQL("INSERT INTO TABLE_NAME_TEMP (PL, PHASE, OKANE, FRONTCHAR, USERNAME, PASSWORD, REGION) "
-                    + "SELECT PL, PHASE, OKANE, FRONTCHAR, USERNAME, PASSWORD, PASSWORD "
-                    + "FROM User_Values_Table");
-            //drop table
-            database.execSQL("DROP TABLE User_Values_Table");
-            //replace table name
-            database.execSQL("ALTER TABLE TABLE_NAME_TEMP RENAME TO User_Values_Table");
+            /*
+            database.execSQL("INSERT INTO TABLE_NAME_TEMP (LABEL, LVL, RANK, WEAPON, DECK, ITEM) "
+                    + "SELECT LABEL, LVL, EXP, WEAPON, DECK, ITEM"
+                    + "FROM User_Characters_Table");
             */
+            //drop table
+            database.execSQL("DROP TABLE User_Characters_Table");
+            //replace table name
+            database.execSQL("ALTER TABLE TABLE_NAME_TEMP RENAME TO User_Characters_Table");
+
         }
     };
 

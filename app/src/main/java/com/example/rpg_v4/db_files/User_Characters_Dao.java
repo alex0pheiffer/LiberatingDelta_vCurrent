@@ -25,9 +25,13 @@ public interface User_Characters_Dao {
     @Query("UPDATE User_Characters_Table SET LABEL=:name WHERE id=:index")
     void updateLabel(String name, int index);
 
-    //update LVL and EXP by id
-    @Query("UPDATE User_Characters_Table SET LVL=:level, EXP=:exp2next WHERE id=:index")
-    void updateExp(int level, int exp2next, int index);
+    //update LVL by id
+    @Query("UPDATE User_Characters_Table SET LVL=:exp WHERE id=:index")
+    void updateLevel(int exp, int index);
+
+    //update RANK by id
+    @Query("UPDATE User_Characters_Table SET RANK=:exp WHERE id=:index")
+    void updateRank(int exp, int index);
 
     //update WEAPON by id
     @Query("UPDATE User_Characters_Table SET WEAPON=:weapon_equip WHERE id=:index")
@@ -40,6 +44,74 @@ public interface User_Characters_Dao {
     //update ITEM by id
     @Query("UPDATE User_Characters_Table SET ITEM=:item_equip WHERE id=:index")
     void updateItem(String item_equip, int index);
+
+    //update REGION1EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION1EXP=:exp WHERE id=:index")
+    void updateRegion1exp(int exp, int index);
+
+    //update REGION23EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION23EXP=:exp WHERE id=:index")
+    void updateRegion23exp(int exp, int index);
+
+    //update REGION4EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION4EXP=:exp WHERE id=:index")
+    void updateRegion4exp(int exp, int index);
+
+    //update REGION5EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION5EXP=:exp WHERE id=:index")
+    void updateRegion5exp(int exp, int index);
+
+    //update REGION6EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION6EXP=:exp WHERE id=:index")
+    void updateRegion6exp(int exp, int index);
+
+    //update REGION7EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION7EXP=:exp WHERE id=:index")
+    void updateRegion7exp(int exp, int index);
+
+    //update REGION89EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION89EXP=:exp WHERE id=:index")
+    void updateRegion89exp(int exp, int index);
+
+    //update REGION10EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION10EXP=:exp WHERE id=:index")
+    void updateRegion10exp(int exp, int index);
+
+    //update REGION11EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION11EXP=:exp WHERE id=:index")
+    void updateRegion11exp(int exp, int index);
+
+    //update REGION12EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION12EXP=:exp WHERE id=:index")
+    void updateRegion12exp(int exp, int index);
+
+    //update REGION13EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION13EXP=:exp WHERE id=:index")
+    void updateRegion13exp(int exp, int index);
+
+    //update REGION14EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION14EXP=:exp WHERE id=:index")
+    void updateRegion14exp(int exp, int index);
+
+    //update REGION16EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION16EXP=:exp WHERE id=:index")
+    void updateRegion16exp(int exp, int index);
+
+    //update REGION17EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION17EXP=:exp WHERE id=:index")
+    void updateRegion17exp(int exp, int index);
+
+    //update REGION18EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION18EXP=:exp WHERE id=:index")
+    void updateRegion18exp(int exp, int index);
+
+    //update REGION19EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION19EXP=:exp WHERE id=:index")
+    void updateRegion19exp(int exp, int index);
+
+    //update REGION20EXP by id
+    @Query("UPDATE User_Characters_Table SET REGION20EXP=:exp WHERE id=:index")
+    void updateRegion20exp(int exp, int index);
 
     //delete the entire table
     @Query("DELETE FROM User_Characters_Table")

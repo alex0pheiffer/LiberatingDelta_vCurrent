@@ -8,7 +8,7 @@ public class MaceriaUnion extends regions {
     //aka region19
 
     public MaceriaUnion() {
-        super("Maceria Union", R.drawable.zoomed_region_1_3,
+        super("Maceria Union", 19, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

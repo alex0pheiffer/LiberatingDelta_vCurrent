@@ -34,11 +34,11 @@ public class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
         this.removeAll();
         User_Values useval = new User_Values(1, 0, 0,"Katherine","none","none","Veneland");
         userValues.insert(useval);
-        User_Characters usechar = new User_Characters("Katherine", 0,0,"SimpleStaff", "BasicDeck","PotionA");
+        User_Characters usechar = new User_Characters("Katherine", 0,0,"SimpleStaff", "BasicDeck","PotionA",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         userCharacters.insert(usechar);
-        usechar = new User_Characters("Delta",0,0,"SimpleSword","none","none");
+        usechar = new User_Characters("Delta",0,0,"SimpleSword","none","none",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         userCharacters.insert(usechar);
-        usechar = new User_Characters("Vivian",0,0,"SimpleBow","none","none");
+        usechar = new User_Characters("Vivian",0,0,"SimpleBow","none","none",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         userCharacters.insert(usechar);
         User_Cards usecard = new User_Cards("RockToss",3,"BasicDeck",0);
         userCards.insert(usecard);

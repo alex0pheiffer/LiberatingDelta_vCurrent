@@ -110,8 +110,11 @@ public class RPG_ViewModel extends AndroidViewModel {
     public void updateLabel(User_Characters userCharacters) {
         repository.updateLabel(userCharacters);
     }
-    public void updateExp(User_Characters userCharacters) {
-        repository.updateExp(userCharacters);
+    public void updateLevel(User_Characters userCharacters) {
+        repository.updateLevel(userCharacters);
+    }
+    public void updateRank(User_Characters userCharacters) {
+        repository.updateRank(userCharacters);
     }
     public void updateWeapon(User_Characters userCharacters) {
         repository.updateWeapon(userCharacters);
@@ -122,6 +125,58 @@ public class RPG_ViewModel extends AndroidViewModel {
     public void updateItem(User_Characters userCharacters) {
         repository.updateItem(userCharacters);
     }
+    public void updateRegion1exp(User_Characters userCharacters) {
+        repository.updateRegion1exp(userCharacters);
+    }
+    public void updateRegion23exp(User_Characters userCharacters) {
+        repository.updateRegion23exp(userCharacters);
+    }
+    public void updateRegion4exp(User_Characters userCharacters) {
+        repository.updateRegion4exp(userCharacters);
+    }
+    public void updateRegion5exp(User_Characters userCharacters) {
+        repository.updateRegion5exp(userCharacters);
+    }
+    public void updateRegion6exp(User_Characters userCharacters) {
+        repository.updateRegion6exp(userCharacters);
+    }
+    public void updateRegion7exp(User_Characters userCharacters) {
+        repository.updateRegion7exp(userCharacters);
+    }
+    public void updateRegion89exp(User_Characters userCharacters) {
+        repository.updateRegion89exp(userCharacters);
+    }
+    public void updateRegion10exp(User_Characters userCharacters) {
+        repository.updateRegion10exp(userCharacters);
+    }
+    public void updateRegion11exp(User_Characters userCharacters) {
+        repository.updateRegion11exp(userCharacters);
+    }
+    public void updateRegion12exp(User_Characters userCharacters) {
+        repository.updateRegion12exp(userCharacters);
+    }
+    public void updateRegion13exp(User_Characters userCharacters) {
+        repository.updateRegion13exp(userCharacters);
+    }
+    public void updateRegion14exp(User_Characters userCharacters) {
+        repository.updateRegion14exp(userCharacters);
+    }
+    public void updateRegion16exp(User_Characters userCharacters) {
+        repository.updateRegion16exp(userCharacters);
+    }
+    public void updateRegion17exp(User_Characters userCharacters) {
+        repository.updateRegion17exp(userCharacters);
+    }
+    public void updateRegion18exp(User_Characters userCharacters) {
+        repository.updateRegion18exp(userCharacters);
+    }
+    public void updateRegion19exp(User_Characters userCharacters) {
+        repository.updateRegion19exp(userCharacters);
+    }
+    public void updateRegion20exp(User_Characters userCharacters) {
+        repository.updateRegion20exp(userCharacters);
+    }
+
     public void updateAmount(User_Cards userCards) {
         repository.updateAmount(userCards);
     }

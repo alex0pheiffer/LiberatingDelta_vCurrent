@@ -8,7 +8,7 @@ public class GreatNorth extends regions {
     //aka region20
 
     public GreatNorth() {
-        super("Great North", R.drawable.zoomed_region_1_3,
+        super("Great North", 20, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

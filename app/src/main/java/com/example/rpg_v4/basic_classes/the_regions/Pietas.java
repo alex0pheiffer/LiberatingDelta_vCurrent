@@ -8,7 +8,7 @@ public class Pietas extends regions {
     //aka region2+4
 
     public Pietas() {
-        super("Pietas", R.drawable.zoomed_region_1_3,
+        super("Pietas", 23, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

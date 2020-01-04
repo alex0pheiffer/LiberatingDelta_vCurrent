@@ -8,7 +8,7 @@ public class Juslyn extends regions {
     //aka region18
 
     public Juslyn() {
-        super("Juslyn", R.drawable.zoomed_region_1_3,
+        super("Juslyn", 18, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 

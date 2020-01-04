@@ -25,6 +25,7 @@ public class main_menyu_frontcharacter extends Fragment {
     private static final String PlayerLevel = "pl";
 
     private main_character character;
+    private main_character previous_character;
     private String weapon;
     private int pl;
     private PL this_pl;
@@ -87,10 +88,17 @@ public class main_menyu_frontcharacter extends Fragment {
     //isUp --> do we shift the characters up or down
     //hasEmpty --> can it return an "empty" slot character
     public void characterArrowPressed(boolean isUp, boolean hasEmpty) {
-        if (character == null) character = this_pl.rotateCharacter("empty", isUp, hasEmpty);
-        else character = this_pl.rotateCharacter(character.getName(), isUp, hasEmpty);
+        if (character == null) {
+            previous_character = character;
+            character = this_pl.rotateCharacter("empty", isUp, hasEmpty);
+        }
+        else {
+            previous_character = character;
+            character = this_pl.rotateCharacter(character.getName(), isUp, hasEmpty);
+        }
         if (character != null) {
             Log.d("CHARARROW", "charArrowPressed; " + character.getName() + " showing");
+            //todo change to character's image
             //frontcharacter.setImageDrawable(getActivity().getDrawable(character.getCharacterImgDrawable()));
             frontcharacter.setImageDrawable(getActivity().getDrawable(R.drawable.dummycat));
         }
@@ -98,6 +106,11 @@ public class main_menyu_frontcharacter extends Fragment {
             Log.d("CHARARROW", "charArrowPressed; " + "null" + " showing");
             frontcharacter.setImageDrawable(null);
         }
+    }
+
+    public void setPreviousCharacter() {
+        //todo change to character's image
+        frontcharacter.setImageDrawable(getActivity().getDrawable(R.drawable.dummycat));
     }
 
     public boolean getEmptyCharacter() {
@@ -112,8 +125,23 @@ public class main_menyu_frontcharacter extends Fragment {
     ft.add(R.id.mmc_downArrow,arrowDown);
     ft.addToBackStack(null);
     ft.commit();
-
     }
+
+    public main_character reignArrowsMMC(Fragment arrowUp, Fragment arrowDown) {
+        if (character == null) {
+            throw new RuntimeException("Cannot reign when character DNE");
+        }
+        else {
+            FragmentManager fm = getChildFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.remove(arrowUp);
+            ft.remove(arrowDown);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        return character;
+    }
+
     public interface onMenyuFrontcharacterSelectedListener {
 
     }

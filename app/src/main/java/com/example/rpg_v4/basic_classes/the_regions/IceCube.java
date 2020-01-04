@@ -8,7 +8,7 @@ public class IceCube extends regions {
     //aka region14
 
     public IceCube() {
-        super("Ice Cube", R.drawable.zoomed_region_1_3,
+        super("Ice Cube", 14, R.drawable.zoomed_region_1_3,
                 new cityPt[]{});
     }
 
