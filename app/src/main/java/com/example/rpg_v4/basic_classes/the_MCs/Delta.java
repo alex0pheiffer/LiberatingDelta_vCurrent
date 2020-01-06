@@ -23,12 +23,13 @@ public class Delta extends main_character {
                 50,
                 9,
                 getAType(9),
+                getMType(1),
                 com.example.rpg_v4.R.drawable.dummy_mmc_img,
                 0,
                 "sword",
                 new basicSword(),
                 null,
-                new stats_object(5,10,1,0,0,2,5,0,0,0));
+                new stats_object(5,10,200,0,0,200,500,0,0,0));
     }
 
     public fighting_character getFightingCharacter() {

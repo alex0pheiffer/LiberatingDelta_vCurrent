@@ -23,12 +23,13 @@ public class Vivian extends main_character {
                 65,
                 7,
                 getAType(17),
+                getMType(3),
                 com.example.rpg_v4.R.drawable.dummycat,
                 0,
                 "dagger",
                 new basicSword(),
                 null,
-                new stats_object(3,10,0,0,3,1,1,1,1,1));
+                new stats_object(3,10,0,0,130,100,100,100,100,100));
     }
 
     public fighting_character getFightingCharacter() {

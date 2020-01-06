@@ -15,6 +15,7 @@ public class staticer_test extends static_character {
                 50,
                 80,
                 getAType(0),
+                getMType(0),
                 new Integer[] {com.example.rpg_v4.R.drawable.dummycat}
                 );
     }

@@ -10,8 +10,8 @@ public abstract class fighting_character extends Characters{
     private inventI item_equip;
     private stats_object stats;
 
-    public fighting_character(String nom, String[] descriptstr, Integer[] descriptpl,String gender, int age, int height, boolean human, int magicalAff, int strength, String charType, int fightImg, String atkType, Weapon weapon, inventI item, stats_object thestats) {
-        super(nom, descriptstr, descriptpl, gender, age, height, human, magicalAff, strength, charType);
+    public fighting_character(String nom, String[] descriptstr, Integer[] descriptpl,String gender, int age, int height, boolean human, int magicalAff, int strength, String charType, String magicType, int fightImg, String atkType, Weapon weapon, inventI item, stats_object thestats) {
+        super(nom, descriptstr, descriptpl, gender, age, height, human, magicalAff, strength, charType, magicType);
         this.fighting_img = fightImg;
         this.attack_type = atkType;
         this.weapon_equip = weapon;

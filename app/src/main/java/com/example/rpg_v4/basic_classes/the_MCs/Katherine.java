@@ -23,12 +23,13 @@ public class Katherine extends main_character {
                 80,
                 5,
                 getAType(17),
+                getMType(0),
                 com.example.rpg_v4.R.drawable.dummy_mmc_img,
                 0,
                 "bow",
                 null,
                 null,
-                new stats_object(3,10,0,1,0,1,0,0,0,0));
+                new stats_object(3,10,0,100,0,100,0,0,0,0));
     }
 
     /*

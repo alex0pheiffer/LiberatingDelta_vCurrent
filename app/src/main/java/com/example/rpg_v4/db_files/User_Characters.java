@@ -261,7 +261,7 @@ public class User_Characters {
     public void setRegion5exp(int region5exp) {
         this.region5exp = region5exp;
     }
-    public void setRegion6EXP(int region6EXP) {
+    public void setRegion6exp(int region6EXP) {
         this.region6exp = region6EXP;
     }
     public void setRegion7exp(int region7EXP) {

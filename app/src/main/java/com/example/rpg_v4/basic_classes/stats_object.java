@@ -29,6 +29,7 @@ public class stats_object {
     public stats_object(int atk, int hp, int vola, int evaA, int evaM, int physdef, int Fdef, int Wdef, int Ldef, int Adef) {
         this.attackA = atk;
         this.health = hp;
+        //eva+vola are in 100s... 564 == 5.64% == .0564.. max will always be 10% == 1000 == .1
         this.volatility = vola;
         this.evasiveA = evaA;
         this.evasiveM = evaM;

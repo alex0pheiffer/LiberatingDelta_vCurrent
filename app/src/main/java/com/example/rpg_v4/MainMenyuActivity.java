@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.rpg_v4.Main_Menyu_Fragements.CharacterArrowFragment;
+import com.example.rpg_v4.Main_Menyu_Fragements.characterViewFragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.dedicatedBackBtn;
 import com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended;
 import com.example.rpg_v4.Main_Menyu_Fragements.deckViewFragment;
@@ -53,7 +54,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction, dedicatedBackBtn.nonRegionBackButtonListener, deckViewer_deckBar.deckViewerDeckBarListener {
+public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction, dedicatedBackBtn.nonRegionBackButtonListener, deckViewer_deckBar.deckViewerDeckBarListener, characterViewFragment.characterViewFragmentListener {
 
     private int pl;
     private PL this_pl;
@@ -75,6 +76,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private chapterExtended chapterExtendedFragment;
     private menyu_itemsbar itemsBar;
     private main_menyu_frontcharacter characterIcon;
+    private characterViewFragment charViewer;
     private deckViewFragment deckViewerRecycler;
     private deckViewer_deckBar deckViewerBar;
     private dedicatedBackBtn backBtn;
@@ -153,6 +155,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
 
     private class dataController {
         //combination of checkUserData and userInventory in order to prevent utmost confusion...
+
+        //mainCharacter data storage...
+        private int KatieLevel;
+        private int VivLevel;
+        private int DeltaLevel;
 
         private class checkUserData {
             private List<User_Values> lValues;
@@ -291,6 +298,18 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 updateFrontChar(value);
             }
 
+            public int getKatieLevelExp() {
+                return lCharacters.get(0).getLevel();
+            }
+
+            public int getDeltaLevelExp() {
+                return lCharacters.get(1).getLevel();
+            }
+
+            public int getVivLevelExp() {
+                return lCharacters.get(2).getLevel();
+            }
+
             public void changeSize(User_Decks deck, int size) {
                 deck.setLength(size);
                 updateLen(deck);
@@ -307,63 +326,98 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 updateAmount(card);
             }
 
-            //todo finish
-            /*
             public void changeRegionExp(regions region, main_character character, int newEXP) {
                 int regionNum = region.getRegionNum();
+                //create userCharacters
+                User_Characters tempUserCharacter;
+                if (character.toString().compareTo(lCharacters.get(0).getName()) == 0) {
+                    //character is Katherine
+                    tempUserCharacter = lCharacters.get(0);
+                }
+                else if (character.toString().compareTo(lCharacters.get(1).getName()) == 0) {
+                    //character is Delta
+                    tempUserCharacter = lCharacters.get(1);
+                }
+                else if (character.toString().compareTo(lCharacters.get(2).getName()) == 0) {
+                    //character is Vivian
+                    tempUserCharacter = lCharacters.get(2);
+                }
+                else {
+                    throw new RuntimeException("Character name "+character.toString()+" doesn't match any saved character");
+                }
+
                 if (regionNum == 1) {
-                    updateVenelandEXP(userCharacters);
+                    tempUserCharacter.setRegion1exp(newEXP);
+                    updateVenelandEXP(tempUserCharacter);
                 }
                 else if (regionNum == 23) {
-                    updatePietasEXP(userCharacters);
+                    tempUserCharacter.setRegion23exp(newEXP);
+                    updatePietasEXP(tempUserCharacter);
                 }
                 else if (regionNum == 4) {
-                    updateStonesEXP(userCharacters);
+                    tempUserCharacter.setRegion4exp(newEXP);
+                    updateStonesEXP(tempUserCharacter);
                 }
                 else if (regionNum == 5) {
-                    repository.updateRegion5exp(userCharacters);
+                    tempUserCharacter.setRegion5exp(newEXP);
+                    updateHdrEXP(tempUserCharacter);
                 }
                 else if (regionNum == 6) {
-                    repository.updateRegion6exp(userCharacters);
+                    tempUserCharacter.setRegion6exp(newEXP);
+                    updateRegion6EXP(tempUserCharacter);
                 }
                 else if (regionNum == 7) {
-                    repository.updateRegion7exp(userCharacters);
+                    tempUserCharacter.setRegion7exp(newEXP);
+                    updateRegion7EXP(tempUserCharacter);
                 }
                 else if (regionNum == 89) {
-                    repository.updateRegion89exp(userCharacters);
+                    tempUserCharacter.setRegion89exp(newEXP);
+                    updateRegion89EXP(tempUserCharacter);
                 }
                 else if (regionNum == 10) {
-                    repository.updateRegion10exp(userCharacters);
+                    tempUserCharacter.setRegion10exp(newEXP);
+                    updateRegion10EXP(tempUserCharacter);
                 }
                 else if (regionNum == 11) {
-                    repository.updateRegion11exp(userCharacters);
+                    tempUserCharacter.setRegion11exp(newEXP);
+                    updateRegion11EXP(tempUserCharacter);
                 }
                 else if (regionNum == 12) {
-                    repository.updateRegion12exp(userCharacters);
+                    tempUserCharacter.setRegion12exp(newEXP);
+                    updateNebulaEXP(tempUserCharacter);
                 }
                 else if (regionNum == 13) {
-                    repository.updateRegion13exp(userCharacters);
+                    tempUserCharacter.setRegion13exp(newEXP);
+                    updateRegion13EXP(tempUserCharacter);
                 }
                 else if (regionNum == 14) {
-                    repository.updateRegion14exp(userCharacters);
+                    tempUserCharacter.setRegion14exp(newEXP);
+                    updateIcecubeEXP(tempUserCharacter);
                 }
                 else if (regionNum == 16) {
-                    repository.updateRegion16exp(userCharacters);
+                    tempUserCharacter.setRegion16exp(newEXP);
+                    updateRupesEXP(tempUserCharacter);
                 }
                 else if (regionNum == 17) {
-                    repository.updateRegion17exp(userCharacters);
+                    tempUserCharacter.setRegion17exp(newEXP);
+                    updatePetraEXP(tempUserCharacter);
                 }
                 else if (regionNum == 18) {
-                    repository.updateRegion18exp(userCharacters);
+                    tempUserCharacter.setRegion18exp(newEXP);
+                    updateJuslynEXP(tempUserCharacter);
                 }
                 else if (regionNum == 19) {
-                    repository.updateRegion19exp(userCharacters);
+                    tempUserCharacter.setRegion19exp(newEXP);
+                    updateJuslynEXP(tempUserCharacter);
                 }
                 else if (regionNum == 20) {
-                    repository.updateRegion20exp(userCharacters);
+                    tempUserCharacter.setRegion20exp(newEXP);
+                    updateNorthEXP(tempUserCharacter);
+                }
+                else {
+                    throw new RuntimeException("invalid region number of region "+region.getNom());
                 }
             }
-             */
 
             public User_Decks getDeck(int index) {
                 return lDecks.get(index);
@@ -792,7 +846,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
 
         public void setlValues(List<User_Values> vals) {userDataChecker.setlValues(vals);}
-        public void setlCharacters(List<User_Characters> lCharacters) {userDataChecker.setlCharacters(lCharacters);}
+        public void setlCharacters(List<User_Characters> lCharacters) {
+            userDataChecker.setlCharacters(lCharacters);
+        }
         public void setlEQPlayed(List<User_EQPlayed> lEQPlayed) {userDataChecker.setlEQPlayed(lEQPlayed);}
         public void setlCards(List<User_Cards> vals) { userDataChecker.setlCards(vals); }
         public void setlDecks(List<User_Decks> vals) {userDataChecker.setlDecks(vals);}
@@ -823,6 +879,25 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         //returns a BlankDeck...not a list
         public BlankDeck getAllCards() {return thisUserInventory.getAllCards();}
         public ArrayList<Deck> getAllDecks() {return thisUserInventory.getAllDecks();}
+
+        public void setKatieLevel(int level) {
+            if (level == 0) {
+                PL_VendingMachine.getInitLevel(userDataChecker.getKatieLevelExp());
+            }
+            else this.KatieLevel = level;
+        }
+        public void setVivLevel(int level) {
+            if (level == 0) {
+                PL_VendingMachine.getInitLevel(userDataChecker.getVivLevelExp());
+            }
+            else this.VivLevel = level;
+        }
+        public void setDeltaLevel(int level) {
+            if (level == 0) {
+                PL_VendingMachine.getInitLevel(userDataChecker.getDeltaLevelExp());
+            }
+            else this.DeltaLevel = level;
+        }
 
     }
     dataController myDataController;
@@ -896,7 +971,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 updateUserCharactersCounter++;
                 myDataController.setlCharacters(vals);
                 if (updateUserCharactersCounter==1) {
-                    //init UI updates here
+                    myDataController.setKatieLevel(0);
+                    myDataController.setVivLevel(0);
+                    myDataController.setDeltaLevel(0);
                 }
             }
         });
@@ -1062,7 +1139,24 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     //ItemsBarBtns
     public void menyuItemsBarSettingsPressed() {}
     public void menyuItemsBarCharactersPressed() {
-
+        Log.d("VIEW_CHANGE","Opening Character Viewer");
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        charViewer = characterViewFragment.newInstance(pl,"Katherine",1,0);
+        //charViewerBar = ;
+        backBtn = dedicatedBackBtn.newInstance(pl,charViewer.getCURRENT_LAYOUT());
+        ft.add(R.id.dedicated_back_btn,backBtn);
+        ft.add(R.id.whole_container_frag,charViewer);
+        //ft.replace(R.id.itemsbar,deckViewerBar);
+        ft.remove(mainMenyuRegionMapBtn);
+        ft.addToBackStack(null);
+        ft.commit();
+        deployArrowsMMC(false);
+        bufferbackgBottom.setAlpha(0);
+        bufferbackgTop.setAlpha(0);
+        bufferbackgLeft.setAlpha(0);
+        bufferbackgRight.setAlpha(0);
+        mmc_backbox.setBackground(null);
+        layoutSetter.changeLayout(charViewer.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
     }
     public void menyuItemsBarPlotPressed() {}
     public void menyuItemsBarDecksPressed() {
@@ -1172,6 +1266,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
         else if (layoutSetter.compareParsed(layout,"CHARACTER_VIEW_LAYOUT")) {
             reignArrowsMMC();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.remove(charViewer);
+            ft.remove(backBtn);
+            ft.addToBackStack(null);
+            ft.commit();
         }
         else if(layoutSetter.compareParsed(layout,"DECK_VIEW_LAYOUT")) {
             reignArrowsMMC();
@@ -1195,7 +1294,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             ft.commit();
         }
         else if (layoutSetter.compareParsed(layout,"CHARACTER_VIEW_LAYOUT")) {
-            reignArrowsMMC();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.itemsbar,itemsBar);
+            ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
+            ft.addToBackStack(null);
+            ft.commit();
         }
         else if(layoutSetter.compareParsed(layout,"DECK_VIEW_LAYOUT")) {
             FragmentTransaction ft = fragmentManager.beginTransaction();
