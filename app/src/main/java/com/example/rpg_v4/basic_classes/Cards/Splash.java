@@ -19,6 +19,10 @@ public class Splash extends Card {
 
     }
 
+    public void preformEffectTodo(battle_character target) {
+
+    }
+
     public static int getDeckAmt() {
         return deckAmt;
     }

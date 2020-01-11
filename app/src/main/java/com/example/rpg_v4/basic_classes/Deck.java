@@ -56,27 +56,25 @@ public class Deck implements abstractDeck {
 
     private final String[] charequipers = {"All", "Vivian", "Katherine", "Delta", "Invalid"};
 
-    /*
-    public Deck(String name, ArrayList<Card> cards, @Nullable String charHolding) {
-        super(name, false, null);
-        this.cards = cards;
+    public Deck(String name, String charHolding, ArrayList<sudoCard> cards) {
+        this.name = name;
+        this.alphabetcards= new ArrayList<sudoCard>();
+        this.allCards = new ArrayList<Card>();
         if (charHolding != null) {
             this.charHolding = charHolding;
         }
-
-        this.alphabetcards = new ArrayList<Card>();
-        alphabetizeDeck(true);
-        this.cardAmt = cards.size();
-        this.isWeaponSpec = checkWeaponSpec();
-        this.charequip = checkCharEquip();
-        this.totalWeight = getTotalWeight();
-        this.instanceName = getClass().getName()+" "+numInstance;
+        this.cardAmt = 0;
         this.charequip = charequipers[0];
         numInstance++;
+        this.instanceName = getClass().getName()+" "+numInstance;
+        for (int i = 0; i < cards.size(); i++) {
+            for (int j = 0; j < cards.get(i).getAmount(); j++) {
+                this.addCard(cards.get(i).getCard(j));
+            }
+        }
     }
-    */
 
-    public Deck(String name, @Nullable String charHolding) {
+    public Deck(String name, String charHolding) {
         this.name = name;
         this.alphabetcards= new ArrayList<sudoCard>();
         this.allCards = new ArrayList<Card>();
@@ -482,14 +480,27 @@ public class Deck implements abstractDeck {
         removeCard(tempSudo.getCard(tempSudo.getAmount()-1));
     }
 
+    //take note that this function doesnt clear allCards nor alphabetCards
     public void removeAll() {
-        Card temp;
-        for (int n = 0; n < allCards.size(); n++) {
-            temp = allCards.get(n);
-            int numinst = numCardInstance(temp);
-            if (numinst == 1) {
-                temp.removeDeckAmt();
-            }
+        sudoCard temp;
+        for (int n = 0; n < alphabetcards.size(); n++) {
+            temp = alphabetcards.get(n);
+            //int numinst = numCardInstance(temp);
+            //if (numinst == 1) {
+            temp.getCard(0).removeDeckAmt();
+            //}
+        }
+    }
+
+    //shuffles the allCards list
+    public void shuffle() {
+        int newIndex = 0;
+        Card tempCard;
+        for (int i=0; i < allCards.size(); i++) {
+            newIndex = (int)(Math.random()*allCards.size());
+            tempCard = allCards.get(newIndex);
+            allCards.set(newIndex, allCards.get(i));
+            allCards.set(i,tempCard);
         }
     }
 
@@ -508,6 +519,10 @@ public class Deck implements abstractDeck {
             total = total+alphabetcards.get(n).getCard(0).getWeight()*alphabetcards.get(n).getAmount();
         }
         return total;
+    }
+
+    public Deck copy() {
+        return new Deck(this.name+"_c",charHolding, alphabetcards);
     }
 
     public String getNom() {

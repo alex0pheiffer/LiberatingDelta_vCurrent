@@ -23,8 +23,8 @@ public abstract class main_character extends fighting_character {
     private int maceriaEXP;
     private int northEXP;
 
-    public main_character(String nom, String[] descriptstr, Integer[] descriptpl, String[] greet, String gender, int age, int height, boolean human, int magicalAff, int strength, String charType, String magicType, int characterImgDrawable, int fightImg, String atkType, Weapon weapon, inventI item, stats_object thestats) {
-        super(nom, descriptstr, descriptpl, gender, age, height, human, magicalAff, strength, charType, magicType, fightImg, atkType, weapon, item, thestats);
+    public main_character(String nom, String[] descriptstr, Integer[] descriptpl, String[] greet, String gender, int age, int height, boolean human, int magicalAff, int strength, String charType, String magicType, int characterImgDrawable, int fightImg, String atkType, Weapon weapon, inventI item, Deck deck, stats_object thestats) {
+        super(nom, descriptstr, descriptpl, gender, age, height, human, magicalAff, strength, charType, magicType, fightImg, atkType, weapon, item, deck, thestats);
         this.greetings = greet;
         this.characterImgDrawable = characterImgDrawable;
     }
