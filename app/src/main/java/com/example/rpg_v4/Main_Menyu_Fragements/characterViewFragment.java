@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.rpg_v4.Main_Menyu_Fragements.characterViewSubFragments.characterViewStatsSubFragment;
 import com.example.rpg_v4.PL_VendingMachine;
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.PL;
@@ -20,12 +21,20 @@ import com.example.rpg_v4.custom_drawables.evaDrawable;
 
 public class characterViewFragment extends Fragment {
 
-    private final String CURRENT_LAYOUT = "CHARACTER_VIEW_LAYOUT";
+    private String CURRENT_LAYOUT = "CHARACTER_VIEW_LAYOUT";
 
     private static final String PlayerLevel = "PlayerLevel";
     private static final String CHARACTER = "CHAR";
     private static final String CHARACTERLVL = "LVL";
     private static final String CHARACTEREXP = "EXP";
+
+    /*
+    private characterViewStatsSubFragment statsFrag;
+    private characterViewEquipSubFragment equipFrag;
+    private characterViewRegionSubFragment regionFrag;
+    private characterViewRankSubFragment rankFrag;
+    private characterViewInfoSubFragment infoFrag;
+    */
 
     private TextView characterName, characterLvl, characterHP, characterAtk, characterPEva, characterMEva, characterType, characterEXP;
     private View expCanvas, atkCanvas, pEvaCanvas, mEvaCanvas, defCanvas, characterViewBar;
@@ -123,6 +132,10 @@ public class characterViewFragment extends Fragment {
 
     public String getCURRENT_LAYOUT() {
         return CURRENT_LAYOUT;
+    }
+
+    public void setCURRENT_LAYOUT(String layout) {
+        CURRENT_LAYOUT = layout;
     }
 
     public interface characterViewFragmentListener {

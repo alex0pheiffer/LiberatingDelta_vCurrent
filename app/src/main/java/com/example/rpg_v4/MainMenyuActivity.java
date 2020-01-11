@@ -1139,6 +1139,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     //ItemsBarBtns
     public void menyuItemsBarSettingsPressed() {}
     public void menyuItemsBarCharactersPressed() {
+        /*
         Log.d("VIEW_CHANGE","Opening Character Viewer");
         FragmentTransaction ft = fragmentManager.beginTransaction();
         charViewer = characterViewFragment.newInstance(pl,"Katherine",1,0);
@@ -1157,6 +1158,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         bufferbackgRight.setAlpha(0);
         mmc_backbox.setBackground(null);
         layoutSetter.changeLayout(charViewer.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
+    */
     }
     public void menyuItemsBarPlotPressed() {}
     public void menyuItemsBarDecksPressed() {
@@ -1196,6 +1198,13 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         intented.putExtras(args);
         startActivity(intented);
     }
+
+    //CharacterViewer
+    public void characterViewBarStatsPressed(String layout) {}
+    public void characterViewBarEquipPressed(String layout) {}
+    public void characterViewBarRegionPressed(String layout) {}
+    public void characterViewBarRankPressed(String layout) {}
+    public void characterViewBarInfoPressed(String layout) {}
 
     //DecksViewer
     public ArrayList<Deck> getAllDecks() {
