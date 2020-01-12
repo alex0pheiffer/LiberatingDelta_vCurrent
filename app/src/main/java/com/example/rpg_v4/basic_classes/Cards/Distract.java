@@ -16,11 +16,11 @@ public class Distract extends Card {
     }
 
     public void preformCard(battle_character user, battle_character target) {
-
+        target.addEffectTodo(this, 1);
     }
 
     public void preformEffectTodo(battle_character target) {
-
+        target.setTurnSkip(true);
     }
 
     public static int getDeckAmt() {

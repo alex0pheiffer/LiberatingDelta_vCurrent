@@ -21,9 +21,8 @@ public class battle_character {
 
     private boolean isDead;
     private boolean turnSkip;
-    private boolean isBuffed;
     private stats_object stats_static;
-    private stats_object buff_stats;        //only used if isBuffed is TRUE
+    private stats_object effect_stats;
     private stats_object stats;
 
     public battle_character(fighting_character thisCharacter, int timeToTurn, boolean ally) {
@@ -45,7 +44,7 @@ public class battle_character {
         this.isDead=false;
         this.turnSkip = false;
         this.stats_static = thisCharacter.getStats();
-        setBuffStats();
+        this.effect_stats = new stats_object(0,0,0,0,0,0,0,0,0,0);
     }
 
     public int getWait() {return timeToTurn;}
@@ -121,46 +120,6 @@ public class battle_character {
             currentHP = currentHP-amt;
         }
     }
-    private void setBuffStats() {
-        stats_object temp = stats_static;
-        if (item_equip_stats == null && weapon_equip_stats == null) {
-            this.buff_stats = null;
-        }
-        else if(item_equip_stats == null) {
-            this.buff_stats = weapon_equip_stats;
-            temp.addStats(this.buff_stats);
-        }
-        else if(weapon_equip_stats == null) {
-            if (thisCharacter.getItemUseForBuff()) {
-                this.buff_stats = null;
-            }
-            else {
-                this.buff_stats = item_equip_stats;
-                temp.addStats(this.buff_stats);
-            }
-        }
-        else {
-            if (thisCharacter.getItemUseForBuff()) {
-                this.buff_stats = weapon_equip_stats;
-                temp.addStats(this.buff_stats);
-            }
-            else {
-                this.buff_stats = new stats_object(
-                        item_equip_stats.getAttackA()+weapon_equip_stats.getAttackA(),
-                        item_equip_stats.getHealth()+weapon_equip_stats.getHealth(),
-                        item_equip_stats.getVolatility()+weapon_equip_stats.getVolatility(),
-                        item_equip_stats.getEvasiveA()+weapon_equip_stats.getEvasiveA(),
-                        item_equip_stats.getEvasiveM()+weapon_equip_stats.getEvasiveM(),
-                        item_equip_stats.getADefense()+weapon_equip_stats.getADefense(),
-                        item_equip_stats.getFireDefense()+weapon_equip_stats.getFireDefense(),
-                        item_equip_stats.getWaterDefense()+weapon_equip_stats.getWaterDefense(),
-                        item_equip_stats.getLandDefense()+weapon_equip_stats.getLandDefense(),
-                        item_equip_stats.getAirDefense()+weapon_equip_stats.getAirDefense());
-                temp.addStats(this.buff_stats);
-            }
-        }
-        this.stats = temp;
-    }
 
     public void removeWeapon() {
         thisCharacter.removeWeapon();
@@ -227,8 +186,9 @@ public class battle_character {
     }
 
     public void applyEffectTodo() {
+        resetEffectStats();
         for (int i = 0; i < cardEffectTodo.size(); i++) {
-            cardEffectTodo.get(i).preformEffectTodo(this);
+            cardEffectTodo.get(i).preformEffectTodo(this, effect_stats);
             waitEffectTodo.set(i, waitEffectTodo.get(i) - 1);
             if (waitEffectTodo.get(i) == 0) {
                 cardEffectTodo.remove(i);
@@ -236,6 +196,19 @@ public class battle_character {
                 i--;
             }
         }
+    }
+
+    public void resetEffectStats() {
+        effect_stats.setHealth(0);
+        effect_stats.setEvasiveA(0);
+        effect_stats.setEvasiveM(0);
+        effect_stats.setAttackA(0);
+        effect_stats.setADefense(0);
+        effect_stats.setFireDefense(0);
+        effect_stats.setWaterDefense(0);
+        effect_stats.setAirDefense(0);
+        effect_stats.setLandDefense(0);
+        effect_stats.setVolatility(0);
     }
 
     public void fillHand() {

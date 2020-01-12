@@ -2,6 +2,7 @@ package com.example.rpg_v4.basic_classes.Cards;
 
 import com.example.rpg_v4.basic_classes.Card;
 import com.example.rpg_v4.basic_classes.battle_character;
+import com.example.rpg_v4.basic_classes.stats_object;
 
 public class DiveLeft extends Card {
 
@@ -16,11 +17,11 @@ public class DiveLeft extends Card {
     }
 
     public void preformCard(battle_character user, battle_character target) {
+        user.addEffectTodo(this, 1);
 
     }
 
-    public void preformEffectTodo(battle_character target) {
-
+    public void preformEffectTodo(battle_character target, stats_object effect_stats) {
     }
 
     public static int getDeckAmt() {

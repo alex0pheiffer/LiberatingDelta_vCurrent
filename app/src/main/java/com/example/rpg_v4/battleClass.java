@@ -115,6 +115,8 @@ public class battleClass {
             }
             //clear the target list
             chosenTargets.clear();
+            //turnSkip is false
+            character_it.setTurnSkip(false);
         }
         return false;
     }
