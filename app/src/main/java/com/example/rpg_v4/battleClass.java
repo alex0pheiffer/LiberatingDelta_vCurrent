@@ -121,8 +121,12 @@ public class battleClass {
         return false;
     }
 
+    //the computer decides which card is best to use.
     private Card chooseFight() {
+        //first, determine which would produce the best amount of damage.
+        for (int c = 0; c < character_it.getHand(); c++) {
 
+        }
     }
 
     //call if an ally dies
