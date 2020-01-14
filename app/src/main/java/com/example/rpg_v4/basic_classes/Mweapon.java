@@ -4,8 +4,8 @@ public abstract class Mweapon extends Weapon {
 
     private String type;
     private int mPerc;
-                                        //"Fire","Water","Land","Air","Match"
-    private final String[] mTypes = {stats_object.getType(0),stats_object.getType(1),stats_object.getType(2),stats_object.getType(3),"Match"};
+    //"Fire","Water","Land","Air","Match"
+    private final String[] mTypes = {Characters.getMType(1),Characters.getMType(2),Characters.getMType(3),Characters.getMType(4),"Match"};
 
     public Mweapon(String name, stats_object buff, int Mtype, int mPerc) {
         super(name, buff, 0);

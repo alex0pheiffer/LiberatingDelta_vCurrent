@@ -1,10 +1,5 @@
 package com.example.rpg_v4.basic_classes;
 
-import android.os.Parcelable;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
-
 import com.example.rpg_v4.basic_classes.Cards.sudoCard;
 
 import java.util.ArrayList;
@@ -115,20 +110,30 @@ public class Deck implements abstractDeck {
     //typical binary search: starting input... card, 0, alphabetcards.size()-1
     public int binarySearch(Card card, int startIndex, int endIndex) {
         String x = card.toString();
+
+        //System.out.println("--- bi : "+card.toString()+" ---");
+        //System.out.println("s: "+startIndex+"\te:"+endIndex);
+
         if (endIndex >= startIndex) {
             int mid = startIndex + (int)(((double)(endIndex - startIndex) / 2)+.5);
+            //System.out.println("mid: "+mid);
             // If the element is present at the
             // middle itself
-            if (alphabetcards.get(mid).getCard(0).toString().compareTo(x) == 0)
+            if (alphabetcards.get(mid).getCard(0).toString().compareTo(x) == 0) {
+                //System.out.println("is mid : "+alphabetcards.get(mid).getCard(0).toString());
                 return mid;
+            }
 
             // If element is smaller than mid, then
             // it can only be present in left subarray
-            if (alphabetcards.get(mid).getCard(0).toString().compareTo(x) > 0)
+            if (alphabetcards.get(mid).getCard(0).toString().compareTo(x) > 0) {
+                //System.out.println("is smaller : "+alphabetcards.get(mid).getCard(0).toString());
                 return binarySearch(card, startIndex, mid - 1);
+            }
 
             // Else the element can only be present
             // in right subarray
+            //System.out.println("is larger: "+alphabetcards.get(mid).getCard(0).toString());
             return binarySearch(card, mid + 1, endIndex);
         }
 
@@ -396,9 +401,22 @@ public class Deck implements abstractDeck {
 
     //when removing a card from your inventory...you will no longer own this card
     private void removeFromSudoDeck(Card card) {
+
+        //System.out.println("_________");
+        //System.out.println(card.toString());
+        //System.out.println("_________");
+        /*
+        for (int i = 0; i < alphabetcards.size(); i++) {
+            for (int j = 0; j < alphabetcards.get(i).getAmount(); j++) {
+                System.out.println(alphabetcards.get(i).getCard(j).toString());
+            }
+        }
+        */
+
         int index = binarySearch(card, 0, alphabetcards.size() - 1);
         //find the sudocard that matches this card
-        if (index != -1) {
+        //System.out.println("index: "+index);
+        if (index == -1) {
             throw new RuntimeException("error: card "+card.getNom()+" DNE in allCards");
         }
         else {

@@ -7,9 +7,6 @@ import com.example.lib.basic_classes.stats_object;
 
 public class Katherine extends main_character {
 
-    private fighting_character mc_fight;
-    private static_character mc_static;
-
     public Katherine() {
         super("Katherine",
                 new String[] {"The main Character!"},
@@ -45,22 +42,6 @@ public class Katherine extends main_character {
         return (int)mc_by_pl[index];
     }
     */
-
-    public fighting_character getFightingCharacter() {
-        return mc_fight;
-    }
-
-    public static_character getStaticCharacter() {
-        return mc_static;
-    }
-
-    public void setFightingCharacter(fighting_character character) {
-        this.mc_fight = character;
-    }
-
-    public void setStaticCharacter(static_character character) {
-        this.mc_static = character;
-    }
 
     public String toString() {return "Katherine";}
 

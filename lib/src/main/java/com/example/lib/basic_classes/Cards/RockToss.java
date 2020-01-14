@@ -17,10 +17,18 @@ public class RockToss extends Card {
 
     public void preformCard(battle_character user, battle_character target) {
 
+        System.out.println("Returns .7 * aAtk");
+
+        int amt = (int)(user.getPatk()*.7);
+        amt = target.hitWPhysical(amt);
+
+        System.out.println(target.getNom()+" lost "+amt+" hp.");
+        System.out.println(target.getNom()+" : "+target.getHP());
+
     }
 
     public void preformEffectTodo(battle_character target) {
-
+        //none
     }
 
     public static int getDeckAmt() {

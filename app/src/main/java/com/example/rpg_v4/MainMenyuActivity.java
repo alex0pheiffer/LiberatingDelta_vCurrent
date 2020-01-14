@@ -38,6 +38,7 @@ import com.example.rpg_v4.basic_classes.cityPt;
 import com.example.rpg_v4.basic_classes.inventI;
 import com.example.rpg_v4.basic_classes.main_character;
 import com.example.rpg_v4.basic_classes.regions;
+import com.example.rpg_v4.basic_classes.str2card;
 import com.example.rpg_v4.basic_classes.the_MCs.Katherine;
 import com.example.rpg_v4.basic_classes.the_cities.chipper_towne;
 import com.example.rpg_v4.basic_classes.the_cities.maleficere_mansion;
@@ -442,10 +443,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             private ArrayList<Weapon> allWeapons;
             private ArrayList<inventI> allNonWeapons;
             private ArrayList<inventI> allItems;
-
-            //todo update this as you add more card classes
-            private Class[] cardClasses = {Distract.class,DiveLeft.class,RockToss.class,Shove.class,Splash.class,Struggle.class,TreeHide.class};
-            private ArrayList<String> cardClassesNames;
+            str2card cardConverter = new str2card();
 
             public userInventory() {
                 allCards = new BlankDeck();
@@ -453,12 +451,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 allWeapons = new ArrayList<Weapon>();
                 allNonWeapons = new ArrayList<inventI>();
                 allItems = new ArrayList<inventI>();
-                cardClassesNames = new ArrayList<String>();
                 allDecksNames = new ArrayList<String>();
-                for (Class n : cardClasses) {
-                    cardClassesNames.add(n.getSimpleName());
-                }
-                alphabetizeClassCard();
             }
 
             public void fillDecks(ArrayList<User_Decks> lDecks, ArrayList<User_Cards> lCards) {
@@ -481,13 +474,10 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                     int deckAmt = 0;
                     Card temp = null;
                     int sudoCardIndex = 0;
-                    Class tempClass = null;
                     for (User_Cards c : lCards) {
                         //if card is not the same as the previous OR null, create a new card instance
                         if (temp == null || !previous_card.equals(c.getName())) {
-                            tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
-                            try{ temp = (Card) tempClass.newInstance(); }
-                            catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                            temp = cardConverter.getCard(c.getName());
                             sudoCardIndex = allCards.addCard(temp);
                             if (!c.getDeck().equals("None")) {
                                 allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
@@ -513,8 +503,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                                     if (deckAmt >= c.getAmount()) {
                                         throw new RuntimeException("cards "+c.getName()+" created exceed the said db amount");
                                     }
-                                    try{ temp = (Card) tempClass.newInstance(); }
-                                    catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                                    temp = cardConverter.getPrevious(previous_card);
                                     allCards.addCard(temp);
                                     if (!c.getDeck().equals("None")) {
                                         allDecks.get(Collections.binarySearch(allDecksNames,c.getDeck())).addCard(temp);
@@ -533,8 +522,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                                     //if the deck is "None" you probably need to make a new card...
                                     if(c.getAmount() > allCards.getSudoCard(sudoCardIndex).getAmount()) {
                                         //we still need to make a new card
-                                        try{ temp = (Card) tempClass.newInstance(); }
-                                        catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                                        temp = cardConverter.getPrevious(previous_card);
                                         allCards.addCard(temp);
                                     }
                                 }
@@ -637,33 +625,10 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 Card temp = null;
                 ArrayList<Card> cards = new ArrayList<Card>();
                 for (User_Cards c : lCards) {
-                    tempClass = cardClasses[Collections.binarySearch(cardClassesNames,c.getName())];
-                    try{ temp = (Card) tempClass.newInstance(); }
-                    catch(Exception e){ throw new RuntimeException("Class "+tempClass.getName()+" is not a valid card."); }
+                    temp = cardConverter.getCard(c.getName());
                     cards.add(temp);
                 }
                 return cards;
-            }
-
-            private void alphabetizeClassCard() {
-                //insertion sort
-                String tempStr;
-                Class tempCl;
-                for (int i = 0; i < cardClasses.length; i++)
-                {
-                    for (int j = i + 1; j < cardClasses.length; j++)
-                    {
-                        if (cardClassesNames.get(i).compareTo(cardClassesNames.get(j))>0)
-                        {
-                            tempStr = cardClassesNames.get(i);
-                            tempCl = cardClasses[i];
-                            cardClassesNames.set(i,cardClassesNames.get(j));
-                            cardClasses[i] = cardClasses[j];
-                            cardClassesNames.set(j, tempStr);
-                            cardClasses[j] = tempCl;
-                        }
-                    }
-                }
             }
 
             private ArrayList<User_Cards> alphabetizelCards(ArrayList<User_Cards> lCards) {

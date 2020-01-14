@@ -2,6 +2,7 @@ package com.example.rpg_v4.basic_classes.Cards;
 
 import com.example.rpg_v4.basic_classes.Card;
 import com.example.rpg_v4.basic_classes.battle_character;
+import com.example.rpg_v4.basic_classes.stats_object;
 
 public class Distract extends Card {
 
@@ -16,10 +17,16 @@ public class Distract extends Card {
     }
 
     public void preformCard(battle_character user, battle_character target) {
+
+        System.out.println(target.getNom()+" has lost a ( 1 ) turn!");
+
         target.addEffectTodo(this, 1);
     }
 
     public void preformEffectTodo(battle_character target) {
+
+        System.out.println("Turn is skipped.");
+
         target.setTurnSkip(true);
     }
 

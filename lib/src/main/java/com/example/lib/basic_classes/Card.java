@@ -104,7 +104,7 @@ public abstract class Card {
     public void preformCard(battle_character user, battle_character target) {}
 
     //should be overwritten
-    public void preformEffectTodo(battle_character target, stats_object effect_stats) {}
+    public void preformEffectTodo(battle_character target) {}
 
     public String toString() {return this.getClass().getSimpleName();}
 }

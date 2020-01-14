@@ -1,11 +1,12 @@
-package com.example.rpg_v4;
+package com.example.lib;
 
-import com.example.rpg_v4.basic_classes.Card;
-import com.example.rpg_v4.basic_classes.battle_character;
-import com.example.rpg_v4.basic_classes.fighting_character;
+import com.example.lib.basic_classes.Card;
+import com.example.lib.basic_classes.battle_character;
+import com.example.lib.basic_classes.fighting_character;
+import com.example.lib.basic_classes.str2card;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class battleClass {
 

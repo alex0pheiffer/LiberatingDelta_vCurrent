@@ -1,6 +1,7 @@
 package com.example.rpg_v4.basic_classes.Cards;
 
 import com.example.rpg_v4.basic_classes.Card;
+import com.example.rpg_v4.basic_classes.Characters;
 import com.example.rpg_v4.basic_classes.battle_character;
 
 public class Struggle extends Card {
@@ -17,10 +18,18 @@ public class Struggle extends Card {
 
     public void preformCard(battle_character user, battle_character target) {
 
+        System.out.println("Returns .5 * pAtk");
+
+        int amt = (int)(user.getPatk()*.5);
+        amt = target.hitWPhysical(amt);
+
+        System.out.println(target.getNom()+" lost "+amt+" hp.");
+        System.out.println(target.getNom()+" : "+target.getHP());
+
     }
 
     public void preformEffectTodo(battle_character target) {
-
+        //none
     }
 
     public static int getDeckAmt() {

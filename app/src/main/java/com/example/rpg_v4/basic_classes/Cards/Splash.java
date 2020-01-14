@@ -1,6 +1,7 @@
 package com.example.rpg_v4.basic_classes.Cards;
 
 import com.example.rpg_v4.basic_classes.Card;
+import com.example.rpg_v4.basic_classes.Characters;
 import com.example.rpg_v4.basic_classes.battle_character;
 
 public class Splash extends Card {
@@ -17,10 +18,19 @@ public class Splash extends Card {
 
     public void preformCard(battle_character user, battle_character target) {
 
+        System.out.println("Returns .5 * mAtk or 0");
+
+        int amt = (int)(user.getMatk()*.5);
+        if (user.getType() != Characters.getMType(0)) amt = target.hitWMagic(amt,user.getType());
+        else amt = 0;
+
+        System.out.println(target.getNom()+" lost "+amt+" hp.");
+        System.out.println(target.getNom()+" : "+target.getHP());
+
     }
 
     public void preformEffectTodo(battle_character target) {
-
+        //none
     }
 
     public static int getDeckAmt() {

@@ -23,13 +23,14 @@ public class stats_object {
                                 //PERCENT
     private int AirDefense;     //the affectiveness of an air magic attack
                                 //PERCENT
-    private static final String[] types = {"Fire","Water","Land","Air","Scatter"};
+    //if you're looking for the list that used to have the string types, use the one under Characters instead.
 
 
     public stats_object(int atk, int hp, int vola, int evaA, int evaM, int physdef, int Fdef, int Wdef, int Ldef, int Adef) {
         this.attackA = atk;
         this.health = hp;
         //eva+vola are in 100s... 564 == 5.64% == .0564.. max will always be 10% == 1000 == .1
+        //dont know why it says theres a max? i hope that isnt implemented somewhere.... there is no max other than 100% == 10000
         this.volatility = vola;
         this.evasiveA = evaA;
         this.evasiveM = evaM;
@@ -39,8 +40,6 @@ public class stats_object {
         this.LandDefense = Ldef;
         this.AirDefense = Adef;
     }
-
-    public static String getType(int index) {return types[index];}
 
     public void addStats(stats_object stats) {
         this.attackA = attackA + stats.getAttackA();

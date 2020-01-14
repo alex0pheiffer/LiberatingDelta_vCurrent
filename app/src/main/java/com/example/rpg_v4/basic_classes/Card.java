@@ -1,7 +1,5 @@
 package com.example.rpg_v4.basic_classes;
 
-import android.util.Log;
-
 public abstract class Card {
 
     private String nom;
@@ -84,7 +82,7 @@ public abstract class Card {
 
     public String getSpecificCharacter() {
         if (isCharacterSpecific) {
-            Log.d("CARDINFO","Warning: This method should be overwritten");
+            System.out.println("Warning: This method should be overwritten");
             return null;
         }
         else {
@@ -94,7 +92,7 @@ public abstract class Card {
 
     public Weapon getSpecificWeapon() {
         if (isWeaponSpecific) {
-            Log.d("CARDINFO","Warning: This method should be overwritten");
+            System.out.println("Warning: This method should be overwritten");
             return null;
         }
         else {
@@ -106,7 +104,7 @@ public abstract class Card {
     public void preformCard(battle_character user, battle_character target) {}
 
     //should be overwritten
-    public void preformEffectTodo(battle_character target, stats_object effect_stats) {}
+    public void preformEffectTodo(battle_character target) {}
 
     public String toString() {return this.getClass().getSimpleName();}
 }
