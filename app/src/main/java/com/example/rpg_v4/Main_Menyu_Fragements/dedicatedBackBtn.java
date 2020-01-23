@@ -25,7 +25,7 @@ public class dedicatedBackBtn extends Fragment {
     private PL this_pl;
     private String current_layout;
 
-    private LinearLayout backbtn;
+    private View backbtn;
 
     private nonRegionBackButtonListener mListener;
 
@@ -90,5 +90,10 @@ public class dedicatedBackBtn extends Fragment {
 
     public interface nonRegionBackButtonListener {
         void backBtnPressed(String layout);
+    }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

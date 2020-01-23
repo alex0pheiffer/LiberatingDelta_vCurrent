@@ -27,7 +27,7 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
     private static final String CITYPT = "this_cityPt";
     private static final String PlayerLevel = "pl";
 
-    private String CURRENT_LAYOUT = "REGION_MAP_CITY";
+    private static final String CURRENT_LAYOUT = "REGION_MAP_CHAPTER";
     private regions this_region;
     private cityPt this_cityPt;
     private int pl;
@@ -108,7 +108,16 @@ public class main_menyu_regionChapters_fragment extends Fragment implements Meny
         }
     }
 
+    public static String getCURRENT_LAYOUT() {
+        return CURRENT_LAYOUT;
+    }
+
     public interface onRegionChaptersSelectedListener {
         public void chapterSelected(regions region, Chapter chapter);
+    }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

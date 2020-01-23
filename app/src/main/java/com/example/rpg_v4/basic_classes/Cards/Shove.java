@@ -1,5 +1,6 @@
 package com.example.rpg_v4.basic_classes.Cards;
 
+import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Card;
 import com.example.rpg_v4.basic_classes.battle_character;
 
@@ -10,7 +11,7 @@ public class Shove extends Card {
     private static int numInstance = 0;
 
     public Shove() {
-        super("Shove", 0, false, false, false, false, 1, 0, 30);
+        super("Shove", R.drawable.shove_card, false, false, false, false, 1, 0, 30);
         instanceName = getClass().getSimpleName()+" "+numInstance;
         numInstance++;
     }

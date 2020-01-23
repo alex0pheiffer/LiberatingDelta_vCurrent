@@ -134,6 +134,21 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             return parsed;
         }
 
+        public String getDefaultPage(String layout) {
+            return pageParse(layout)+"_LAYOUT";
+        }
+
+        //returns if the layout (page_page_layout) has two parts to it, making it a subpage (layout == layout_layout)
+        public boolean isSubpage(String layout) {
+            int underscores = 0;
+            for (int i=0; i < layout.length(); i++) {
+                if (layout.substring(i,i+1).equals("_")) underscores++;
+                if (underscores == 4) return true;
+            }
+            //only has 3 or less underscores
+            return false;
+        }
+
         public boolean compareParsed(String layout1, String layout2) {
             return (pageParse(layout1).equals(pageParse(layout2)));
         }
@@ -175,6 +190,11 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 this.lValues = vals;
                 if (pl < 3 || this_pl == null) {
                     pl = getPL();
+                    this_pl = PL_VendingMachine.getPL(pl);
+                }
+                else if (lValues.get(0).getCur_PL() != pl) {
+                    //update our pl, it has changed
+                    pl = lValues.get(0).getCur_PL();
                     this_pl = PL_VendingMachine.getPL(pl);
                 }
                 cur_region = getCurrentRegion();
@@ -275,7 +295,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
             private Characters getCur_character() {
                 Characters character = new Katherine();
                 if (lValues != null) {
-                    this_pl.getCharacter(lValues.get(0).getFront_char());
+                    character = this_pl.getCharacter(lValues.get(0).getFront_char());
                 }
                 return character;
             }
@@ -893,6 +913,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         FragmentTransaction ft = fragmentManager.beginTransaction();
         mainMenyuRegionMapBtn = main_menyu_region_map_btn.newInstance(myDataController.getCur_region().getNom(), pl);
         itemsBar = menyu_itemsbar.newInstance();
+        Log.d("DEBUG",R.drawable.katie1+" "+((main_character)myDataController.getCur_character()).getCharacterImgDrawable());
         characterIcon = main_menyu_frontcharacter.newInstance(myDataController.getCur_character().getName(), myDataController.getCur_weapon(),myDataController.getPL());
         ft.add(R.id.menyu_regionmap_btn_frag,mainMenyuRegionMapBtn);
         ft.add(R.id.itemsbar,itemsBar);
@@ -994,14 +1015,16 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
 
     public void regionBtnPressed() {
-        if (layoutSetter.compareWithCurrent(mainMenyuRegionMapBtn.getCURRENT_LAYOUT())) {
+        if (layoutSetter.compareWithCurrent(main_menyu_region_map_btn.getCURRENT_LAYOUT())) {
             boolean regions_match = myDataController.getCur_region().getNom().equals(mainMenyuRegionMapBtn.getRegion().getNom());
             if (regions_match) {
                 //terminate the fragment
                 System.out.println("Terminating RegionBtn");
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 regionFragment = region_1_fragment.newInstance(myDataController.getPL());
-                backBtn = dedicatedBackBtn.newInstance(pl,((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT());
+                //this assumes that all region fragments will have the same CURRENT_LAYOUT
+                //BEWARE
+                backBtn = dedicatedBackBtn.newInstance(pl,region_1_fragment.getCURRENT_LAYOUT());
                 ft.add(R.id.dedicated_back_btn,backBtn);
                 ft.add(R.id.menyu_regionmap_btn_frag,regionFragment);
                 ft.remove(characterIcon);
@@ -1014,7 +1037,8 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 bufferbackgLeft.setAlpha(0);
                 bufferbackgRight.setAlpha(0);
                 mmc_backbox.setBackground(null);
-                layoutSetter.changeLayout(((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
+                //previous was: (((RegionFragmentInterface)regionFragment).getCURRENT_LAYOUT());
+                layoutSetter.changeLayout(region_1_fragment.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
                 //intro mainmenyu2region (move region icons on)
             }
             else {
@@ -1026,15 +1050,27 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         }
     }
 
+    /*
     //regionBtns
     public void cityPtPressed(String city) {
         boolean regions_match = myDataController.getCur_region().getNom().equals(((RegionFragmentInterface)regionFragment).getRegion().getNom());
         if (regions_match) {
-
+            //set up the cityPressed layout -- img, info, storeBtn, CH btn
             cityPt town;
 
             if (city.equals("Maleficere Mansion")) {
-                town = new maleficere_mansion();
+                town = this_pl.getCityPt("Maleficere Mansion",myDataController.getCur_region());
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
+                backbox_top_text.setText(town.getNom());
+                ft.addToBackStack(null);
+                ft.commit();
+                layoutSetter.changeLayout();
+                backBtn.modifyLayout(layoutSetter.getCURRENT_LAYOUT());
+            }
+
+            else if (city.equals("Chipper Towne")) {
+                town = this_pl.getCityPt("Chipper Towne",myDataController.getCur_region());
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(myDataController.getCur_region().getNom(), town.getNom(),myDataController.getPL());
                 ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
@@ -1044,16 +1080,40 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
                 layoutSetter.changeLayout("REGION_MAP_CITY");
                 backBtn.modifyLayout(layoutSetter.getCURRENT_LAYOUT());
             }
+        }
+        else {
+            throw new RuntimeException("mismatch regions");
+        }
+    }
+    */
+    //todo change to chBtnPressed
+    public void cityPtPressed(String city) {
+        boolean regions_match = myDataController.getCur_region().getNom().equals(((RegionFragmentInterface)regionFragment).getRegion().getNom());
+        if (regions_match) {
 
-            else if (city.equals("Chipper Towne")) {
-                town = new chipper_towne();
+            cityPt town;
+
+            if (city.equals("Maleficere Mansion")) {
+                town = this_pl.getCityPt("Maleficere Mansion",myDataController.getCur_region());
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(myDataController.getCur_region().getNom(), town.getNom(),myDataController.getPL());
                 ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
                 backbox_top_text.setText(town.getNom());
                 ft.addToBackStack(null);
                 ft.commit();
-                layoutSetter.changeLayout("REGION_MAP_CITY");
+                layoutSetter.changeLayout(main_menyu_regionChapters_fragment.getCURRENT_LAYOUT());
+                backBtn.modifyLayout(layoutSetter.getCURRENT_LAYOUT());
+            }
+
+            else if (city.equals("Chipper Towne")) {
+                town = this_pl.getCityPt("Chipper Towne",myDataController.getCur_region());
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                regionChapterListRecycler = main_menyu_regionChapters_fragment.newInstance(myDataController.getCur_region().getNom(), town.getNom(),myDataController.getPL());
+                ft.replace(R.id.mmc_backbox_bottom,regionChapterListRecycler);
+                backbox_top_text.setText(town.getNom());
+                ft.addToBackStack(null);
+                ft.commit();
+                layoutSetter.changeLayout(main_menyu_regionChapters_fragment.getCURRENT_LAYOUT());
                 backBtn.modifyLayout(layoutSetter.getCURRENT_LAYOUT());
             }
 
@@ -1084,17 +1144,52 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         //lol this probably isnt needed? i dont think this is going to do anything... maybe open an entire window?
     }
 
+    //todo this is dumb. why don't i just use the MM current layout? why do i have bckbtn storing its own?
+
     public void backBtnPressed(String layout) {
-        //pressing the back button will always return you to Main Menyu
-        System.out.println("mm backpressed");
-        clearFragments(layout);
-        addFragments(layout);
-        bufferbackgBottom.setAlpha(1);
-        bufferbackgTop.setAlpha(1);
-        bufferbackgLeft.setAlpha(1);
-        bufferbackgRight.setAlpha(1);
-        mmc_backbox.setBackgroundColor(getColor(R.color.genericElectric));
-        layoutSetter.changeLayout("MAIN_MENYU_LAYOUT");
+        //backbtn will return you to MAIN_MENYU_LAYOUT orrrr if the layout has an underscore, it will return you thatpage_layout
+        //check if the layout is a subpage
+
+        //check that the "real" current layout matches bckbtn's current layout
+        if (layout.compareTo(layoutSetter.getCURRENT_LAYOUT()) != 0) {
+            throw new RuntimeException("Back Button's layout "+layout+" does NOT match MM layout "+layoutSetter.getCURRENT_LAYOUT());
+        }
+
+        boolean isSubpage = layoutSetter.isSubpage(layout);
+        if (!isSubpage) {
+            //not a subpage, go to mainmenyu
+            System.out.println("mm backpressed");
+            clearFragments(layout);
+            addFragments(layout);
+            bufferbackgBottom.setAlpha(1);
+            bufferbackgTop.setAlpha(1);
+            bufferbackgLeft.setAlpha(1);
+            bufferbackgRight.setAlpha(1);
+            mmc_backbox.setBackgroundColor(getColor(R.color.genericElectric));
+            layoutSetter.changeLayout("MAIN_MENYU_LAYOUT");
+        }
+        else {
+            //is a subpage, go to proper layout.
+            Log.d("ERROR","MUST INPUT THE INSTRUCTIONS FOR RETURNING TO THE PROPER SCREEN");
+            String defaultPage = layoutSetter.getDefaultPage(layout);
+            //characterView
+            if (defaultPage.equals(characterViewFragment.getCURRENT_LAYOUT())) {
+
+            }
+            //deckView
+            else if (defaultPage.equals(deckViewFragment.getCURRENT_LAYOUT())) {
+
+            }
+            /*
+            //itemView
+            else if (defaultPage.equals(itemViewFragment.getCURRENT_LAYOUT())) {
+
+            }
+            */
+            //set the layout to the previous layout
+            layoutSetter.changeLayout(layoutSetter.getPREVIOUS_LAYOUT());
+
+        }
     }
 
     public void goBtnPressed() {
@@ -1102,14 +1197,16 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
 
     //ItemsBarBtns
-    public void menyuItemsBarSettingsPressed() {}
+    public void menyuItemsBarSettingsPressed() {
+        //new activity
+    }
     public void menyuItemsBarCharactersPressed() {
-        /*
+
         Log.d("VIEW_CHANGE","Opening Character Viewer");
         FragmentTransaction ft = fragmentManager.beginTransaction();
         charViewer = characterViewFragment.newInstance(pl,"Katherine",1,0);
         //charViewerBar = ;
-        backBtn = dedicatedBackBtn.newInstance(pl,charViewer.getCURRENT_LAYOUT());
+        backBtn = dedicatedBackBtn.newInstance(pl,characterViewFragment.getCURRENT_LAYOUT());
         ft.add(R.id.dedicated_back_btn,backBtn);
         ft.add(R.id.whole_container_frag,charViewer);
         //ft.replace(R.id.itemsbar,deckViewerBar);
@@ -1122,10 +1219,12 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         bufferbackgLeft.setAlpha(0);
         bufferbackgRight.setAlpha(0);
         mmc_backbox.setBackground(null);
-        layoutSetter.changeLayout(charViewer.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
-    */
+        layoutSetter.changeLayout(characterViewFragment.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
+
     }
-    public void menyuItemsBarPlotPressed() {}
+    public void menyuItemsBarPlotPressed() {
+        //new activity
+    }
     public void menyuItemsBarDecksPressed() {
         //bring in the charswitch arrows
         //remove the region btn
@@ -1137,7 +1236,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         FragmentTransaction ft = fragmentManager.beginTransaction();
         deckViewerRecycler = deckViewFragment.newInstance(myDataController.getPL(),myDataController.getAllDecks().get(0).getNom());
         deckViewerBar = deckViewer_deckBar.newInstance(pl,"falseString");
-        backBtn = dedicatedBackBtn.newInstance(pl,deckViewerRecycler.getCURRENT_LAYOUT());
+        backBtn = dedicatedBackBtn.newInstance(pl,deckViewFragment.getCURRENT_LAYOUT());
         ft.add(R.id.dedicated_back_btn,backBtn);
         ft.add(R.id.whole_container_frag,deckViewerRecycler);
         ft.replace(R.id.itemsbar,deckViewerBar);
@@ -1150,7 +1249,7 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         bufferbackgLeft.setAlpha(0);
         bufferbackgRight.setAlpha(0);
         mmc_backbox.setBackground(null);
-        layoutSetter.changeLayout(deckViewerRecycler.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
+        layoutSetter.changeLayout(deckViewFragment.getCURRENT_LAYOUT());//menyu_items_bar, main_menyu_region_map_btn, main_menyu_frontcharacter
         //intro mainmenyu2region (move region icons on)
     }
     public void menyuItemsBarInventoryPressed() {}
@@ -1178,13 +1277,27 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     public void deckRecyclerDeckPressed(Deck deck) {
         Log.d("TESTING",deck.getNom()+" was pressed.");
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        if (deckViewerBar != null) {
+            Log.d("DEBUG","deckerView is not null");
+            ft.remove(deckViewerBar);
+        }
         deckViewerBar = deckViewer_deckBar.newInstance(pl,deck.getNom());
         deckViewerBar.importDeck(deck);
         ft.add(R.id.itemsbar,deckViewerBar);
         ft.addToBackStack(null);
         ft.commit();
     }
-    public void deckRecyclerAddDeckPressed() {Log.d("TESTING","Adding_deck was pressed.");}
+    public void deckRecyclerAddDeckPressed() {
+        Log.d("TESTING","Adding_deck was pressed.");
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        if (deckViewerBar != null) {
+            ft.remove(deckViewerBar);
+        }
+        //todo change this to be ADDDECKFRAGTHING.getCURRENT_LAYOUT();
+        layoutSetter.changeLayout("DECK_VIEW_ADD_DECK");
+        //prompt new deck's name
+        //if input is blank, assume they dont want to make a new deck
+    }
     public int getMMC_rightDist() {
         return characterIcon.getView().getRight();
     }
@@ -1198,7 +1311,9 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
         ft.commit();
     }
     //DeckViewerBar
-    public void deckViewerBar_ViewDeckPressed(Deck deck) {}
+    public void deckViewerBar_ViewDeckPressed(Deck deck) {
+
+    }
     public void deckViewerBar_EditDeckPressed(Deck deck) {}
     public void deckViewerBar_DeleteDeckPressed(Deck deck) {
         //send a confirmation box...pause the lower screens?

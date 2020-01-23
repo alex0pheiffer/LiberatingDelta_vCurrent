@@ -1,5 +1,6 @@
 package com.example.rpg_v4.basic_classes.the_MCs;
 
+import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Weapons.basicSword;
 import com.example.rpg_v4.basic_classes.fighting_character;
 import com.example.rpg_v4.basic_classes.main_character;
@@ -24,13 +25,13 @@ public class Vivian extends main_character {
                 7,
                 getAType(17),
                 getMType(3),
-                com.example.rpg_v4.R.drawable.dummycat,
-                0,
+                R.drawable.vivian1,
+                R.drawable.katie1_battle,
                 "dagger",
                 new basicSword(),
                 null,
                 null,
-                new stats_object(3,10,0,0,130,100,100,100,100,100));
+                new stats_object(3,10,0,0,130,10,10,10,10,10));
     }
 
     public fighting_character getFightingCharacter() {

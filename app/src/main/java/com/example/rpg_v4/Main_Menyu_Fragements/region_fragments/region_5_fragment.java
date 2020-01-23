@@ -16,7 +16,7 @@ import com.example.rpg_v4.R;
 public class region_5_fragment extends Fragment {
     private static final String PlayerLevel= "pl";
 
-    final String THIS_LAYOUT="REGION_MAP_LAYOUT";
+    private static final String CURRENT_LAYOUT ="REGION_MAP_LAYOUT";
 
     private int pl;
 
@@ -84,5 +84,15 @@ public class region_5_fragment extends Fragment {
         //ChipperTowneBtn = view.findViewById(R.id.Chipper_Towne_img);
         //ChipperTowneText = view.findViewById(R.id.Chipper_Towne_tag);
         gobtn = view.findViewById(R.id.region_5_gobtn);
+    }
+
+    String mTag = this.toString();
+
+    public static String getCURRENT_LAYOUT() {
+        return CURRENT_LAYOUT;
+    }
+
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

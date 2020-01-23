@@ -12,7 +12,7 @@ public abstract class Characters {
     private int strength;
     private String charType;
     private String magicType;
-    private final static String[] characterTypes = {"Human","DragonA","DragonB","DragonC","DragonD","DragonE","DragonF","DragonG","DragonH","DragonI","DragonJ","DragonK","DragonL","DragonM","DragonN","DragonO","DragonP","Mage","Witch"};
+    private final static String[] characterTypes = {"Human","DragonA","DragonB","DragonC","DragonD","DragonE","DragonF","DragonG","DragonH","DragonI","DragonJ","DragonK","DragonL","DragonM","DragonN","DragonO","DragonP","Mage","Witch","Animal"};
     private final static String[] magicTypes = {"None", "Fire", "Water", "Land", "Air", "???"};
 
     public Characters(String nom, String[] descript_str, Integer[] descript_pl, String gender, int age, int height, boolean human, int magicalAff, int strength, String charType, String magicType) {

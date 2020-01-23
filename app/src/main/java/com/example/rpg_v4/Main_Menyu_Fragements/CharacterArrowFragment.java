@@ -81,4 +81,9 @@ public class CharacterArrowFragment extends Fragment {
     public interface onCharacterArrowFragmentInteraction {
         void characterArrowPressed(boolean isUp, boolean hasEmpty);
     }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

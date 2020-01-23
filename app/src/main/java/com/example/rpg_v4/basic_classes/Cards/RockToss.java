@@ -1,5 +1,6 @@
 package com.example.rpg_v4.basic_classes.Cards;
 
+import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Card;
 import com.example.rpg_v4.basic_classes.battle_character;
 
@@ -10,7 +11,7 @@ public class RockToss extends Card {
     private static int numInstance = 0;
 
     public RockToss() {
-        super("Rock Toss", 0, false, false, false, false, 1, 0, 50);
+        super("Rock Toss", R.drawable.rocktoss_card, false, false, false, false, 1, 0, 50);
         instanceName = getClass().getSimpleName()+" "+numInstance;
         numInstance++;
     }

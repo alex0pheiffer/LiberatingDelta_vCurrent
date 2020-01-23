@@ -5,12 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.rpg_v4.Main_Menyu_Fragements.characterViewSubFragments.characterViewBar;
 import com.example.rpg_v4.Main_Menyu_Fragements.characterViewSubFragments.characterViewStatsSubFragment;
 import com.example.rpg_v4.PL_VendingMachine;
 import com.example.rpg_v4.R;
@@ -21,23 +24,25 @@ import com.example.rpg_v4.custom_drawables.evaDrawable;
 
 public class characterViewFragment extends Fragment {
 
-    private String CURRENT_LAYOUT = "CHARACTER_VIEW_LAYOUT";
+    private static final String CURRENT_LAYOUT = "CHARACTER_VIEW_LAYOUT";
 
     private static final String PlayerLevel = "PlayerLevel";
     private static final String CHARACTER = "CHAR";
     private static final String CHARACTERLVL = "LVL";
     private static final String CHARACTEREXP = "EXP";
 
-    /*
+
     private characterViewStatsSubFragment statsFrag;
+    /*
     private characterViewEquipSubFragment equipFrag;
     private characterViewRegionSubFragment regionFrag;
     private characterViewRankSubFragment rankFrag;
     private characterViewInfoSubFragment infoFrag;
     */
+    private characterViewBar bar;
 
-    private TextView characterName, characterLvl, characterHP, characterAtk, characterPEva, characterMEva, characterType, characterEXP;
-    private View expCanvas, atkCanvas, pEvaCanvas, mEvaCanvas, defCanvas, characterViewBar;
+
+    private TextView characterName, characterLvl;
 
     private int pl;
     private PL this_pl;
@@ -82,33 +87,31 @@ public class characterViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_character_view, container, false);
 
+        //Create subFragments
+        statsFrag = characterViewStatsSubFragment.newInstance("str1","str2");
+        bar = characterViewBar.newInstance(pl);
+
+        //add subfragments
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.characterViewSubFragment,statsFrag);
+        ft.add(R.id.characterView_barFragment,bar);
+        ft.addToBackStack(null);
+        ft.commit();
+
         //store Views
         characterName = view.findViewById(R.id.characterView_characterName);
         characterLvl = view.findViewById(R.id.characterView_characterLevel);
-        characterHP = view.findViewById(R.id.characterView_hpStat);
-        characterAtk = view.findViewById(R.id.characterView_atkStat);
-        characterPEva = view.findViewById(R.id.characterView_pEvaPercent);
-        characterMEva = view.findViewById(R.id.characterView_mEvaPercent);
-        characterType = view.findViewById(R.id.characterView_typeStat);
-        characterEXP = view.findViewById(R.id.characterView_expStat);
-        expCanvas = view.findViewById(R.id.characterView_expCanvas);
-        pEvaCanvas = view.findViewById(R.id.characterView_pEvaCanvas);
-        mEvaCanvas = view.findViewById(R.id.characterView_mEvaCanvas);
-        defCanvas = view.findViewById(R.id.characterView_defenseCanvas);
-        characterViewBar = view.findViewById(R.id.characterView_barFragment);
 
         //update Views
         characterName.setText(this_character.getName());
         characterLvl.setText(""+this_character_lvl);
-        characterHP.setText(""+this_character.getStats().getHealth());
-        characterAtk.setText("Atk : "+this_character.getStats().getAttackA());
-        characterPEva.setText(""+this_character.getStats().getEvasiveA());
-        characterMEva.setText(""+this_character.getStats().getEvasiveM());
-        characterType.setText(""+this_character.getMagicType());
-        characterEXP.setText(this_character_exp+" / "+PL_VendingMachine.exp2next(this_character_lvl));
-        pEvaCanvas.setBackground(new evaDrawable(this_character.getStats().getEvasiveA()));
-        mEvaCanvas.setBackground(new evaDrawable(this_character.getStats().getEvasiveM()));
-        defCanvas.setBackground(new defDrawable(this_character.getStats().getADefense(),this_character.getStats().getFireDefense(),this_character.getStats().getWaterDefense(),this_character.getStats().getLandDefense(),this_character.getStats().getAirDefense()));
+        statsFrag.setHP(this_character.getStats().getHealth());
+        statsFrag.setAtk(this_character.getStats().getAttackA());
+        statsFrag.setPEva(this_character.getStats().getEvasiveA());
+        statsFrag.setMEva(this_character.getStats().getEvasiveM());
+        statsFrag.setMagicType(this_character.getMagicType());
+        statsFrag.setEXP(this_character_exp+" / "+PL_VendingMachine.exp2next(this_character_lvl));
 
         return view;
     }
@@ -130,15 +133,22 @@ public class characterViewFragment extends Fragment {
         mListener = null;
     }
 
-    public String getCURRENT_LAYOUT() {
+    public static String getCURRENT_LAYOUT() {
         return CURRENT_LAYOUT;
     }
 
+    /*
     public void setCURRENT_LAYOUT(String layout) {
         CURRENT_LAYOUT = layout;
     }
+    */
 
     public interface characterViewFragmentListener {
         //void onFragmentInteraction(Uri uri);
+    }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

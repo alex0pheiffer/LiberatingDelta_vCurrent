@@ -21,7 +21,7 @@ import com.example.rpg_v4.basic_classes.regions;
 public class region_1_fragment extends Fragment implements RegionFragmentInterface{
     private static final String PlayerLevel = "pl";
 
-    final String CURRENT_LAYOUT="REGION_MAP_LAYOUT";
+    private static final String CURRENT_LAYOUT="REGION_MAP_LAYOUT";
 
     private int pl;
     private PL this_pl;
@@ -136,13 +136,14 @@ public class region_1_fragment extends Fragment implements RegionFragmentInterfa
         gobtn.setAlpha(1);
     }
 
-    public String getCURRENT_LAYOUT() {
+    public static String getCURRENT_LAYOUT() {
         return THIS_LAYOUT;
     }
 
     public regions getRegion() {return thisRegion;}
 
+    String mTag = this.toString();
     public String toString() {
-        return "region_1_fragment";
+        return this.getClass().getSimpleName();
     }
 }

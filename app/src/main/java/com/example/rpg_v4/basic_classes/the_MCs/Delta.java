@@ -1,5 +1,6 @@
 package com.example.rpg_v4.basic_classes.the_MCs;
 
+import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Weapons.basicSword;
 import com.example.rpg_v4.basic_classes.fighting_character;
 import com.example.rpg_v4.basic_classes.main_character;
@@ -24,13 +25,13 @@ public class Delta extends main_character {
                 9,
                 getAType(9),
                 getMType(1),
-                com.example.rpg_v4.R.drawable.dummy_mmc_img,
-                0,
+                R.drawable.delta1,
+                R.drawable.delta1_battle,
                 "sword",
                 new basicSword(),
                 null,
                 null,
-                new stats_object(5,10,200,0,0,200,500,0,0,0));
+                new stats_object(5,10,200,0,0,20,50,0,0,0));
     }
 
     public fighting_character getFightingCharacter() {

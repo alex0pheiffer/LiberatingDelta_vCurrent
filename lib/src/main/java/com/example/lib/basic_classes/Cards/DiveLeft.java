@@ -18,7 +18,7 @@ public class DiveLeft extends Card {
 
     public void preformCard(battle_character user, battle_character target) {
 
-        System.out.println(target.getNom()+"has increased evasiveness ( P,M ) by 40% for 2 turns.");
+        System.out.println("\t"+target.getNom()+"has increased evasiveness ( P,M ) by 40% for 2 turns.");
         preformEffectTodo(target);
         user.addEffectTodo(this, 1);
 
@@ -26,7 +26,7 @@ public class DiveLeft extends Card {
 
     public void preformEffectTodo(battle_character target) {
 
-        System.out.println(target.getNom()+"has increased evasiveness ( P,M ) by 40%.");
+        System.out.println("\t"+target.getNom()+"has increased evasiveness ( P,M ) by 40%.");
 
         target.getEffectStats().addStats(new stats_object(0,0,0, 4000, 4000,0,0,0,0,0));
     }

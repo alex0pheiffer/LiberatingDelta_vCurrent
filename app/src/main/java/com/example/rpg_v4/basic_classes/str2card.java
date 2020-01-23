@@ -1,10 +1,13 @@
 package com.example.rpg_v4.basic_classes;
 
+import com.example.rpg_v4.basic_classes.Cards.BoldTackle;
 import com.example.rpg_v4.basic_classes.Cards.Distract;
-import com.example.rpg_v4.basic_classes.Cards.DiveLeft;
+import com.example.rpg_v4.basic_classes.Cards.Scare;
+import com.example.rpg_v4.basic_classes.Cards.SimpleDodge;
 import com.example.rpg_v4.basic_classes.Cards.RockToss;
 import com.example.rpg_v4.basic_classes.Cards.Shove;
 import com.example.rpg_v4.basic_classes.Cards.Splash;
+import com.example.rpg_v4.basic_classes.Cards.StellaSpark;
 import com.example.rpg_v4.basic_classes.Cards.Struggle;
 import com.example.rpg_v4.basic_classes.Cards.TreeHide;
 
@@ -16,12 +19,15 @@ public class str2card {
     //todo update this as you add more card classes
     private Class[] cardClasses = {
             Distract.class,
-            DiveLeft.class,
+            SimpleDodge.class,
             RockToss.class,
             Shove.class,
             Splash.class,
             Struggle.class,
-            TreeHide.class};
+            TreeHide.class,
+            StellaSpark.class,
+            BoldTackle.class,
+            Scare.class};
     private ArrayList<String> cardClassesNames;
     private Card previousCard;
 

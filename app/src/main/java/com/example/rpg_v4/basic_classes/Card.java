@@ -90,6 +90,16 @@ public abstract class Card {
         }
     }
 
+    public String getSpecificCombo() {
+        if (isComboSpecific) {
+            System.out.println("Warning: This method should be overwritten");
+            return null;
+        }
+        else {
+            return null;
+        }
+    }
+
     public Weapon getSpecificWeapon() {
         if (isWeaponSpecific) {
             System.out.println("Warning: This method should be overwritten");

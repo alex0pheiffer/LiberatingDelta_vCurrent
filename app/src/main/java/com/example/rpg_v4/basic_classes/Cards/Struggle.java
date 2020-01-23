@@ -11,16 +11,16 @@ public class Struggle extends Card {
     private static int numInstance = 0;
 
     public Struggle() {
-        super("Struggle", 0, false, false, false, false, 1, 0, 50);
+        super("Struggle", 0, false, false, false, false, 1, 0, 30);
         instanceName = getClass().getSimpleName()+" "+numInstance;
         numInstance++;
     }
 
     public void preformCard(battle_character user, battle_character target) {
 
-        System.out.println("Returns .5 * pAtk");
+        System.out.println("Returns .3 * pAtk");
 
-        int amt = (int)(user.getPatk()*.5);
+        int amt = (int)(user.getPatk()*.3);
         amt = target.hitWPhysical(amt);
 
         System.out.println(target.getNom()+" lost "+amt+" hp.");

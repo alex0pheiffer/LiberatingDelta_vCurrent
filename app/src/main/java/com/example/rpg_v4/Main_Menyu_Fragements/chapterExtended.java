@@ -78,4 +78,9 @@ public class chapterExtended extends Fragment {
     public interface onChapterExtendedSelectedListener {
         void onChapterExtendedPressed(Chapter chapter);
     }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

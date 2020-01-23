@@ -155,7 +155,8 @@ public class menyu_itemsbar extends Fragment implements ItemsBarFragmentInterfac
         }
     }
 
+    String mTag = this.toString();
     public String toString() {
-        return "menyu_itemsbar";
+        return this.getClass().getSimpleName();
     }
 }

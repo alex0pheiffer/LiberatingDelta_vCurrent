@@ -132,4 +132,9 @@ public class characterViewBar extends Fragment {
         void characterViewBarRankPressed(String layout);
         void characterViewBarInfoPressed(String layout);
     }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

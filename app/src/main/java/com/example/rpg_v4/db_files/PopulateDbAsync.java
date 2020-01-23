@@ -77,6 +77,7 @@ public class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
         userCards.insert(usecard);
         usecard = new User_Cards("Distract",3,"None",8);
         userCards.insert(usecard);
+        /*
         usecard = new User_Cards("TreeHide",3,"BasicDeck",9);
         userCards.insert(usecard);
         usecard = new User_Cards("TreeHide",3,"BasicDeck",10);
@@ -89,18 +90,32 @@ public class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
         userCards.insert(usecard);
         usecard = new User_Cards("TreeHide",3,"None",11);
         userCards.insert(usecard);
-        usecard = new User_Cards("DiveLeft",3,"BasicDeck",12);
+        */
+        usecard = new User_Cards("Scare",3,"BasicDeck",9);
         userCards.insert(usecard);
-        usecard = new User_Cards("DiveLeft",3,"BasicDeck",13);
+        usecard = new User_Cards("Scare",3,"BasicDeck",10);
         userCards.insert(usecard);
-        usecard = new User_Cards("DiveLeft",3,"BasicDeck",14);
+        usecard = new User_Cards("Scare",3,"BasicDeck",11);
         userCards.insert(usecard);
-        usecard = new User_Cards("DiveLeft",3,"None",12);
+        usecard = new User_Cards("Scare",3,"None",9);
         userCards.insert(usecard);
-        usecard = new User_Cards("DiveLeft",3,"None",13);
+        usecard = new User_Cards("Scare",3,"None",10);
         userCards.insert(usecard);
-        usecard = new User_Cards("DiveLeft",3,"None",14);
+        usecard = new User_Cards("Scare",3,"None",11);
         userCards.insert(usecard);
+        usecard = new User_Cards("SimpleDodge",3,"BasicDeck",12);
+        userCards.insert(usecard);
+        usecard = new User_Cards("SimpleDodge",3,"BasicDeck",13);
+        userCards.insert(usecard);
+        usecard = new User_Cards("SimpleDodge",3,"BasicDeck",14);
+        userCards.insert(usecard);
+        usecard = new User_Cards("SimpleDodge",3,"None",12);
+        userCards.insert(usecard);
+        usecard = new User_Cards("SimpleDodge",3,"None",13);
+        userCards.insert(usecard);
+        usecard = new User_Cards("SimpleDodge",3,"None",14);
+        userCards.insert(usecard);
+        /*
         usecard = new User_Cards("Splash",3,"BasicDeck",15);
         userCards.insert(usecard);
         usecard = new User_Cards("Splash",3,"BasicDeck",16);
@@ -125,7 +140,8 @@ public class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
         userCards.insert(usecard);
         usecard = new User_Cards("Struggle",3,"None",20);
         userCards.insert(usecard);
-        User_Decks usedeck = new User_Decks("BasicDeck","Katherine",21);
+        */
+        User_Decks usedeck = new User_Decks("BasicDeck","Katherine",15);
         userDecks.insert(usedeck);
         User_EQPlayed useEQP = new User_EQPlayed("ChallengeA",0,0);
         userEQPlayed.insert(useEQP);

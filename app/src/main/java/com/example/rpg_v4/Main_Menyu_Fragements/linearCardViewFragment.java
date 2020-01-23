@@ -99,4 +99,9 @@ public class linearCardViewFragment extends Fragment {
         //possibly pop up information about a given card
         void onListFragmentInteraction(Card card);
     }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

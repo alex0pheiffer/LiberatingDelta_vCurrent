@@ -4,7 +4,7 @@ import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Characters;
 import com.example.rpg_v4.basic_classes.Phase;
 import com.example.rpg_v4.basic_classes.static_character;
-import com.example.rpg_v4.basic_classes.the_static_characters.staticer_test;
+import com.example.rpg_v4.basic_classes.the_static_characters.Grendel1;
 
 public class ch1_1_phase extends Phase {
 
@@ -15,7 +15,7 @@ public class ch1_1_phase extends Phase {
                 "Then theres this",
                 "and now this."
         });
-        static_character statty = new staticer_test();
+        static_character statty = new Grendel1();
         setCharacters(new static_character[] {statty, statty, statty});
         setBackground(new Integer[] {R.drawable.zoomed_region_1_3,R.drawable.zoomed_region_1_3,R.drawable.zoomed_region_1_3});
     }

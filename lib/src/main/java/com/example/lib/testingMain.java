@@ -13,6 +13,7 @@ import com.example.lib.basic_classes.battle_character;
 import com.example.lib.basic_classes.fighting_character;
 import com.example.lib.basic_classes.main_character;
 import com.example.lib.basic_classes.the_MCs.Delta;
+import com.example.lib.basic_classes.the_MCs.Katherine;
 import com.example.lib.basic_classes.the_MCs.Vivian;
 
 import java.util.ArrayList;
@@ -24,10 +25,13 @@ public class testingMain {
         ArrayList<Boolean> allies = new ArrayList<Boolean>();
 
         main_character mc = new Vivian();
+        //mc.setHealth(200);
         characters.add(mc);
         fighting_character enemy = new Delta();
         characters.add(enemy);
-        allies.add(true); allies.add(false);
+        //fighting_character enemy2 = new Katherine();
+        //characters.add(enemy2);
+        allies.add(true); allies.add(false); //allies.add(false);
 
         Deck myDeck = new Deck("myDeck", mc.getName());
         mc.setDeck(myDeck);
@@ -49,6 +53,7 @@ public class testingMain {
 
         Deck hisDeck = new Deck("hisDeck", enemy.getName());
         enemy.setDeck(hisDeck);
+        //enemy2.setDeck(hisDeck);
         hisDeck.addCard(new RockToss());
         hisDeck.addCard(new RockToss());
         hisDeck.addCard(new RockToss());

@@ -126,7 +126,7 @@ public class battle_character {
     //returns the amt of damage dealt
     public int hitWPhysical(int amt) {
         //when the attack is purely physical
-        int change = (stats_static.getADefense()+effect_stats.getADefense())*amt/100;
+        int change = (int)((stats_static.getADefense()+effect_stats.getADefense())*amt/100.0);
         reduceHealth(change);
         return change;
     }

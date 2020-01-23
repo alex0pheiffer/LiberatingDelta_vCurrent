@@ -135,4 +135,9 @@ public class deckViewer_deckBar extends Fragment {
         void deckViewerBar_EditDeckPressed(Deck deck);
         void deckViewerBar_DeleteDeckPressed(Deck deck);
     }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

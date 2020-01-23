@@ -26,7 +26,7 @@ public class deckViewFragment extends Fragment {
     private static final String PlayerLevel = "PL";
     private static final String CURRENT_DECK = "CURRENT_DECK";
 
-    private final String CURRENT_LAYOUT = "DECK_VIEW_LAYOUT";
+    private static final String CURRENT_LAYOUT = "DECK_VIEW_LAYOUT";
 
     private final String ADD_DECK = "__adding";
     private final String BLANK_ITEM = "__blank";
@@ -120,7 +120,7 @@ public class deckViewFragment extends Fragment {
         mListener = null;
     }
 
-    public String getCURRENT_LAYOUT() {
+    public static String getCURRENT_LAYOUT() {
         return CURRENT_LAYOUT;
     }
 
@@ -131,5 +131,10 @@ public class deckViewFragment extends Fragment {
         int getMMC_rightDist();
         boolean getEmptyCharacter();
         void decksScrolled();
+    }
+
+    String mTag = this.toString();
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

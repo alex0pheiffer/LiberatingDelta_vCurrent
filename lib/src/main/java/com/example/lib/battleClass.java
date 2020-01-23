@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class battleClass {
 
     Scanner scanner = new Scanner(System.in);
+    boolean testFightPrints = false;
 
 
     ArrayList<battle_character> allCharacters;
@@ -68,6 +69,7 @@ public class battleClass {
             chosenTargets.clear();
 
             System.out.println("It's now "+character_it.getNom()+"'s turn!");
+            System.out.println("Their deck has "+character_it.getRemainingDeck().getCardAmt()+" of "+character_it.getFullDeck().getCardAmt());
 
             character_it.applyEffectTodo();
             character_it.setWeightPoints(character_it.getWeightPoints()+1);
@@ -225,10 +227,12 @@ public class battleClass {
                 opponents.add(new battle_character(allies.get(b)));
             }
 
-            System.out.println("opponent is testing their options....\n");
-            System.out.println("opponents: ");
-            for (int i=0; i < opponents.size(); i++) {
-                System.out.println("\t"+opponents.get(i).getNom());
+            if (testFightPrints) {
+                System.out.println("opponent is testing their options....\n");
+                System.out.println("opponents: ");
+                for (int i = 0; i < opponents.size(); i++) {
+                    System.out.println("\t" + opponents.get(i).getNom());
+                }
             }
 
 
@@ -236,25 +240,32 @@ public class battleClass {
             cTargets = character_it.getHandCard(c).getTargetCharAmt();
             maxCardDamage = 0;
 
-            System.out.println("test "+c+": "+character_it.getHandCard(c));
-            System.out.println("requires "+cTargets+" targets.");
+            if (testFightPrints) {
+                System.out.println("test " + c + ": " + character_it.getHandCard(c));
+                System.out.println("requires " + cTargets + " targets.");
+            }
 
             //the number of targets the card requires is greater than the number of targets available.
             if (cTargets >= opponents.size()) {
                 //no need to check different potential targets: automatically selects all.
 
-                System.out.println("more targets req than available.");
+                if (testFightPrints) {
+                    System.out.println("more targets req than available.");
+                }
 
                 //test each target to see if anyone dies, and to find the max HP damage done
                 for (int i = 0; i < opponents.size(); i++) {
-
-                    System.out.println("card used on "+opponents.get(i));
+                    if (testFightPrints) {
+                        System.out.println("card used on " + opponents.get(i));
+                    }
 
                     dead = character_it.testCard(character_it.getHandCard(c), opponents.get(i));
 
                     if (dead) {
 
-                        System.out.println("Opponent died.");
+                        if (testFightPrints) {
+                            System.out.println("Opponent died.");
+                        }
 
                         for (int j = 0; j < opponents.size(); j++) {
                             chosenTargets.add(allies.get(j));
@@ -274,16 +285,22 @@ public class battleClass {
             else {
                 //just loop through the opponents and see if anyone dies...
 
-                System.out.println("targets required <= targets available");
+                if (testFightPrints) {
+                    System.out.println("targets required <= targets available");
+                }
 
                 for (int a = 0; a < opponents.size(); a++) {
 
-                    System.out.println("card used on "+opponents.get(a));
+                    if (testFightPrints) {
+                        System.out.println("card used on " + opponents.get(a));
+                    }
 
                     dead = character_it.testCard(character_it.getHandCard(c),opponents.get(a));
                     if (dead) {
 
-                        System.out.println("Opponent died.");
+                        if (testFightPrints) {
+                            System.out.println("Opponent died.");
+                        }
 
                         //firstly, add the char that dies.
                         chosenTargets.add(allies.get(a));
@@ -315,11 +332,15 @@ public class battleClass {
 
             //is this max larger than maxMax?
 
-            System.out.println("maxDmg: "+maxCardDamage+" maxMaxDmg: "+maxMaxDamage);
+            if (testFightPrints) {
+                System.out.println("maxDmg: " + maxCardDamage + " maxMaxDmg: " + maxMaxDamage);
+            }
 
             if (maxCardDamage > maxMaxDamage) {
 
-                System.out.println(character_it.getHandCard(c)+"'s damage is greater. It is the new saved maxCard.");
+                if (testFightPrints) {
+                    System.out.println(character_it.getHandCard(c) + "'s damage is greater. It is the new saved maxCard.");
+                }
 
                 maxMaxCard = c;
                 maxMaxDamage = maxCardDamage;

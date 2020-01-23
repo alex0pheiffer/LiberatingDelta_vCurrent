@@ -18,14 +18,14 @@ public class Distract extends Card {
 
     public void preformCard(battle_character user, battle_character target) {
 
-        System.out.println(target.getNom()+" has lost a ( 1 ) turn!");
+        System.out.println("\t"+target.getNom()+" has lost a ( 1 ) turn!");
 
         target.addEffectTodo(this, 1);
     }
 
     public void preformEffectTodo(battle_character target) {
 
-        System.out.println("Turn is skipped.");
+        System.out.println("\t"+"Turn is skipped.");
 
         target.setTurnSkip(true);
     }

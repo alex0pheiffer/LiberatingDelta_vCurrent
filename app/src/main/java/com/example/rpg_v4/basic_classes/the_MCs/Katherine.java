@@ -1,5 +1,6 @@
 package com.example.rpg_v4.basic_classes.the_MCs;
 
+import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Weapons.basicSword;
 import com.example.rpg_v4.basic_classes.fighting_character;
 import com.example.rpg_v4.basic_classes.main_character;
@@ -24,13 +25,13 @@ public class Katherine extends main_character {
                 5,
                 getAType(17),
                 getMType(0),
-                com.example.rpg_v4.R.drawable.dummy_mmc_img,
-                0,
+                R.drawable.katie1,
+                R.drawable.katie1_battle,
                 "bow",
                 null,
                 null,
                 null,
-                new stats_object(3,10,0,100,0,100,0,0,0,0));
+                new stats_object(3,10,0,100,0,10,0,0,0,0));
     }
 
     /*

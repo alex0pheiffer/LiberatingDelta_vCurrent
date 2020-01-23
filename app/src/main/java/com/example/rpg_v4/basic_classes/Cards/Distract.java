@@ -1,5 +1,6 @@
 package com.example.rpg_v4.basic_classes.Cards;
 
+import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Card;
 import com.example.rpg_v4.basic_classes.battle_character;
 import com.example.rpg_v4.basic_classes.stats_object;
@@ -11,7 +12,7 @@ public class Distract extends Card {
     private static int numInstance = 0;
 
     public Distract() {
-        super("Distract", 0, false, false, false, false, 1, 0, 10);
+        super("Distract", R.drawable.distract_card, false, false, false, false, 1, 2, 10);
         instanceName = getClass().getSimpleName()+" "+numInstance;
         numInstance++;
     }

@@ -18,14 +18,14 @@ public class TreeHide extends Card {
 
     public void preformCard(battle_character user, battle_character target) {
 
-        System.out.println(target.getNom()+"has increased evasiveness ( P,M ) by 20% for 3 turns.");
+        System.out.println("\t"+target.getNom()+"has increased evasiveness ( P,M ) by 20% for 3 turns.");
         preformEffectTodo(target);
         user.addEffectTodo(this, 1);
 
     }
 
     public void preformEffectTodo(battle_character target) {
-        System.out.println(target.getNom() + "has increased evasiveness ( P,M ) by 20%.");
+        System.out.println("\t"+target.getNom() + "has increased evasiveness ( P,M ) by 20%.");
 
         target.getEffectStats().addStats(new stats_object(0, 0, 0, 2000, 2000, 0, 0, 0, 0, 0));
     }

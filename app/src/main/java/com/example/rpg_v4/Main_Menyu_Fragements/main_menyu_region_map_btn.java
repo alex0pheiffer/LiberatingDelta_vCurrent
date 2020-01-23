@@ -32,7 +32,7 @@ public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegi
     private int pl;
     private PL this_pl;
     private TextView mainbtn, regionName;
-    private final String THIS_LAYOUT = "MAIN_MENYU_LAYOUT";
+    private static final String THIS_LAYOUT = "MAIN_MENYU_LAYOUT";
 
     private onRegionMapBtnSelectedListener mListener;
     public void setOnRegionMapSelectedListener(onRegionMapBtnSelectedListener callback  ) {
@@ -111,7 +111,7 @@ public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegi
         }
     }
 
-    public String getCURRENT_LAYOUT() {
+    public static String getCURRENT_LAYOUT() {
         return THIS_LAYOUT;
     }
 
@@ -124,7 +124,8 @@ public class main_menyu_region_map_btn extends Fragment implements MainMenyuRegi
         return this.region;
     }
 
+    String mTag = this.toString();
     public String toString() {
-        return "main_menyu_region_map_btn";
+        return this.getClass().getSimpleName();
     }
 }

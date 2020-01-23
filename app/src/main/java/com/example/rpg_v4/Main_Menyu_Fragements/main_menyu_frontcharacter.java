@@ -61,7 +61,9 @@ public class main_menyu_frontcharacter extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menyu_frontcharacter, container, false);
+        Log.d("DEBUG",""+character.getCharacterImgDrawable());
         frontcharacter = view.findViewById(R.id.menyu_mmc_img);
+        frontcharacter.setImageDrawable(getActivity().getDrawable(character.getCharacterImgDrawable()));
 
         return view;
     }
@@ -88,19 +90,18 @@ public class main_menyu_frontcharacter extends Fragment {
     //isUp --> do we shift the characters up or down
     //hasEmpty --> can it return an "empty" slot character
     public void characterArrowPressed(boolean isUp, boolean hasEmpty) {
+        previous_character = character;
         if (character == null) {
-            previous_character = character;
             character = this_pl.rotateCharacter("empty", isUp, hasEmpty);
         }
         else {
-            previous_character = character;
             character = this_pl.rotateCharacter(character.getName(), isUp, hasEmpty);
         }
         if (character != null) {
             Log.d("CHARARROW", "charArrowPressed; " + character.getName() + " showing");
             //todo change to character's image
             //frontcharacter.setImageDrawable(getActivity().getDrawable(character.getCharacterImgDrawable()));
-            frontcharacter.setImageDrawable(getActivity().getDrawable(R.drawable.dummycat));
+            frontcharacter.setImageDrawable(getActivity().getDrawable(character.getCharacterImgDrawable()));
         }
         else {
             Log.d("CHARARROW", "charArrowPressed; " + "null" + " showing");
@@ -110,7 +111,8 @@ public class main_menyu_frontcharacter extends Fragment {
 
     public void setPreviousCharacter() {
         //todo change to character's image
-        frontcharacter.setImageDrawable(getActivity().getDrawable(R.drawable.dummycat));
+        character = previous_character;
+        frontcharacter.setImageDrawable(getActivity().getDrawable(character.getCharacterImgDrawable()));
     }
 
     public boolean getEmptyCharacter() {
@@ -146,7 +148,8 @@ public class main_menyu_frontcharacter extends Fragment {
 
     }
 
+    String mTag = this.toString();
     public String toString() {
-        return "main_menyu_frontcharacter";
+        return this.getClass().getSimpleName();
     }
 }
