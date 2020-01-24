@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="210dp"
+    android:layout_height="326dp">
+
+    <ImageView
+        android:id="@+id/LargeCardViewCard"
+        android:layout_width="match_parent"
+        android:layout_height="186dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentTop="true"/>
+
+    <LinearLayout
+        android:id="@+id/LargeCardViewBackground"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:background="@drawable/cardbackground"/>
+    <RelativeLayout
+        android:id="@+id/LargeCardViewBorder"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/cardborder"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/LargeCardViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="9dp"
+        android:textColor="@color/white"
+        android:text="Test Test Testinggg"
+        android:textAppearance="?attr/textAppearanceListItem" />
+    <TextView
+        android:id="@+id/LargeCardViewInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/text_margin"
+        android:textColor="@color/white"
+        android:textAppearance="?attr/textAppearanceListItem" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/LargeCardViewNumber"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:background="@drawable/cardvaluering"/>
+</RelativeLayout>

@@ -43,6 +43,12 @@ public class Scare extends Card {
     public static void removeDeckAmt() {
         deckAmt--;
     }
+
+    public String getInfo() {
+        return "↓ Opponent's pDef by 10% for 3 turns.\n"+
+                "Targets: "+getTargetCharAmt()+"\tWeight: "+getWeight()+"\tWait: "+getWait();
+    }
+
     public int getNumInstance() {
         return numInstance;
     }

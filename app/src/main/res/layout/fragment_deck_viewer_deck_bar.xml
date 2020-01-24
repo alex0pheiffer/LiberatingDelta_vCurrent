@@ -9,38 +9,31 @@
         android:id="@+id/deckViewBar_vis"
         android:background="@color/genericPurple"
         android:alpha=".3"
-        android:layout_gravity="right"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="120dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="25dp"
         android:layout_width="400dp"
         android:layout_height="40dp"
         android:orientation="horizontal"/>
     <LinearLayout
         android:id="@+id/deckViewBar_inv"
-        android:gravity="right"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="130dp"
+        android:gravity="end"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="200dp"
         android:layout_width="400dp"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
         <Button
             android:id="@+id/deckViewBar_view_btn"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/settingsicon"/>
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" >
-        </Space>
-        <Button
-            android:id="@+id/deckViewBar_edit_btn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/charactersicon"/>
+            android:background="@drawable/deckview_btn"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -51,12 +44,27 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/missionsploticon"/>
+            android:background="@drawable/deckdelete_btn"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1" >
         </Space>
+        <Button
+            android:id="@+id/deckViewBar_valid_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/deckvalid_btn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <TextView
+            android:id="@+id/deckViewBar_name"
+            android:layout_width="100dp"
+            android:layout_height="60dp"/>
     </LinearLayout>
 
 </FrameLayout>

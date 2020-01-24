@@ -43,6 +43,12 @@ public class SimpleDodge extends Card {
     public static void removeDeckAmt() {
         deckAmt--;
     }
+
+    public String getInfo() {
+        return "↑ pEva of Self by 40% and mEva by 20% for 2 turns.\n"+
+                "Targets: "+getTargetCharAmt()+"\tWeight: "+getWeight()+"\tWait: "+getWait();
+    }
+
     public int getNumInstance() {
         return numInstance;
     }

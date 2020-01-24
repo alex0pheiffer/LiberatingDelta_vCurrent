@@ -31,7 +31,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/settingsicon"/>
+            android:background="@drawable/characterstats_btn"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -41,7 +41,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/charactersicon"/>
+            android:background="@drawable/characterequip_btn"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -51,7 +51,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/missionsploticon"/>
+            android:background="@drawable/characterregion_btn"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -61,7 +61,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/decksicon"/>
+            android:background="@drawable/characterrank_btn"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -72,7 +72,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/inventoryicon"/>
+            android:background="@drawable/characterinfo_btn"/>
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"

@@ -41,6 +41,12 @@ public class TreeHide extends Card {
     public static void removeDeckAmt() {
         deckAmt--;
     }
+
+    public String getInfo() {
+        return "↑ Self's mEva and pEva by 20% for 3 turns.\n"+
+                "Targets: "+getTargetCharAmt()+"\tWeight: "+getWeight()+"\tWait: "+getWait();
+    }
+
     public int getNumInstance() {
         return numInstance;
     }

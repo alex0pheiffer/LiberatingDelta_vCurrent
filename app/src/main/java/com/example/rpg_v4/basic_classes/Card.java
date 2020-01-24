@@ -80,6 +80,11 @@ public abstract class Card {
         return isCharacterSpecific;
     }
 
+    //to be overwritten
+    public String getInfo() {
+        throw new RuntimeException("ERROR: GETINFO SHOULD BE OVERWRITTEN");
+    }
+
     public String getSpecificCharacter() {
         if (isCharacterSpecific) {
             System.out.println("Warning: This method should be overwritten");

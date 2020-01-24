@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="105dp"
+    android:layout_height="163dp">
 
     <ImageView
         android:id="@+id/SmallCardViewCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"/>
+        android:layout_height="93dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_alignParentTop="true"/>
     <LinearLayout
         android:id="@+id/SmallCardViewBackground"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/SmallCardViewBorder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"/>
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/cardbackground">
         <TextView
-            android:id="@+id/item_number"
+            android:id="@+id/SmallCardViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:textAppearance="?attr/textAppearanceListItem" />
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/SmallCardViewInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:textAppearance="?attr/textAppearanceListItem" />
     </LinearLayout>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/SmallCardViewBorder"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:background="@drawable/cardborder"/>
+    <TextView
+        android:id="@+id/SmallCardViewNumber"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:background="@drawable/cardvaluering"/>
+</RelativeLayout>

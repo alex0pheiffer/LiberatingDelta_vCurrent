@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.rpg_v4.PL_VendingMachine;
 import com.example.rpg_v4.R;
@@ -21,6 +22,8 @@ public class deckViewer_deckBar extends Fragment {
     private static final String PlayerLevel = "pl";
     private static final String DeckName = "deck";
 
+    private static final String CURRENT_LAYOUT = "DECK_VIEW_SELECT";
+
     private int pl;
     private PL this_pl;
     private String deckName;
@@ -28,8 +31,9 @@ public class deckViewer_deckBar extends Fragment {
     private boolean deckCheck;
 
     private Button viewDeckBtn;
-    private Button editDeckBtn;
+    private Button showValidDeckBtn;
     private Button deleteDeckBtn;
+    private TextView deckNameTextView;
 
     private deckViewerDeckBarListener mListener;
 
@@ -53,8 +57,6 @@ public class deckViewer_deckBar extends Fragment {
             pl = getArguments().getInt(PlayerLevel);
             this_pl = PL_VendingMachine.getPL(pl);
             deckName = getArguments().getString(DeckName);
-            //temporary until the deck is imported
-            this_deck = null;
         }
     }
 
@@ -64,36 +66,38 @@ public class deckViewer_deckBar extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_deck_viewer_deck_bar, container, false);
         viewDeckBtn = view.findViewById(R.id.deckViewBar_view_btn);
-        editDeckBtn = view.findViewById(R.id.deckViewBar_edit_btn);
+        showValidDeckBtn = view.findViewById(R.id.deckViewBar_valid_btn);
         deleteDeckBtn = view.findViewById(R.id.deckViewBar_delete_btn);
+        deckNameTextView = view.findViewById(R.id.deckViewBar_name);
+
         viewDeckBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!deckCheck) {
+                if (!deckCheck && this_deck != null) {
                     if (deckName.compareTo(this_deck.getNom()) ==  0) deckCheck = true;
                     else throw new RuntimeException("deck and imported deck do not match");
                 }
-                mListener.deckViewerBar_ViewDeckPressed(this_deck);
+                if (this_deck != null) mListener.deckViewerBar_ViewDeckPressed(this_deck);
             }
         });
-        editDeckBtn.setOnClickListener(new View.OnClickListener() {
+        showValidDeckBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!deckCheck) {
+                if (!deckCheck && this_deck != null) {
                     if (deckName.compareTo(this_deck.getNom()) ==  0) deckCheck = true;
                     else throw new RuntimeException("deck and imported deck do not match");
                 }
-                mListener.deckViewerBar_EditDeckPressed(this_deck);
+                if (this_deck != null) mListener.deckViewerBar_showValidDeckPressed(this_deck);
             }
         });
         deleteDeckBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!deckCheck) {
+                if (!deckCheck && this_deck != null) {
                     if (deckName.compareTo(this_deck.getNom()) ==  0) deckCheck = true;
                     else throw new RuntimeException("deck and imported deck do not match");
                 }
-                mListener.deckViewerBar_DeleteDeckPressed(this_deck);
+                if (this_deck != null) mListener.deckViewerBar_DeleteDeckPressed(this_deck);
             }
         });
         return view;
@@ -111,6 +115,7 @@ public class deckViewer_deckBar extends Fragment {
     }
 
     public void importDeck(Deck deck) {
+        Log.d("DEBUG","Deck Imported to deckViewer: "+deck.getNom());
         if (deckName == null) {
             this_deck = deck;
             deckCheck = false;
@@ -120,7 +125,10 @@ public class deckViewer_deckBar extends Fragment {
             deckCheck = true;
         }
         else {
-            throw new RuntimeException("deck and imported deck do not match");
+            throw new RuntimeException("deck: "+deckName+" and imported deck: "+deck.getNom()+" do not match");
+        }
+        if (deckNameTextView != null) {
+            deckNameTextView.setText(this_deck.getNom());
         }
     }
 
@@ -132,8 +140,13 @@ public class deckViewer_deckBar extends Fragment {
 
     public interface deckViewerDeckBarListener {
         void deckViewerBar_ViewDeckPressed(Deck deck);
-        void deckViewerBar_EditDeckPressed(Deck deck);
+        void deckViewerBar_showValidDeckPressed(Deck deck);
         void deckViewerBar_DeleteDeckPressed(Deck deck);
+        void deckRecyclerDeckPressed(Deck deck);
+    }
+
+    public static String getCURRENT_LAYOUT() {
+        return CURRENT_LAYOUT;
     }
 
     String mTag = this.toString();

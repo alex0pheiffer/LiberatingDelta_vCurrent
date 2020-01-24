@@ -43,6 +43,11 @@ public class Distract extends Card {
         deckAmt--;
     }
 
+    public String getInfo() {
+        return "Opponent will lose a turn.\n"+
+                "Targets: "+getTargetCharAmt()+"\tWeight: "+getWeight()+"\tWait: "+getWait();
+    }
+
     public int getNumInstance() {
         return numInstance;
     }

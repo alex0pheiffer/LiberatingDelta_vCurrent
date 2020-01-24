@@ -20,6 +20,7 @@ import com.example.rpg_v4.Main_Menyu_Fragements.dedicatedBackBtn;
 import com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended;
 import com.example.rpg_v4.Main_Menyu_Fragements.deckViewFragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.deckViewer_deckBar;
+import com.example.rpg_v4.Main_Menyu_Fragements.linearCardViewFragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_frontcharacter;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_regionChapters_fragment;
 import com.example.rpg_v4.Main_Menyu_Fragements.main_menyu_region_map_btn;
@@ -34,6 +35,7 @@ import com.example.rpg_v4.basic_classes.Characters;
 import com.example.rpg_v4.basic_classes.Deck;
 import com.example.rpg_v4.basic_classes.PL;
 import com.example.rpg_v4.basic_classes.Weapon;
+import com.example.rpg_v4.basic_classes.abstractDeck;
 import com.example.rpg_v4.basic_classes.cityPt;
 import com.example.rpg_v4.basic_classes.inventI;
 import com.example.rpg_v4.basic_classes.main_character;
@@ -55,7 +57,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction, dedicatedBackBtn.nonRegionBackButtonListener, deckViewer_deckBar.deckViewerDeckBarListener, characterViewFragment.characterViewFragmentListener {
+public class MainMenyuActivity extends AppCompatActivity implements main_menyu_region_map_btn.onRegionMapBtnSelectedListener, region_1_fragment.onRegion1SelectedListener, main_menyu_frontcharacter.onMenyuFrontcharacterSelectedListener, menyu_itemsbar.onMenyuItemsBarSelectedListener, main_menyu_regionChapters_fragment.onRegionChaptersSelectedListener, com.example.rpg_v4.Main_Menyu_Fragements.chapterExtended.onChapterExtendedSelectedListener, deckViewFragment.deckRecyclerListener, CharacterArrowFragment.onCharacterArrowFragmentInteraction, dedicatedBackBtn.nonRegionBackButtonListener, deckViewer_deckBar.deckViewerDeckBarListener, characterViewFragment.characterViewFragmentListener, linearCardViewFragment.linearCardViewListener {
 
     private int pl;
     private PL this_pl;
@@ -80,10 +82,12 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     private characterViewFragment charViewer;
     private deckViewFragment deckViewerRecycler;
     private deckViewer_deckBar deckViewerBar;
+    private linearCardViewFragment cardViewFragment, cardEditFragmentTop, cardEditFragmentBottom;
     private dedicatedBackBtn backBtn;
     private CharacterArrowFragment MMCarrowUp, MMCarrowDown;
     private main_menyu_regionChapters_fragment regionChapterListRecycler;
-    private View bufferbackgTop, bufferbackgBottom, bufferbackgLeft, bufferbackgRight, mmc_backbox ;
+    private View bufferbackgTop, bufferbackgBottom, bufferbackgLeft, bufferbackgRight, mmc_backbox;
+    private abstractDeck theQuickGrabDeck;
 
 
     private class layoutClass {
@@ -1306,17 +1310,41 @@ public class MainMenyuActivity extends AppCompatActivity implements main_menyu_r
     }
     public void decksScrolled() {
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.remove(deckViewerBar);
+        if (deckViewerBar != null) {
+            ft.remove(deckViewerBar);
+        }
         ft.addToBackStack(null);
         ft.commit();
     }
     //DeckViewerBar
     public void deckViewerBar_ViewDeckPressed(Deck deck) {
-
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        if (deckViewerBar != null) {
+            ft.remove(deckViewerBar);
+        }
+        reignArrowsMMC();
+        ft.remove(characterIcon);
+        ft.remove(deckViewerRecycler);
+        cardViewFragment = linearCardViewFragment.newInstance(pl, false, deck.getNom());
+        theQuickGrabDeck = deck;
+        //cardViewFragment.importDeck(deck);
+        ft.add(R.id.cardViewRecycler_container_frag,cardViewFragment);
+        //create the cardViewButton fragment here
+        //ft.add(R.id.cardViewButton_container_frag,cardViewbuttons);
+        ft.addToBackStack(null);
+        ft.commit();
     }
-    public void deckViewerBar_EditDeckPressed(Deck deck) {}
+    public abstractDeck quickGrabDeck() {
+        return theQuickGrabDeck;
+    }
+    public void deckViewerBar_showValidDeckPressed(Deck deck) {}
     public void deckViewerBar_DeleteDeckPressed(Deck deck) {
         //send a confirmation box...pause the lower screens?
+    }
+    //DeckViewCardView
+    public void onListFragmentInteraction(sudoCard card) {}
+    public void cardViewLargeBtnEditPressed(abstractDeck deck) {
+
     }
 
     //MMC_Character

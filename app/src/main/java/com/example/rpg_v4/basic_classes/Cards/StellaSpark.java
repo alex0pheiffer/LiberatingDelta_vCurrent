@@ -54,6 +54,11 @@ public class StellaSpark extends Card {
         deckAmt--;
     }
 
+    public String getInfo() {
+        return "Attack Opponent with 1*pAtk if Self has Fire magic.\n"+
+                "Targets: "+getTargetCharAmt()+"\tWeight: "+getWeight()+"\tWait: "+getWait();
+    }
+
     public int getNumInstance() {
         return numInstance;
     }

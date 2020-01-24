@@ -43,6 +43,12 @@ public class Shove extends Card {
     public static void removeDeckAmt() {
         deckAmt--;
     }
+
+    public String getInfo() {
+        return "Attack Opponent with .4*pAtk.\n"+
+                "Targets: "+getTargetCharAmt()+"\tWeight: "+getWeight()+"\tWait: "+getWait();
+    }
+
     public int getNumInstance() {
         return numInstance;
     }

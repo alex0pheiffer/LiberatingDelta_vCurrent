@@ -2,13 +2,17 @@ package com.example.rpg_v4.Main_Menyu_Fragements;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rpg_v4.R;
 import com.example.rpg_v4.basic_classes.Card;
+import com.example.rpg_v4.basic_classes.Cards.sudoCard;
 import com.example.rpg_v4.basic_classes.abstractDeck;
 
 import java.util.List;
@@ -17,11 +21,13 @@ public class MylinearCardViewRecyclerViewAdapter extends RecyclerView.Adapter<My
 
     private final abstractDeck deck;
     private boolean isHalf;
+    private Activity activityy;
     private final linearCardViewFragment.linearCardViewListener mListener;
 
-    public MylinearCardViewRecyclerViewAdapter(abstractDeck deck, linearCardViewFragment.linearCardViewListener listener, boolean isHalf) {
+    public MylinearCardViewRecyclerViewAdapter(abstractDeck deck, linearCardViewFragment.linearCardViewListener listener, boolean isHalf, Activity activity) {
         this.deck = deck;
         this.isHalf = isHalf;
+        this.activityy = activity;
         mListener = listener;
     }
 
@@ -33,18 +39,18 @@ public class MylinearCardViewRecyclerViewAdapter extends RecyclerView.Adapter<My
                     .inflate(R.layout.fragment_linearcardview_small, parent, false);
         }
         else {
-            //todo uncomment once card layout is completed
-            view = null;
-            //view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_linearcardview_large, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_linearcardview_large, parent, false);
         }
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = deck.getCard(position);
-        //holder.mIdView.setText(deck.getCard(position));
-        holder.mContentView.setText(deck.getCard(position).getNom());
+        holder.mItem = deck.getSudoCard(position);
+        holder.mIdView.setText(deck.getSudoCard(position).getCard(0).getNom());
+        holder.mContentView.setText(deck.getSudoCard(position).getCard(0).getInfo());
+        holder.cardView.setImageDrawable(activityy.getDrawable(deck.getSudoCard(position).getCard(0).getCardImg()));
+        holder.cardAmtRing.setText(""+deck.getSudoCard(0).getAmount());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,20 +66,40 @@ public class MylinearCardViewRecyclerViewAdapter extends RecyclerView.Adapter<My
 
     @Override
     public int getItemCount() {
-        return deck.getCardAmt();
+        return deck.getSudoCardAmt();
     }
+
+    /*
+    public void updateDeck(abstractDeck deck) {
+        //possibly add a few lines to ensure this IS NOT MODIFIED AFTER THE RECYCLER IS VISIBLE.
+        this.deck = deck;
+    }
+    */
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Card mItem;
+        public TextView cardAmtRing;
+        public ImageView cardView;
+        public sudoCard mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            if (isHalf) {
+                cardView = (ImageView) view.findViewById(R.id.SmallCardViewCard);
+                cardAmtRing = (TextView) view.findViewById(R.id.SmallCardViewNumber);
+                mIdView = (TextView) view.findViewById(R.id.SmallCardViewTitle);
+                mContentView = (TextView) view.findViewById(R.id.SmallCardViewInfo);
+            }
+            else {
+                cardView = (ImageView) view.findViewById(R.id.LargeCardViewCard);
+                cardAmtRing = (TextView) view.findViewById(R.id.LargeCardViewNumber);
+                mIdView = (TextView) view.findViewById(R.id.LargeCardViewTitle);
+                mContentView = (TextView) view.findViewById(R.id.LargeCardViewInfo);
+            }
+
         }
 
         @Override

@@ -52,6 +52,11 @@ public class BoldTackle extends Card {
         deckAmt--;
     }
 
+    public String getInfo() {
+        return "Attack Opponent with .7*pAtk.\n"+
+                "Targets: "+getTargetCharAmt()+"\tWeight: "+getWeight()+"\tWait: "+getWait();
+    }
+
     public int getNumInstance() {
         return numInstance;
     }
